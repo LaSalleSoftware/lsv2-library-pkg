@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Lasalle Software library (lasallesoftware/library)
+ * This file is part of the Lasalle Software library
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,9 +13,9 @@
  * @license    http://opensource.org/licenses/MIT MIT
  * @author     Bob Bloom
  * @email      bob.bloom@lasallesoftware.ca
- * @link       https://lasallesoftware.ca Blog, Podcast, Docs
- * @link       https://packagist.org/packages/lasallesoftware/library Packagist
- * @link       https://github.com/lasallesoftware/library GitHub
+ * @link       https://lasallesoftware.ca
+ * @link       https://packagist.org/packages/lasallesoftware/lsv2-library-pkg
+ * @link       https://github.com/LaSalleSoftware/lsv2-library-pkg
  *
  */
 
@@ -28,7 +28,7 @@ class Version
      *
      * @var string
      */
-    const VERSION = '2.0.0';
+    const VERSION = '1.9.1';
 
     /**
      * This package's name.

@@ -16,7 +16,7 @@
 * @email      bob.bloom@lasallesoftware.ca
 * @link       https://lasallesoftware.ca Blog, Podcast, Docs
 * @link       https://packagist.org/packages/lasallesoftware/library Packagist
-* @link       https://github.com/lasallesoftware/library GitHub
+* @link       https://github.com/LaSalleSoftware/lsv2-library-pkg
 *
 */
 

@@ -12,6 +12,10 @@ Library package for my LaSalle Software Version 2.
 
 If you discover any security related issues, please email Bob Bloom at "bob dot bloom at lasallesoftware dot ca" instead of using the issue tracker.
 
+## Caveat
+
+You need to buy [Laravel Nova](https://nova.laravel.com/), first first-party Laravel Framework administration panel package.
+
 ## Links
 
 * [Change Log](CHANGELOG.md)
