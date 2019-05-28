@@ -1,0 +1,62 @@
+{
+  "name": "lasallesoftware/lsv2-library-pkg",
+  "description": "LaSalle Software v2 Library Package.",
+  "keywords": [
+    "lasalle software",
+    "south lasalle",
+    "bob bloom",
+    "package",
+    "laravel"
+  ],
+  "homepage": "https://lasallesoftware.ca",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Bob Bloom",
+      "email": "bob.bloom@lasallesoftware.ca",
+      "homepage": "https://LasalleSoftware.ca",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^7.1.3",
+    "fideloper/proxy": "^4.0"
+  },
+  "require-dev": {
+    "barryvdh/laravel-ide-helper": "^2.3",
+    "barryvdh/laravel-debugbar": "^3.1",
+    "orchestra/testbench" : "~3.5.0|~3.6.0|~3.7.0"
+  },
+  "autoload": {
+      "classmap": [
+          "database/factories"
+      ],
+    "psr-4": {
+      "Lasallesoftware\\Library\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Lasallesoftware\\Library\\Test\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Lasallesoftware\\Library\\LibraryServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  },
+  "suggest": {
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
