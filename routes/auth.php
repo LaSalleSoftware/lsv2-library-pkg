@@ -31,13 +31,6 @@
 |
 */
 
-//Here expeditiously to solve a stupid problem I don't wanna look into
-// DELETE BEFORE COMMITTING!!!!!
-Route::get('user/profile', function () {
-    //
-})->name('nova.logout');
-
-
 Route::group(['middleware' => ['web']], function () {
 
     Route::get('/home', 'Lasallesoftware\Library\Authentication\Http\Controllers\HomeController@index')->name('home');
