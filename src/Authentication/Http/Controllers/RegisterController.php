@@ -30,7 +30,7 @@ use Lasallesoftware\Library\Profiles\Models\Person;
 use Lasallesoftware\Library\Profiles\Models\Email;
 use Lasallesoftware\Library\Profiles\Models\Person_email;
 use Lasallesoftware\Library\Authentication\Models\Personbydomain;
-use Lasallesoftware\Library\Profiles\Models\Lookup_domain;
+use Lasallesoftware\Library\Profiles\Models\Installed_domain;
 
 
 // Laravel Framework
@@ -114,13 +114,13 @@ class RegisterController extends CommonController
         // emails table
         $email = new Email();
 
-        $email->email_type_id = 1;
-        $email->email_address = trim($data['email']);
-        $email->description   = 'Created by the Register Form.';
-        $email->comments      = 'Created by the Register Form.';
-        $email->uuid          = $uuid;
-        $email->created_at    = $now;
-        $email->created_by    = 1;
+        $email->lookup_email_type_id = 1;
+        $email->email_address        = trim($data['email']);
+        $email->description          = 'Created by the Register Form.';
+        $email->comments             = 'Created by the Register Form.';
+        $email->uuid                 = $uuid;
+        $email->created_at           = $now;
+        $email->created_by           = 1;
 
         $email->save();
 
@@ -150,20 +150,20 @@ class RegisterController extends CommonController
 
         // personbydomains table
         $lasalle_app_domain_name = app('config')->get('lasallesoftware-library.lasalle_app_domain_name');
-        $lookup_domain = Lookup_domain::where('title', $lasalle_app_domain_name)->first();
+        $installed_domain = Installed_domain::where('title', $lasalle_app_domain_name)->first();
 
         $personbydomain = new Personbydomain();
 
-        $personbydomain->person_id           = $person->id;
-        $personbydomain->person_first_name   = $person->first_name;
-        $personbydomain->person_surname      = $person->surname;
-        $personbydomain->email               = $email->email_address;
-        $personbydomain->password            = Hash::make($data['password']);
-        $personbydomain->lookup_domain_id    = $lookup_domain->id;
-        $personbydomain->lookup_domain_title = $lookup_domain->title;
-        $personbydomain->uuid                = $uuid;
-        $personbydomain->created_at          = $now;
-        $personbydomain->created_by          = 1;
+        $personbydomain->person_id              = $person->id;
+        $personbydomain->person_first_name      = $person->first_name;
+        $personbydomain->person_surname         = $person->surname;
+        $personbydomain->email                  = $email->email_address;
+        $personbydomain->password               = Hash::make($data['password']);
+        $personbydomain->installed_domain_id    = $installed_domain->id;
+        $personbydomain->installed_domain_title = $installed_domain->title;
+        $personbydomain->uuid                   = $uuid;
+        $personbydomain->created_at             = $now;
+        $personbydomain->created_by             = 1;
 
         $personbydomain->save();
 

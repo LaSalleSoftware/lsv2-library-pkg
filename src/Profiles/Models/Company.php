@@ -69,6 +69,48 @@ class Company extends CommonModel
     public $timestamps = false;
 
 
+    ///////////////////////////////////////////////////////////////////
+    //////////////         MODEL EVENTS             ///////////////////
+    ///////////////////////////////////////////////////////////////////
+
+    /**
+     * The "booting" method of the model.
+     *
+     * Laravel will execute this function automatically
+     * https://github.com/laravel/framework/blob/e6c8aa0e39d8f91068ad1c299546536e9f25ef63/src/Illuminate/Database/Eloquent/Model.php#L197
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        // parent's boot function should occur first
+        parent::boot();
+
+        // Do this when the "creating" model event is dispatched
+        // https://laracasts.com/discuss/channels/eloquent/is-there-any-way-to-listen-for-an-eloquent-event-in-the-model-itself
+        //
+        static::creating(function($company) {
+            self::populateNameField($company);
+        });
+
+        // Do this when the "updating" model event is dispatched
+        static::updating(function($company) {
+            self::populateNameField($company);
+        });
+    }
+
+    /**
+     * Populate the "name" field.
+     *
+     * @param  Company  $company
+     */
+    private static function populateNameField(Company $company)
+    {
+        // without any "save", this following statement actually populates the field!
+        $company->name = self::deepWashText($company->name);
+    }
+
+
 
     ///////////////////////////////////////////////////////////////////
     //////////////        RELATIONSHIPS             ///////////////////

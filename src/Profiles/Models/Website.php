@@ -101,7 +101,7 @@ class Website extends CommonModel
     }
 
     /**
-     * Populate the "name_calculated" field when triggered by creating & updating model event.
+     * Populate the "comment" field when triggered by creating & updating model event.
      *
      * @param  Person  $person
      */

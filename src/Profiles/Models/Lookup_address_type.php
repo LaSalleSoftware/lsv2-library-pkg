@@ -78,6 +78,48 @@ class Lookup_address_type extends CommonModel
 
 
     ///////////////////////////////////////////////////////////////////
+    //////////////         MODEL EVENTS             ///////////////////
+    ///////////////////////////////////////////////////////////////////
+
+    /**
+     * The "booting" method of the model.
+     *
+     * Laravel will execute this function automatically
+     * https://github.com/laravel/framework/blob/e6c8aa0e39d8f91068ad1c299546536e9f25ef63/src/Illuminate/Database/Eloquent/Model.php#L197
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        // parent's boot function should occur first
+        parent::boot();
+
+        // Do this when the "creating" model event is dispatched
+        // https://laracasts.com/discuss/channels/eloquent/is-there-any-way-to-listen-for-an-eloquent-event-in-the-model-itself
+        //
+        static::creating(function($lookup_address_type) {
+            self::populateTitleField($lookup_address_type);
+        });
+
+        // Do this when the "updating" model event is dispatched
+        static::updating(function($lookup_address_type) {
+            self::populateTitleField($lookup_address_type);
+        });
+    }
+
+    /**
+     * Populate the "title" field.
+     *
+     * @param  Lookup_address_type  $lookup_address_type
+     */
+    private static function populateTitleField(Lookup_address_type $lookup_address_type)
+    {
+        // without any "save", this following statement actually populates the field!
+        $lookup_address_type->title = self::deepWashText($lookup_address_type->title);
+    }
+
+
+    ///////////////////////////////////////////////////////////////////
     //////////////        RELATIONSHIPS             ///////////////////
     ///////////////////////////////////////////////////////////////////
 

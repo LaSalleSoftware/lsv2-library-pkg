@@ -25,116 +25,103 @@ namespace Lasallesoftware\Library\Policies;
 // LaSalle Software class
 use Lasallesoftware\Library\Common\Policies\CommonPolicy;
 use Lasallesoftware\Library\Authentication\Models\Personbydomain as User;
-use Lasallesoftware\Library\Profiles\Models\Lookup_domain as Model;
+use Lasallesoftware\Library\Profiles\Models\Installed_domain as Model;
+
+
+//                       SPECIAL NOTE!
+//
+// Installed_domains is populated during seeding. If it is absolutely necessary to create/update/delete records,
+// then -- gasp! -- modify the table directly. Viewing the table in the admin is just a convenience!
+//
 
 
 /**
- * Class Lookup_address_typePolicy
+ * Class Installed_domainPolicy
  *
  * @package Lasallesoftware\Library\Policies
  */
-class Lookup_domainPolicy extends CommonPolicy
+class Installed_domainPolicy extends CommonPolicy
 {
     /**
      * Records that are not deletable.
      *
      * @var array
      */
-    protected $recordsDoNotDelete = [1];
+    protected $recordsDoNotDelete = [];
 
 
     /**
-     * Determine whether the user can view the lookup_address_type details.
+     * Only owners can see installed_domains! No C-U-D operations are allowed.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Lookup_domain   $model
+     * @param  \Lasallesoftware\Library\Profiles\Models\Installed_domain      $model
      * @return bool
      */
     public function view(User $user, Model $model)
     {
-        return $user->hasRole('owner');
+        return $user->hasRole('owner') ? true: false;
     }
 
     /**
-     * Determine whether the user can create lookup_address_types.
+     * Only owners can see installed_domains! No C-U-D operations are allowed.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @return bool
      */
     public function create(User $user)
     {
-        return $user->hasRole('owner');
+        return false;
     }
 
     /**
-     * Determine whether the user can update the lookup_address_types.
+     * Only owners can see installed_domains! No C-U-D operations are allowed.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Lookup_domain   $model
+     * @param  \Lasallesoftware\Library\Profiles\Models\Installed_domain      $model
      * @return bool
      */
     public function update(User $user, Model $model)
     {
-        if (!$user->hasRole('owner')) {
-            return false;
-        }
-
-        if ($this->isRecordDoNotDelete($model)) {
-            return false;
-        }
-
-        return true;
+        return false;
     }
 
     /**
-     * Determine whether the user can delete the lookup_address_types.
+     * Only owners can see installed_domains! No C-U-D operations are allowed.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Lookup_domain   $model
+     * @param  \Lasallesoftware\Library\Profiles\Models\Installed_domain      $model
      * @return bool
      */
     public function delete(User $user, Model $model)
     {
-        if (!$user->hasRole('owner')) {
-            return false;
-        }
-
-        if ($this->isRecordDoNotDelete($model)) {
-            return false;
-        }
-
-        return true;
+        return false;
     }
 
     /**
-     * Determine whether the user can restore the lookup_address_types.
+     * Only owners can see installed_domains! No C-U-D operations are allowed.
+     *
+     *  This feature is not used!
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Lookup_domain   $model
+     * @param  \Lasallesoftware\Library\Profiles\Models\Installed_domain      $model
      * @return bool
      */
     public function restore(User $user, Model $model)
     {
-        return $user->hasRole('owner');
+        return false;
     }
 
     /**
-     * Determine whether the user can permanently delete the lookup_address_types.
+     * Only owners can see installed_domains! No C-U-D operations are allowed.
+     *
+     * This feature is not used!
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Lookup_domain   $model
+     * @param  \Lasallesoftware\Library\Profiles\Models\Installed_domain      $model
      * @return bool
      */
     public function forceDelete(User $user, Model $model)
     {
-        if (!$user->hasRole('owner')) {
-            return false;
-        }
-
-        if ($this->isRecordDoNotDelete($model)) {
-            return false;
-        }
-
-        return true;
+        return false;
     }
 }

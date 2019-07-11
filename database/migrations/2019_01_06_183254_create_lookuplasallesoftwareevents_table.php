@@ -58,38 +58,16 @@ class CreateLookuplasallesoftwareeventsTable extends BaseMigration
 
                 $table->timestamp('created_at')->useCurrent();
                 $table->integer('created_by')->unsigned();
-                $table->foreign('created_by')->references('id')->on('persons');
+                //$table->foreign('created_by')->references('id')->on('persons');
 
                 $table->timestamp('updated_at')->nullable();
                 $table->integer('updated_by')->unsigned()->nullable();
-                $table->foreign('updated_by')->references('id')->on('persons');
+                //$table->foreign('updated_by')->references('id')->on('persons');
 
                 $table->timestamp('locked_at')->nullable();
                 $table->integer('locked_by')->unsigned()->nullable();
-                $table->foreign('locked_by')->references('id')->on('persons');
+                //$table->foreign('locked_by')->references('id')->on('persons');
             });
         }
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        // Disable foreign key constraints or these DROPs will not work
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-
-        Schema::table('lookup_lasallesoftware_events', function($table){
-            $table->dropIndex('lookup_lasallesoftware_events_title_unique');
-            $table->dropForeign('lookup_lasallesoftware_events_created_by_foreign');
-            $table->dropForeign('lookup_lasallesoftware_events_updated_by_foreign');
-            $table->dropForeign('lookup_lasallesoftware_events_locked_by_foreign');
-        });
-        Schema::dropIfExists('lookup_lasallesoftware_events');
-
-        // Enable foreign key constraints
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

@@ -54,7 +54,7 @@ trait LibraryPoliciesServiceProvider
     {
         return [
             'Lasallesoftware\Library\Profiles\Models\Lookup_address_type'   => 'Lasallesoftware\Library\Policies\Lookup_address_typePolicy',
-            'Lasallesoftware\Library\Profiles\Models\Lookup_domain'         => 'Lasallesoftware\Library\Policies\Lookup_domainPolicy',
+            'Lasallesoftware\Library\Profiles\Models\Installed_domain'      => 'Lasallesoftware\Library\Policies\Installed_domainPolicy',
             'Lasallesoftware\Library\Profiles\Models\Lookup_email_type'     => 'Lasallesoftware\Library\Policies\Lookup_email_typePolicy',
             'Lasallesoftware\Library\LaSalleSoftwareEvents\Models\Lookup_lasallesoftware_event' =>
                 'Lasallesoftware\Library\Policies\Lookup_lasallesoftware_eventPolicy',

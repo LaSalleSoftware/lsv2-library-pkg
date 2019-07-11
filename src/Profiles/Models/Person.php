@@ -109,13 +109,73 @@ class Person extends CommonModel
         // https://laracasts.com/discuss/channels/eloquent/is-there-any-way-to-listen-for-an-eloquent-event-in-the-model-itself
         //
         static::creating(function($person) {
+            self::populateSalutationField($person);
+            self::populateFirstnameField($person);
+            self::populateMiddlenameField($person);
+            self::populateSurnameField($person);
+            self::populatePositionField($person);
             self::populateCalculatedField($person);
         });
 
         // Do this when the "updating" model event is dispatched
         static::updating(function($person) {
+            self::populateSalutationField($person);
+            self::populateFirstnameField($person);
+            self::populateMiddlenameField($person);
+            self::populateSurnameField($person);
+            self::populatePositionField($person);
             self::populateCalculatedField($person);
         });
+    }
+
+    /**
+     * Populate the "salutation" field when triggered by creating & updating model event.
+     *
+     * @param  Person  $person
+     */
+    private static function populateSalutationField(Person $person)
+    {
+        $person->salutation = self::deepWashText($person->salutation);
+    }
+
+    /**
+     * Populate the "first_name" field when triggered by creating & updating model event.
+     *
+     * @param  Person  $person
+     */
+    private static function populateFirstnameField(Person $person)
+    {
+        $person->first_name = self::deepWashText($person->first_name);
+    }
+
+    /**
+     * Populate the "middle_name" field when triggered by creating & updating model event.
+     *
+     * @param  Person  $person
+     */
+    private static function populateMiddlenameField(Person $person)
+    {
+        $person->middle_name = self::deepWashText($person->middle_name);
+    }
+
+    /**
+     * Populate the "surname" field when triggered by creating & updating model event.
+     *
+     * @param  Person  $person
+     */
+    private static function populateSurnameField(Person $person)
+    {
+        $person->surname = self::deepWashText($person->surname);
+    }
+
+    /**
+     * Populate the "position" field when triggered by creating & updating model event.
+     *
+     * @param  Person  $person
+     */
+    private static function populatePositionField(Person $person)
+    {
+        $person->position = self::deepWashText($person->position);
     }
 
     /**

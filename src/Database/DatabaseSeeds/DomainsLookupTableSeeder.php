@@ -37,7 +37,7 @@ class DomainslookupTableSeeder extends BaseSeeder
      */
     public function run()
     {
-        DB::table('lookup_domains')->insert([
+        DB::table('installed_domains')->insert([
             'title'       => app('config')->get('lasallesoftware-library.lasalle_app_domain_name'),
             'description' => app('config')->get('lasallesoftware-library.lasalle_app_domain_name'),
             'enabled'     => 1,
@@ -50,8 +50,8 @@ class DomainslookupTableSeeder extends BaseSeeder
         ]);
 
         if (app('config')->get('app.env') == "testing") {
-            DB::table('lookup_domains')->insert([
-                'title'       => 'https://lasallesoftware.ca',
+            DB::table('installed_domains')->insert([
+                'title'       => 'lasallesoftware.ca',
                 'description' => 'LaSalleSoftware.ca',
                 'enabled'     => 1,
                 'created_at'  => Carbon::now(),

@@ -26,10 +26,14 @@ namespace Lasallesoftware\Library;
 // custom artisan commands
 use Lasallesoftware\Library\Commands\CustomseedCommand;
 use Lasallesoftware\Library\Commands\CustomdropCommand;
+use Lasallesoftware\Library\Commands\InstalleddomainseedCommand;
+
 // custom guard class
 use Lasallesoftware\Library\Authentication\CustomGuards\LasalleGuard;
+
 // model class
 use Lasallesoftware\Library\Profiles\Models\Person;
+
 // observer class
 use Lasallesoftware\Library\Observers\PersonObserver;
 
@@ -37,6 +41,9 @@ use Lasallesoftware\Library\Observers\PersonObserver;
 // https://github.com/laravel/framework/blob/5.6/src/Illuminate/Support/ServiceProvider.php
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+
+// Laravel Nova class
+use Laravel\Nova\Nova;
 
 
 // see https://laravel.com/docs/5.7/packages
@@ -70,6 +77,8 @@ class LibraryServiceProvider extends ServiceProvider
 
         $this->registerArtisanCommands();
 
+        $this->registerNovaResources();
+
         $this->registerCustomAuthenticationGuard();
     }
 
@@ -88,6 +97,11 @@ class LibraryServiceProvider extends ServiceProvider
         $this->app->bind('command.lslibrary:customdrop', CustomdropCommand::class);
         $this->commands([
             'command.lslibrary:customdrop',
+        ]);
+
+        $this->app->bind('command.lslibrary:installeddomainseeder', InstalleddomainseedCommand::class);
+        $this->commands([
+            'command.lslibrary:installeddomainseeder',
         ]);
     }
 
@@ -113,6 +127,34 @@ class LibraryServiceProvider extends ServiceProvider
             $app->refresh('request', $guard, 'setRequest');
             return $guard;
         });
+    }
+
+    /**
+     * Register the Nova resources for this package.
+     *
+     * @return void
+     */
+    protected function registerNovaResources()
+    {
+        Nova::resources([
+            \Lasallesoftware\Library\Nova\Resources\address::class,
+            \Lasallesoftware\Library\Nova\Resources\company::class,
+            \Lasallesoftware\Library\Nova\Resources\email::class,
+            \Lasallesoftware\Library\Nova\Resources\lookup_address_type::class,
+            \Lasallesoftware\Library\Nova\Resources\installed_domain::class,
+            \Lasallesoftware\Library\Nova\Resources\lookup_email_type::class,
+            \Lasallesoftware\Library\Nova\Resources\lookup_lasallesoftware_event::class,
+            \Lasallesoftware\Library\Nova\Resources\lookup_role::class,
+            \Lasallesoftware\Library\Nova\Resources\lookup_social_type::class,
+            \Lasallesoftware\Library\Nova\Resources\lookup_telephone_type::class,
+            \Lasallesoftware\Library\Nova\Resources\lookup_website_type::class,
+            \Lasallesoftware\Library\Nova\Resources\person::class,
+            \Lasallesoftware\Library\Nova\Resources\personbydomain::class,
+            \Lasallesoftware\Library\Nova\Resources\social::class,
+            \Lasallesoftware\Library\Nova\Resources\telephone::class,
+            \Lasallesoftware\Library\Nova\Resources\website::class,
+
+        ]);
     }
 
 

@@ -33,7 +33,7 @@ class CustomdropCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Custom command that drops all the database tables.';
+    protected $description = 'The LaSalle Software custom command that drops all the database tables.';
 
     /**
      * Execute the console command.

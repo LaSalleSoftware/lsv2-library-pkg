@@ -58,15 +58,15 @@ class CreateLookupemailtypesTable extends BaseMigration
 
                 $table->timestamp('created_at')->useCurrent();
                 $table->integer('created_by')->unsigned();
-                $table->foreign('created_by')->references('id')->on('persons');
+                //$table->foreign('created_by')->references('id')->on('persons');
 
                 $table->timestamp('updated_at')->nullable();
                 $table->integer('updated_by')->unsigned()->nullable();
-                $table->foreign('updated_by')->references('id')->on('persons');
+                //$table->foreign('updated_by')->references('id')->on('persons');
 
                 $table->timestamp('locked_at')->nullable();
                 $table->integer('locked_by')->unsigned()->nullable();
-                $table->foreign('locked_by')->references('id')->on('persons');
+                //$table->foreign('locked_by')->references('id')->on('persons');
             });
         }
     }

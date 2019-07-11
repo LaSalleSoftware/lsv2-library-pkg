@@ -49,6 +49,7 @@ use Illuminate\Http\Request;
  *
  * @package Lasallecms\Lasallecmsadmin\Http\Controllers
  */
+
 class UuidGenerator
 {
     /**
@@ -76,7 +77,8 @@ class UuidGenerator
             $lookup_lasallesoftwareevent_id,
             $uuid4,
             $comment,
-            $created_by);
+            $created_by
+        );
 
         // STEP 4: store the UUID and the lookup_lasallesoftware_event to the global scope
         $this->storeToGlobal($uuid4, $lookup_lasallesoftwareevent_id);

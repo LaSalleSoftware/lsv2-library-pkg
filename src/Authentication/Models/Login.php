@@ -148,11 +148,6 @@ class Login extends CommonModel
         return $this->where('token', $loginToken)->first();
     }
 
-    public function bob()
-    {
-        return "hi bob!";
-    }
-
     /**
      * Delete an existing logins database table record when given the model slated for deletion
      *

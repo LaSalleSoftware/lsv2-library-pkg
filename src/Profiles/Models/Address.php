@@ -100,14 +100,15 @@ class Address extends CommonModel
         //
         static::creating(function($address) {
             self::populateCalculatedField($address);
-            self::washUrl($address);
+            self::populateMaplinkField($address);
+            self::populateTitleField($address);
         });
 
         // Do this when the "updating" model event is dispatched
         static::updating(function($address) {
             self::populateCalculatedField($address);
             self::populateMaplinkField($address);
-            self::washUrl($address);
+            self::populateTitleField($address);
         });
     }
 
@@ -148,9 +149,18 @@ class Address extends CommonModel
      */
     private static function populateMaplinkField(Address $address)
     {
-        $url = self::washUrl($address->map_link);
-        $address->map_link = $url;
+        $address->map_link = self::washUrl($address->map_link);
+    }
 
+    /**
+     * Populate the "title" field.
+     *
+     * @param  Address  $address
+     */
+    private static function populateTitleField(Address $address)
+    {
+        // without any "save", this following statement actually populates the field!
+        $address->title = self::deepWashText($address->title);
     }
 
 

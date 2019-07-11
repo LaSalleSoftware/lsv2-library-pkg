@@ -22,11 +22,15 @@
 
 namespace Lasallesoftware\Library\Database\DatabaseSeeds;
 
+// LaSalle Software
+use Lasallesoftware\Library\Profiles\Models\Email;
+use Lasallesoftware\Library\Profiles\Models\Installed_domain;
+use Lasallesoftware\Library\Profiles\Models\Person;
+use Lasallesoftware\Library\Authentication\Models\Personbydomain;
+
 // Laravel Framework
 use Illuminate\Database\Seeder;
-
-// Third party classes
-use Illuminate\Support\Carbon;;
+use Illuminate\Support\Facades\DB;
 
 class BaseSeeder extends Seeder
 {
@@ -55,4 +59,87 @@ class BaseSeeder extends Seeder
         return false;
     }
 
+    /**
+     * Get the next ID of the installeddomain_domaintype db table
+     *
+     * @return int|mixed
+     */
+    public function getNewInstalleddomain_domaintypeId()
+    {
+        $id = DB::table('installeddomain_domaintype')
+            ->orderBy('id', 'desc')
+            ->take(1)
+            ->value('id')
+        ;
+
+        return $id ? $id + 1 : 1;
+    }
+
+    /**
+     * Get the ID of this app in the installed_domains db table
+     *
+     * @return mixed
+     */
+    public function getInstalledDomainId()
+    {
+        $lasalle_app_domain_name= app('config')->get('lasallesoftware-library.lasalle_app_domain_name');
+
+        return DB::table('installed_domains')
+            ->where('title', $lasalle_app_domain_name)
+            ->value('id')
+         ;
+    }
+
+    /**
+     * Get the most recent inserted record in the persons db table
+     *
+     * @return mixed
+     */
+    public function getLatestPerson()
+    {
+        return Person::orderBy('id', 'desc')->first();
+    }
+
+    /**
+     * Get the record of the specified id in the persons db table.
+     *
+     * @param  $id
+     * @return mixed
+     */
+    public function getPerson($id)
+    {
+        return Person::find($id);
+    }
+
+    /**
+     * Get the most recent inserted record in the emails db table
+     *
+     * @return mixed
+     */
+    public function getLatestEmail()
+    {
+        return Email::orderBy('id', 'desc')->first();
+    }
+
+    /**
+     * Get the most recent inserted record in the personbydomains db table
+     *
+     * @return mixed
+     */
+    public function getLatestPersonbydomain()
+    {
+        return Personbydomain::orderBy('id', 'desc')->first();
+    }
+
+    /**
+     * get the domain's title for the specified ID in the installed_domains db table
+     *
+     * @param  $id
+     * @return mixed
+     */
+    public function getDomainTitle($id)
+    {
+        $domain = Installed_domain::find($id);
+        return $domain['title'];
+    }
 }

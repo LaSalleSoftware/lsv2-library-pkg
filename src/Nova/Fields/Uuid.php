@@ -109,7 +109,7 @@ class Uuid extends BaseTextField
     /**
      * Do the UUID stuff!
      *
-     * @param  in     $lasallesoftware_event_id   The ID from the lookup_lasallesoftware_events db table
+     * @param  int     $lasallesoftware_event_id   The ID from the lookup_lasallesoftware_events db table
      * @return string
      */
     private function doTheUuidStuff($lasallesoftware_event_id = 6)
@@ -131,6 +131,8 @@ class Uuid extends BaseTextField
         $lasallesoftware_event_id = $lasallesoftware_event_id;
         $uuidComment              = "Created by a Nova form";
         $uuidCreatedby            = Auth::id();
+
+        $uuidComment = "SO IT IS NOW 18 SO I AM BEING HIT AGAIN!";
 
         // https://laravel.com/docs/5.8/helpers#method-resolve
         $uuidGenerator = resolve('Lasallesoftware\Library\UniversallyUniqueIDentifiers\UuidGenerator');

@@ -45,9 +45,9 @@ class CreatePivottablesforcompaniesTable extends BaseMigration
                 $table->increments('id')->unsigned();
 
                 $table->integer('company_id')->unsigned()->index();
-                $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+                $table->foreign('company_id')->references('id')->on('companies');
                 $table->integer('person_id')->unsigned()->index();
-                $table->foreign('person_id')->references('id')->on('persons')->onDelete('cascade');
+                $table->foreign('person_id')->references('id')->on('persons');
             });
         }
 
@@ -60,9 +60,9 @@ class CreatePivottablesforcompaniesTable extends BaseMigration
                 $table->increments('id')->unsigned();
 
                 $table->integer('company_id')->unsigned()->index();
-                $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+                $table->foreign('company_id')->references('id')->on('companies');
                 $table->integer('address_id')->unsigned()->index();
-                $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
+                $table->foreign('address_id')->references('id')->on('addresses');
             });
         }
 
@@ -75,9 +75,9 @@ class CreatePivottablesforcompaniesTable extends BaseMigration
                 $table->increments('id')->unsigned();
 
                 $table->integer('company_id')->unsigned()->index();
-                $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+                $table->foreign('company_id')->references('id')->on('companies');
                 $table->integer('email_id')->unsigned()->index();
-                $table->foreign('email_id')->references('id')->on('emails')->onDelete('cascade');
+                $table->foreign('email_id')->references('id')->on('emails');
             });
         }
 
@@ -90,9 +90,9 @@ class CreatePivottablesforcompaniesTable extends BaseMigration
                 $table->increments('id')->unsigned();
 
                 $table->integer('company_id')->unsigned()->index();
-                $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+                $table->foreign('company_id')->references('id')->on('companies');
                 $table->integer('social_id')->unsigned()->index();
-                $table->foreign('social_id')->references('id')->on('socials')->onDelete('cascade');
+                $table->foreign('social_id')->references('id')->on('socials');
             });
         }
 
@@ -105,9 +105,9 @@ class CreatePivottablesforcompaniesTable extends BaseMigration
                 $table->increments('id')->unsigned();
 
                 $table->integer('company_id')->unsigned()->index();
-                $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+                $table->foreign('company_id')->references('id')->on('companies');
                 $table->integer('telephone_id')->unsigned()->index();
-                $table->foreign('telephone_id')->references('id')->on('telephones')->onDelete('cascade');
+                $table->foreign('telephone_id')->references('id')->on('telephones');
             });
         }
 
@@ -120,9 +120,9 @@ class CreatePivottablesforcompaniesTable extends BaseMigration
                 $table->increments('id')->unsigned();
 
                 $table->integer('company_id')->unsigned()->index();
-                $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+                $table->foreign('company_id')->references('id')->on('companies');
                 $table->integer('website_id')->unsigned()->index();
-                $table->foreign('website_id')->references('id')->on('websites')->onDelete('cascade');
+                $table->foreign('website_id')->references('id')->on('websites');
             });
         }
     }

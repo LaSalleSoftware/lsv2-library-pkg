@@ -27,8 +27,8 @@ return [
     // Nova Resource Labels
     'resource_label_plural_lookup_address_types'            => 'Lookup Address Types',
     'resource_label_singular_lookup_address_types'          => 'Lookup Address Type',
-    'resource_label_plural_lookup_domains'                  => 'Lookup Domains',
-    'resource_label_singular_lookup_domains'                => 'Lookup Domain',
+    'resource_label_plural_installed_domains'               => 'Installed Domains',
+    'resource_label_singular_installed_domains'             => 'Installed Domain',
     'resource_label_plural_lookup_email_types'              => 'Lookup Email Types',
     'resource_label_singular_lookup_email_types'            => 'Lookup Email Type',
     'resource_label_plural_lookup_lasallesoftware_events'   => 'Lookup LaSalle Software Events',
@@ -97,13 +97,22 @@ return [
     'field_name_telephone_number'   => 'Telephone Number',
     'field_name_extension'          => 'Extension',
 
+    'field_name_domain'             => 'Domain',
+    'field_name_slug'               => 'Slug',
+    'field_name_title'              => 'Title',
+
+    'field_name_content'            => 'Content',
+    'field_name_excerpt'            => 'Excerpt',
+    'field_name_meta_description'   => 'Meta_Description',
+    'field_name_publish_on'         => 'Publish_on',
+
     // Nova Field Headings
-    'field_heading_system_fields'   => 'Automated system fields:',
-    'field_heading_address_type'    => 'An address is associated with a "type":',
-    'field_heading_email_type'      => 'An email is associated with a "type":',
-    'field_heading_social_type'     => 'A social site is associated with a "type":',
-    'field_heading_telephone_type'  => 'A telephone number is associated with a "type":',
-    'field_heading_website_type'    => 'A website is associated with a "type":',
+    'field_heading_system_fields'          => 'Automated system fields:',
+    'field_heading_address_type'           => 'An address is associated with a "type":',
+    'field_heading_email_type'             => 'An email is associated with a "type":',
+    'field_heading_social_type'            => 'A social site is associated with a "type":',
+    'field_heading_telephone_type'         => 'A telephone number is associated with a "type":',
+    'field_heading_website_type'           => 'A website is associated with a "type":',
 
     'field_heading_addresses_address'      => 'Address',
     'field_heading_persons_name'           => 'Name:',
@@ -112,25 +121,32 @@ return [
     'field_heading_persons_general_info'   => 'General Information:',
 
     // Nova Field Help
-    'field_help_brief'              => 'please keep it as brief as possible',
-    'field_help_lookup_name'        => 'the name of this lookup record',
-    'field_help_max_255_chars'      => 'maximum of 255 characters',
-    'field_help_optional'           => 'optional',
-    'field_help_required'           => 'required',
-    'field_help_salutation'         => 'Mr., Mrs., Ms., Dr., etc',
-    'field_help_unique'             => 'must be unique',
-    'field_help_url'                => 'must be a url (include the  "http" part)"',
+    'field_help_brief'                     => 'please keep it as brief as possible',
+    'field_help_lookup_name'               => 'the name of this lookup record',
+    'field_help_max_255_chars'             => 'maximum of 255 characters',
+    'field_help_optional'                  => 'optional',
+    'field_help_required'                  => 'required',
+    'field_help_salutation'                => 'Mr., Mrs., Ms., Dr., etc',
+    'field_help_unique'                    => 'must be unique',
+    'field_help_url'                       => 'must be a url (include the  "http" part)"',
     'field_help_country_code_website_reference' => 'see <a href="https://countrycode.org" target="_blank">CountryCode.org</a> for country codes',
+    'field_help_excerpt1'                  => 'Excerpt that displays in listings and previews',
+    'field_help_excerpt2'                  => 'When left blank, an excerpt is created automatically',
+    'field_help_meta_description1'         => 'For the description meta tags',
+    'field_help_meta_description2'         => 'When left blank, a meta_description is created automatically',
+
+    'field_help_publish_on1'               => 'display on and after this date',
+    'field_help_publish_on2'               => "when left blank, will be today's date",
 
     // Exceptions
-    'exception_message_date_cast'   => "Date field must cast to 'date' in Eloquent model.",
+    'exception_message_date_cast'          => "Date field must cast to 'date' in Eloquent model.",
 
     // Rules
-    'rules_addresses_unique_message'  => 'This address already exists',
-    'rules_persons_unique_message'    => 'This person already exists',
-    'rules_telephones_unique_message' => 'This telephone number already exists',
+    'rules_addresses_unique_message'       => 'This address already exists',
+    'rules_persons_unique_message'         => 'This person already exists',
+    'rules_telephones_unique_message'      => 'This telephone number already exists',
 
     // Miscellaneous
-    'not_specified'                 => 'not specified',
+    'not_specified'                        => 'not specified',
 
 ];

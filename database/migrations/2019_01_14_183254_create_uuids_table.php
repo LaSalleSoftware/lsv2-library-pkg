@@ -64,24 +64,4 @@ class CreateUuidsTable extends BaseMigration
             });
         }
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        // Disable foreign key constraints or these DROPs will not work
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-
-        Schema::table('uuids', function($table){
-            $table->dropForeign('uuids_lasallesoftware_event_id_foreign');
-            $table->dropForeign('uuids_created_by_foreign');
-        });
-        Schema::dropIfExists('uuids');
-
-        // Enable foreign key constraints
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
-    }
 }

@@ -85,23 +85,23 @@ class CreatePersonbydomainsTable extends BaseMigration
                 $table->timestamp('email_verified_at')->nullable();
                 $table->string('password');
 
-                $table->integer('lookup_domain_id')->unsigned();
-                $table->foreign('lookup_domain_id')->references('id')->on('lookup_domains');
-                $table->string('lookup_domain_title');
+                $table->integer('installed_domain_id')->unsigned();
+                $table->foreign('installed_domain_id')->references('id')->on('installed_domains');
+                $table->string('installed_domain_title');
 
                 $table->uuid('uuid')->nullable();
 
                 $table->timestamp('created_at')->useCurrent();
                 $table->integer('created_by')->unsigned();
-                $table->foreign('created_by')->references('id')->on('persons');
+                //$table->foreign('created_by')->references('id')->on('persons');
 
                 $table->timestamp('updated_at')->nullable();
                 $table->integer('updated_by')->unsigned()->nullable();
-                $table->foreign('updated_by')->references('id')->on('persons');
+                //$table->foreign('updated_by')->references('id')->on('persons');
 
                 $table->timestamp('locked_at')->nullable();
                 $table->integer('locked_by')->nullable()->unsigned();
-                $table->foreign('locked_by')->references('id')->on('persons');
+                //$table->foreign('locked_by')->references('id')->on('persons');
             });
         }
     }

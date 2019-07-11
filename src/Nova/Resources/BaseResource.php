@@ -47,7 +47,11 @@ abstract class BaseResource extends NovaBaseResource
     public function systemPanel()
     {
         return [
-            Heading::make( __('lasallesoftwarelibrary::general.field_heading_system_fields')),
+
+            // Nova v2.0.8 now displays panels on the create and update views in addition to the detail view.
+            // So, now that there is a separate panel for this, I should remove my own heading.
+
+            //Heading::make( __('lasallesoftwarelibrary::general.field_heading_system_fields')),
 
             new Panel(__('lasallesoftwarelibrary::general.panel_system_fields'), $this->systemFields()),
         ];

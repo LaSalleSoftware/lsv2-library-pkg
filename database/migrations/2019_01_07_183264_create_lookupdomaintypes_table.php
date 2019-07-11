@@ -27,19 +27,14 @@ use Lasallesoftware\Library\Database\Migrations\BaseMigration;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 
-/**
- * Class CreateLookupdomainsTable
- *
- * Domains administered with this database (on the administrative app)
- */
-class CreateLookupdomainsTable extends BaseMigration
+class CreateLookupdomaintypesTable extends BaseMigration
 {
     /**
      * The name of the database table
      *
      * @var string
      */
-    protected $tableName = "lookup_domains";
+    protected $tableName = "lookup_domain_types";
 
     /**
      * Run the migrations.
@@ -56,45 +51,23 @@ class CreateLookupdomainsTable extends BaseMigration
 
                 $table->increments('id')->unsigned();
 
-                $table->string('title')->unique()->comment('Must be same as the APP_URL environment variable.');
+                $table->string('title')->unique();
                 $table->string('description')->nullable();
 
                 $table->boolean('enabled')->default(true);
 
                 $table->timestamp('created_at')->useCurrent();
                 $table->integer('created_by')->unsigned();
-                $table->foreign('created_by')->references('id')->on('persons');
+                //$table->foreign('created_by')->references('id')->on('persons');
 
                 $table->timestamp('updated_at')->nullable();
                 $table->integer('updated_by')->unsigned()->nullable();
-                $table->foreign('updated_by')->references('id')->on('persons');
+                //$table->foreign('updated_by')->references('id')->on('persons');
 
                 $table->timestamp('locked_at')->nullable();
                 $table->integer('locked_by')->unsigned()->nullable();
-                $table->foreign('locked_by')->references('id')->on('persons');
+                //$table->foreign('locked_by')->references('id')->on('persons');
             });
         }
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        // Disable foreign key constraints or these DROPs will not work
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-
-        Schema::table('lookup_domains', function($table){
-            $table->dropIndex('lookup_domains_title_unique');
-            $table->dropForeign('lookup_domains_created_by_foreign');
-            $table->dropForeign('lookup_domains_updated_by_foreign');
-            $table->dropForeign('lookup_domains_locked_by_foreign');
-        });
-        Schema::dropIfExists('lookup_domains');
-
-        // Enable foreign key constraints
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

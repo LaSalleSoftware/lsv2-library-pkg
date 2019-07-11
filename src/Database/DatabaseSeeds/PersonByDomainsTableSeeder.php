@@ -38,6 +38,8 @@ class PersonByDomainsTableSeeder extends BaseSeeder
      */
     public function run()
     {
+        $installed_domain_id = 1;  // Admin back-end domain
+
         // for the owner role
         $person = $this->getPerson(2);
         DB::table('personbydomains')->insert([
@@ -47,8 +49,8 @@ class PersonByDomainsTableSeeder extends BaseSeeder
             'email'                 => $person->email[0]->email_address,
             'email_verified_at'     => Carbon::now(),
             'password'              => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-            'lookup_domain_id'      => 1,
-            'lookup_domain_title'   => $this->getDomainTitle(),
+            'installed_domain_id'   => 1,
+            'installed_domain_title' => $this->getDomainTitle($installed_domain_id),
             'uuid'                  => 'created_during_initial_seeding',
             'created_at'            => Carbon::now(),
             'created_by'            => 1,
@@ -58,7 +60,6 @@ class PersonByDomainsTableSeeder extends BaseSeeder
             'locked_by'             => null,
         ]);
 
-        // populate the person_email pivot table with the above email address
         DB::table('personbydomain_lookup_roles')->insert([
             'id'                => 1,
             'personbydomain_id' => 1,
@@ -66,7 +67,9 @@ class PersonByDomainsTableSeeder extends BaseSeeder
         ]);
 
 
-        if (app('config')->get('app.env') == "testing") {
+        if ($this->doPopulateWithTestData()) {
+
+
 
             // for the super administrator role
             $person = $this->getPerson(3);
@@ -77,8 +80,8 @@ class PersonByDomainsTableSeeder extends BaseSeeder
                 'email'                 => $person->email[0]->email_address,
                 'email_verified_at'     => Carbon::now(),
                 'password'              => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-                'lookup_domain_id'      => 1,
-                'lookup_domain_title'   => $this->getDomainTitle(),
+                'installed_domain_id'   => 1,
+                'installed_domain_title' => $this->getDomainTitle($installed_domain_id),
                 'uuid'                  => 'created_during_initial_seeding',
                 'created_at'            => Carbon::now(),
                 'created_by'            => 1,
@@ -88,7 +91,6 @@ class PersonByDomainsTableSeeder extends BaseSeeder
                 'locked_by'             => null,
             ]);
 
-            // populate the person_email pivot table with the above email address
             DB::table('personbydomain_lookup_roles')->insert([
                 'id'                => 2,
                 'personbydomain_id' => 2,
@@ -105,8 +107,8 @@ class PersonByDomainsTableSeeder extends BaseSeeder
                 'email'                 => $person->email[0]->email_address,
                 'email_verified_at'     => Carbon::now(),
                 'password'              => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-                'lookup_domain_id'      => 1,
-                'lookup_domain_title'   => $this->getDomainTitle(),
+                'installed_domain_id'   => 1,
+                'installed_domain_title' => $this->getDomainTitle($installed_domain_id),
                 'uuid'                  => 'created_during_initial_seeding',
                 'created_at'            => Carbon::now(),
                 'created_by'            => 1,
@@ -116,23 +118,11 @@ class PersonByDomainsTableSeeder extends BaseSeeder
                 'locked_by'             => null,
             ]);
 
-            // populate the person_email pivot table with the above email address
             DB::table('personbydomain_lookup_roles')->insert([
                 'id'                => 3,
                 'personbydomain_id' => 3,
                 'lookup_role_id'    => 3,
             ]);
         }
-    }
-
-    private function getPerson($id)
-    {
-        return \Lasallesoftware\Library\Profiles\Models\Person::find($id);
-    }
-
-    private function getDomainTitle()
-    {
-        $domain = \Lasallesoftware\Library\Profiles\Models\Lookup_domain::find(1);
-        return $domain['title'];
     }
 }

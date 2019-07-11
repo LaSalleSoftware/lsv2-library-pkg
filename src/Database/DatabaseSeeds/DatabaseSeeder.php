@@ -43,6 +43,8 @@ class DatabaseSeeder extends BaseSeeder
             ProfilesLookupTablesSeeder::class,
             ProfilesTablesSeeder::class,
             DomainsLookupTableSeeder::class,
+            DomainTypesLookupTableSeeder::class,
+            DomainbydomaintypeTableSeeder::class,
             RolesLookupTableSeeder::class,
             PersonByDomainsTableSeeder::class,
         ]);

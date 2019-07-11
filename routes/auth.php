@@ -38,7 +38,7 @@ Route::group(['middleware' => ['web']], function () {
 // Authentication Routes...
     Route::get('login',   'Lasallesoftware\Library\Authentication\Http\Controllers\LoginController@showLoginForm')->name('login');
     Route::post('login',  'Lasallesoftware\Library\Authentication\Http\Controllers\LoginController@login');
-    Route::get('logout',  'Lasallesoftware\Library\Authentication\Http\Controllers\LogoutController@showLogoutForm');
+    Route::get('logout',  'Lasallesoftware\Library\Authentication\Http\Controllers\LogoutController@showLogoutForm')->name('nova.logout');
     Route::post('logout', 'Lasallesoftware\Library\Authentication\Http\Controllers\LogoutController@logout')->name('logout');
 
 // Registration Routes...

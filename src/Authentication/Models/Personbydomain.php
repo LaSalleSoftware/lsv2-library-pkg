@@ -62,8 +62,8 @@ class Personbydomain extends Authenticatable
         'person_first_name',
         'person_surname',
         'email',
-        'lookup_domain_id',
-        'lookup_domain_title',
+        'installed_domain_id',
+        'installed_domain_title',
         'password',
     ];
 
@@ -116,7 +116,7 @@ class Personbydomain extends Authenticatable
     }
 
     /*
-     * One to many (inverse) relationship with lookup_domain.
+     * One to many (inverse) relationship with installed_domain.
      *
      * Method name must be:
      *    * the model name,
@@ -126,9 +126,9 @@ class Personbydomain extends Authenticatable
      *
      * @return Eloquent
      */
-    public function lookup_domain()
+    public function installed_domain()
     {
-        return $this->belongsTo('Lasallesoftware\Library\Authentication\Models\Lookup_domain');
+        return $this->belongsTo('Lasallesoftware\Library\Profiles\Models\Installed_domain');
     }
 
     /*
@@ -184,6 +184,21 @@ class Personbydomain extends Authenticatable
             'personbydomain_id',
             'lookup_role_id'
         );
+    }
+
+    /*
+     * A post may have one, and only one, personbydomain.
+     *
+     * The post database table has the field "personbydomain_id". So the post model specifies "hasOne".
+     * The personbydomain is the "inverse of the relationship" (per the lexicon of https://laravel.com/docs/5.8/eloquent-relationships#one-to-one)
+     *
+     * Method name must be the model name, *not* the table name
+     *
+     * @return Eloquent
+     */
+    public function post()
+    {
+        return $this->belongsTo('Lasallesoftware\Blogbackend\Models\Post');
     }
 
 

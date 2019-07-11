@@ -39,7 +39,7 @@ return [
     | Set in the .env file.
     |
     */
-	'lasalle_app_name' => env('LASALLE_APP_NAM'),
+	'lasalle_app_name' => env('LASALLE_APP_NAME'),
 
     /*
     |--------------------------------------------------------------------------
@@ -69,5 +69,17 @@ return [
     |
     */
     'lasalle_app_default_user_role' => 3,
+
+    /*
+	|--------------------------------------------------------------------------
+	| Excerpt Length
+	|--------------------------------------------------------------------------
+	|
+	| When an excerpt field is left blank, then the "content" field is used to
+	| construct the excerpt. How many characters of the base "content" field
+	| do you want to use for the excerpt?
+	|
+	*/
+    'how_many_initial_chars_of_content_field_for_excerpt' => '250',
 
 ];

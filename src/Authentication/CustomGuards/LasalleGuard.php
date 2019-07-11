@@ -808,9 +808,9 @@ class LasalleGuard implements StatefulGuard
         }
 
         return [
-            'email'                 => $email,
-            'lookup_domain_title'   => app('config')->get('lasallesoftware-library.lasalle_app_domain_name'),
-            'password'              => $partialCredentials['password'],
+            'email'                  => $email,
+            'installed_domain_title' => app('config')->get('lasallesoftware-library.lasalle_app_domain_name'),
+            'password'               => $partialCredentials['password'],
         ];
     }
 

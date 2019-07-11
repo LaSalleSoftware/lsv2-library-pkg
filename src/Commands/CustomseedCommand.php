@@ -52,7 +52,7 @@ class CustomseedCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Run the custom database seeder.';
+    protected $description = 'Run the LaSalle Software custom administrative and profiles database seeder.';
 
     public function __construct()
     {
@@ -72,5 +72,14 @@ class CustomseedCommand extends Command
         $this->call('db:seed', [
             '--class' => 'Lasallesoftware\\Library\\Database\\DatabaseSeeds\\DatabaseSeeder',
         ]);
+
+
+        /*
+        if (class_exists('\Lasallesoftware\Blogbackend\Database\DatabaseSeeds\CategoryTableSeeder')) {
+            $this->call('db:seed', [
+                '--class' => 'Lasallesoftware\\Blogbackend\\Database\\DatabaseSeeds\\DatabaseSeeder',
+            ]);
+        }
+        */
     }
 }
