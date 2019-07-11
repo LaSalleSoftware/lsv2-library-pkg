@@ -55,6 +55,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
  *
  * @package Lasallesoftware\Library\Authentication\CustomGuards
  */
+
 //class SessionGuard implements StatefulGuard, SupportsBasicAuth
 class LasalleGuard implements StatefulGuard
 {
