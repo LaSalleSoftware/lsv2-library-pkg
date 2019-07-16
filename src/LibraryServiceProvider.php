@@ -137,23 +137,22 @@ class LibraryServiceProvider extends ServiceProvider
     protected function registerNovaResources()
     {
         Nova::resources([
-            \Lasallesoftware\Library\Nova\Resources\address::class,
-            \Lasallesoftware\Library\Nova\Resources\company::class,
-            \Lasallesoftware\Library\Nova\Resources\email::class,
-            \Lasallesoftware\Library\Nova\Resources\lookup_address_type::class,
-            \Lasallesoftware\Library\Nova\Resources\installed_domain::class,
-            \Lasallesoftware\Library\Nova\Resources\lookup_email_type::class,
-            \Lasallesoftware\Library\Nova\Resources\lookup_lasallesoftware_event::class,
-            \Lasallesoftware\Library\Nova\Resources\lookup_role::class,
-            \Lasallesoftware\Library\Nova\Resources\lookup_social_type::class,
-            \Lasallesoftware\Library\Nova\Resources\lookup_telephone_type::class,
-            \Lasallesoftware\Library\Nova\Resources\lookup_website_type::class,
-            \Lasallesoftware\Library\Nova\Resources\person::class,
-            \Lasallesoftware\Library\Nova\Resources\personbydomain::class,
-            \Lasallesoftware\Library\Nova\Resources\social::class,
-            \Lasallesoftware\Library\Nova\Resources\telephone::class,
-            \Lasallesoftware\Library\Nova\Resources\website::class,
-
+            \Lasallesoftware\Library\Nova\Resources\Address::class,
+            \Lasallesoftware\Library\Nova\Resources\Company::class,
+            \Lasallesoftware\Library\Nova\Resources\Email::class,
+            \Lasallesoftware\Library\Nova\Resources\Lookup_address_type::class,
+            \Lasallesoftware\Library\Nova\Resources\Installed_domain::class,
+            \Lasallesoftware\Library\Nova\Resources\Lookup_email_type::class,
+            \Lasallesoftware\Library\Nova\Resources\Lookup_lasallesoftware_event::class,
+            \Lasallesoftware\Library\Nova\Resources\Lookup_role::class,
+            \Lasallesoftware\Library\Nova\Resources\Lookup_social_type::class,
+            \Lasallesoftware\Library\Nova\Resources\Lookup_telephone_type::class,
+            \Lasallesoftware\Library\Nova\Resources\Lookup_website_type::class,
+            \Lasallesoftware\Library\Nova\Resources\Person::class,
+            \Lasallesoftware\Library\Nova\Resources\Personbydomain::class,
+            \Lasallesoftware\Library\Nova\Resources\Social::class,
+            \Lasallesoftware\Library\Nova\Resources\Telephone::class,
+            \Lasallesoftware\Library\Nova\Resources\Website::class,
         ]);
     }
 
