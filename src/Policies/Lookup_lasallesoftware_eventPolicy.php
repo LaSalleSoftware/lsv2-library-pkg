@@ -44,7 +44,7 @@ class Lookup_lasallesoftware_eventPolicy extends CommonPolicy
 
 
     /**
-     * Determine whether the user can view the lookup_address_type details.
+     * Determine whether the user can view a lookup_lasallesoftware_event's details.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\LaSalleSoftwareEvents\Models\Lookup_lasallesoftware_event   $model
@@ -56,7 +56,7 @@ class Lookup_lasallesoftware_eventPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can create lookup_address_types.
+     * Determine whether the user can create lookup_lasallesoftware_events.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @return bool
@@ -67,7 +67,7 @@ class Lookup_lasallesoftware_eventPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can update the lookup_address_types.
+     * Determine whether the user can update a lookup_lasallesoftware_event.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\LaSalleSoftwareEvents\Models\Lookup_lasallesoftware_event   $model
@@ -87,7 +87,7 @@ class Lookup_lasallesoftware_eventPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can delete the lookup_address_types.
+     * Determine whether the user can delete a lookup_lasallesoftware_event.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\LaSalleSoftwareEvents\Models\Lookup_lasallesoftware_event   $model
@@ -107,7 +107,7 @@ class Lookup_lasallesoftware_eventPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can restore the lookup_address_types.
+     * Determine whether the user can restore a lookup_lasallesoftware_event.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\LaSalleSoftwareEvents\Models\Lookup_lasallesoftware_event   $model
@@ -119,7 +119,7 @@ class Lookup_lasallesoftware_eventPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can permanently delete the lookup_address_types.
+     * Determine whether the user can permanently delete a lookup_lasallesoftware_event.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\LaSalleSoftwareEvents\Models\Lookup_lasallesoftware_event   $model

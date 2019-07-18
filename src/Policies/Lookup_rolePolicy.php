@@ -44,7 +44,7 @@ class Lookup_rolePolicy extends CommonPolicy
 
 
     /**
-     * Determine whether the user can view the lookup_address_type details.
+     * Determine whether the user can view a lookup_roles' details.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Authentication\Models\Lookup_role     $model
@@ -56,7 +56,7 @@ class Lookup_rolePolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can create lookup_address_types.
+     * Determine whether the user can create lookup_roles.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @return bool
@@ -67,7 +67,7 @@ class Lookup_rolePolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can update the lookup_address_types.
+     * Determine whether the user can update a lookup_role.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Authentication\Models\Lookup_role     $model
@@ -87,7 +87,7 @@ class Lookup_rolePolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can delete the lookup_address_types.
+     * Determine whether the user can delete a lookup_role.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Authentication\Models\Lookup_role     $model
@@ -107,7 +107,7 @@ class Lookup_rolePolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can restore the lookup_address_types.
+     * Determine whether the user can restore a lookup_role.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Authentication\Models\Lookup_role     $model
@@ -119,7 +119,7 @@ class Lookup_rolePolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can permanently delete the lookup_address_types.
+     * Determine whether the user can permanently delete a lookup_role.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Authentication\Models\Lookup_role     $model

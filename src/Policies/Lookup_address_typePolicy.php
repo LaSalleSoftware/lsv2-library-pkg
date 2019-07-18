@@ -44,7 +44,7 @@ class Lookup_address_typePolicy extends CommonPolicy
 
 
     /**
-     * Determine whether the user can view the lookup_address_type details.
+     * Determine whether the user can view a lookup_address_type's details.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Lookup_address_type   $model
@@ -56,7 +56,7 @@ class Lookup_address_typePolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can create lookup_address_types.
+     * Determine whether the user can create a lookup_address_type.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @return bool
@@ -67,7 +67,7 @@ class Lookup_address_typePolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can update the lookup_address_types.
+     * Determine whether the user can update a lookup_address_type.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Lookup_address_type   $model
@@ -87,7 +87,7 @@ class Lookup_address_typePolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can delete the lookup_address_types.
+     * Determine whether the user can delete a lookup_address_type.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Lookup_address_type   $model
@@ -107,7 +107,7 @@ class Lookup_address_typePolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can restore the lookup_address_types.
+     * Determine whether the user can restore a lookup_address_type.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Lookup_address_type   $model
@@ -119,7 +119,7 @@ class Lookup_address_typePolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can permanently delete the lookup_address_types.
+     * Determine whether the user can permanently delete a lookup_address_type.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Lookup_address_type   $model

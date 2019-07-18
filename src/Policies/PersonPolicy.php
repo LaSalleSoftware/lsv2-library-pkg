@@ -47,7 +47,7 @@ class PersonPolicy extends CommonPolicy
 
 
     /**
-     * Determine whether the user can view the email details.
+     * Determine whether the user can view a person's details.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Person                $model
@@ -59,7 +59,7 @@ class PersonPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can create emails.
+     * Determine whether the user can create a person.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @return bool
@@ -70,7 +70,7 @@ class PersonPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can update the emails.
+     * Determine whether the user can update a person.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Person                $model
@@ -90,7 +90,7 @@ class PersonPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can delete the emails.
+     * Determine whether the user can delete a person.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Person                $model
@@ -138,7 +138,7 @@ class PersonPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can restore the emails.
+     * Determine whether the user can restore a person.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Person                $model
@@ -150,7 +150,7 @@ class PersonPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can permanently delete the emails.
+     * Determine whether the user can permanently delete a person.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Person                $model

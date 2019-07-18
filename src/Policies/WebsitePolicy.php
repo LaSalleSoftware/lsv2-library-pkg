@@ -47,7 +47,7 @@ class WebsitePolicy extends CommonPolicy
 
 
     /**
-     * Determine whether the user can view the website details.
+     * Determine whether the user can view a website's details.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Website               $model

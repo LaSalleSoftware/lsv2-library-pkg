@@ -47,7 +47,7 @@ class SocialPolicy extends CommonPolicy
 
 
     /**
-     * Determine whether the user can view the social details.
+     * Determine whether the user can view a social site's details.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Social                $model

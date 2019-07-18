@@ -47,7 +47,7 @@ class TelephonePolicy extends CommonPolicy
 
 
     /**
-     * Determine whether the user can view the telephone details.
+     * Determine whether the user can view a telephone number's details.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Telephone             $model

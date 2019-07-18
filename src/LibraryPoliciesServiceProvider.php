@@ -69,7 +69,7 @@ trait LibraryPoliciesServiceProvider
             'Lasallesoftware\Library\Profiles\Models\Telephone' => 'Lasallesoftware\Library\Policies\TelephonePolicy',
             'Lasallesoftware\Library\Profiles\Models\Website'   => 'Lasallesoftware\Library\Policies\WebsitePolicy',
 
-            //'Lasallesoftware\Library\Profiles\Models\Company'   => 'Lasallesoftware\Library\Policies\CompanyPolicy',
+            'Lasallesoftware\Library\Profiles\Models\Company'   => 'Lasallesoftware\Library\Policies\CompanyPolicy',
             'Lasallesoftware\Library\Profiles\Models\Person'    => 'Lasallesoftware\Library\Policies\PersonPolicy',
 
             //'Lasallesoftware\Library\Authentication\Models\Personbydomain' => 'Lasallesoftware\Library\Policies\PersonbydomainPolicy',

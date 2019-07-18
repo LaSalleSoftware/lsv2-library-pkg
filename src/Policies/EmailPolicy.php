@@ -47,7 +47,7 @@ class EmailPolicy extends CommonPolicy
 
 
     /**
-     * Determine whether the user can view the email details.
+     * Determine whether the user can view an email's details.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Email                 $model
@@ -70,7 +70,7 @@ class EmailPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can update the emails.
+     * Determine whether the user can update an email.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Email                 $model
@@ -90,7 +90,7 @@ class EmailPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can delete the emails.
+     * Determine whether the user can delete an email.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Email                 $model
@@ -123,7 +123,7 @@ class EmailPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can restore the emails.
+     * Determine whether the user can restore an email.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Email                 $model
@@ -135,7 +135,7 @@ class EmailPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can permanently delete the emails.
+     * Determine whether the user can permanently delete an email.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Profiles\Models\Email                 $model
