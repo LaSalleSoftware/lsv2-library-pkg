@@ -27,6 +27,7 @@ namespace Lasallesoftware\Library;
 use Lasallesoftware\Library\Commands\CustomseedCommand;
 use Lasallesoftware\Library\Commands\CustomdropCommand;
 use Lasallesoftware\Library\Commands\InstalleddomainseedCommand;
+use Lasallesoftware\Library\Commands\LasalleinstallCommand;
 
 // custom guard class
 use Lasallesoftware\Library\Authentication\CustomGuards\LasalleGuard;
@@ -102,6 +103,11 @@ class LibraryServiceProvider extends ServiceProvider
         $this->app->bind('command.lslibrary:installeddomainseeder', InstalleddomainseedCommand::class);
         $this->commands([
             'command.lslibrary:installeddomainseeder',
+        ]);
+
+        $this->app->bind('command.lslibrary:lasalleinstall', LasalleinstallCommand::class);
+        $this->commands([
+            'command.lslibrary:lasalleinstall',
         ]);
     }
 
