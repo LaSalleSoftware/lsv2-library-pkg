@@ -53,20 +53,23 @@ class CompanyTableSeeder extends BaseSeeder
     {
         $uuid = "created_during_initial_seeding";
 
-        DB::table('companies')->insert([
-            'id'             => 1,
-            'name'           => 'House of Blues',
-            'description'    => null,
-            'comments'       => 'House of Blues IS the ultimate night out. It\'s where great food sets the stage for amazing live concerts. From VIP experiences with the world\'s best artists to our world-famous Gospel Brunch on Sundays, House of Blues is truly where music and food feed the soul.',
-            'profile'        => null,
-            'featured_image' => null,
-            'uuid'           => $uuid,
-            'created_at'     => Carbon::now(),
-            'created_by'     => 1,
-            'updated_at'     => null,
-            'updated_by'     => null,
-            'locked_at'      => null,
-            'locked_by'      => null,
-        ]);
+        if ($this->doPopulateWithTestData()) {
+
+            DB::table('companies')->insert([
+                'id' => 1,
+                'name' => 'House of Blues',
+                'description' => null,
+                'comments' => 'House of Blues IS the ultimate night out. It\'s where great food sets the stage for amazing live concerts. From VIP experiences with the world\'s best artists to our world-famous Gospel Brunch on Sundays, House of Blues is truly where music and food feed the soul.',
+                'profile' => null,
+                'featured_image' => null,
+                'uuid' => $uuid,
+                'created_at' => Carbon::now(),
+                'created_by' => 1,
+                'updated_at' => null,
+                'updated_by' => null,
+                'locked_at' => null,
+                'locked_by' => null,
+            ]);
+        }
     }
 }
