@@ -78,8 +78,6 @@ class LibraryServiceProvider extends ServiceProvider
 
         $this->registerArtisanCommands();
 
-        $this->registerNovaResources();
-
         $this->registerCustomAuthenticationGuard();
     }
 
@@ -134,34 +132,6 @@ class LibraryServiceProvider extends ServiceProvider
             return $guard;
         });
     }
-
-    /**
-     * Register the Nova resources for this package.
-     *
-     * @return void
-     */
-    protected function registerNovaResources()
-    {
-        Nova::resources([
-            \Lasallesoftware\Library\Nova\Resources\Address::class,
-            \Lasallesoftware\Library\Nova\Resources\Company::class,
-            \Lasallesoftware\Library\Nova\Resources\Email::class,
-            \Lasallesoftware\Library\Nova\Resources\Lookup_address_type::class,
-            \Lasallesoftware\Library\Nova\Resources\Installed_domain::class,
-            \Lasallesoftware\Library\Nova\Resources\Lookup_email_type::class,
-            \Lasallesoftware\Library\Nova\Resources\Lookup_lasallesoftware_event::class,
-            \Lasallesoftware\Library\Nova\Resources\Lookup_role::class,
-            \Lasallesoftware\Library\Nova\Resources\Lookup_social_type::class,
-            \Lasallesoftware\Library\Nova\Resources\Lookup_telephone_type::class,
-            \Lasallesoftware\Library\Nova\Resources\Lookup_website_type::class,
-            \Lasallesoftware\Library\Nova\Resources\Person::class,
-            \Lasallesoftware\Library\Nova\Resources\Personbydomain::class,
-            \Lasallesoftware\Library\Nova\Resources\Social::class,
-            \Lasallesoftware\Library\Nova\Resources\Telephone::class,
-            \Lasallesoftware\Library\Nova\Resources\Website::class,
-        ]);
-    }
-
 
     /**
      * Bootstrap any package services.
