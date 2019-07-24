@@ -27,6 +27,9 @@ use Lasallesoftware\Library\Common\Policies\CommonPolicy;
 use Lasallesoftware\Library\Authentication\Models\Personbydomain as User;
 use Lasallesoftware\Library\Profiles\Models\Lookup_address_type as Model;
 
+// Laravel facade
+use Illuminate\Support\Facades\DB;
+
 
 /**
  * Class Lookup_address_typePolicy
@@ -100,6 +103,10 @@ class Lookup_address_typePolicy extends CommonPolicy
         }
 
         if ($this->isRecordDoNotDelete($model)) {
+            return false;
+        }
+
+        if (DB::table('addresses')->where('lookup_address_type_id', $model->id)->first()) {
             return false;
         }
 

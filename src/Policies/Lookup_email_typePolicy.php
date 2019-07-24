@@ -27,6 +27,8 @@ use Lasallesoftware\Library\Common\Policies\CommonPolicy;
 use Lasallesoftware\Library\Authentication\Models\Personbydomain as User;
 use Lasallesoftware\Library\Profiles\Models\Lookup_email_type as Model;
 
+// Laravel facades
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class Lookup_address_typePolicy
@@ -100,6 +102,10 @@ class Lookup_email_typePolicy extends CommonPolicy
         }
 
         if ($this->isRecordDoNotDelete($model)) {
+            return false;
+        }
+
+        if (DB::table('emails')->where('lookup_email_type_id', $model->id)->first()) {
             return false;
         }
 

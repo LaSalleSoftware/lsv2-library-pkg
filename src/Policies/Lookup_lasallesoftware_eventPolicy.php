@@ -27,6 +27,8 @@ use Lasallesoftware\Library\Common\Policies\CommonPolicy;
 use Lasallesoftware\Library\Authentication\Models\Personbydomain as User;
 use Lasallesoftware\Library\LaSalleSoftwareEvents\Models\Lookup_lasallesoftware_event as Model;
 
+// Laravel facades
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class Lookup_address_typePolicy
@@ -40,7 +42,7 @@ class Lookup_lasallesoftware_eventPolicy extends CommonPolicy
      *
      * @var array
      */
-    protected $recordsDoNotDelete = [1,2,3,4,5];
+    protected $recordsDoNotDelete = [1,2,3,4,5,6,7,8];
 
 
     /**
@@ -100,6 +102,10 @@ class Lookup_lasallesoftware_eventPolicy extends CommonPolicy
         }
 
         if ($this->isRecordDoNotDelete($model)) {
+            return false;
+        }
+
+        if (DB::table('uuids')->where('lasallesoftware_event_id', $model->id)->first()) {
             return false;
         }
 

@@ -27,6 +27,9 @@ use Lasallesoftware\Library\Common\Policies\CommonPolicy;
 use Lasallesoftware\Library\Authentication\Models\Personbydomain as User;
 use Lasallesoftware\Library\Authentication\Models\Lookup_role as Model;
 
+// Laravel facades
+use Illuminate\Support\Facades\DB;
+
 
 /**
  * Class Lookup_rolePolicy
@@ -100,6 +103,10 @@ class Lookup_rolePolicy extends CommonPolicy
         }
 
         if ($this->isRecordDoNotDelete($model)) {
+            return false;
+        }
+
+        if (DB::table('personbydomain_lookup_roles')->where('lookup_role_id', $model->id)->first()) {
             return false;
         }
 
