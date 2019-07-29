@@ -69,29 +69,46 @@ class LasalleinstallCommand extends Command
      */
     public function handle()
     {
-        echo "\n\n====================================================================\n";
-        echo "              ** lslibrary:lasalleinstall is starting **";
-        echo "\n====================================================================\n";
+        // START: INTRO
+        echo "\n\n";
+        $this->info('====================================================================');
+        $this->info('              ** starting lslibrary:lasalleinstall **');
+        $this->info('====================================================================');
+        echo "\n\n";
 
-        echo "\n-----------------------------------------------------\n";
-        echo   "Welcome to my LaSalle Software's Installation Command!";
-        echo  "\n\n";
-        echo  "This command does *not* do every installation step,";
-        echo  "so please read INSTALLATION.md before running this command.";
-        echo "\n-----------------------------------------------------\n";
-
+        $this->line('-----------------------------------------------------------------------');
+        $this->line('  Welcome to my LaSalle Software\'s Installation Command!');
+        echo "\n";
+        $this->line('  Since my command utility does *not* do every installation step, please');
+        $this->line('  read my INSTALLATION.md before running this command.');
+        echo "\n";
+        $this->line('  Thank you for installing my LaSalle Software!');
+        $this->line('  --Bob Bloom');
+        $this->line('-----------------------------------------------------------------------');
+        $this->line('  You are installing the ' . mb_strtoupper(env('LASALLE_APP_NAME')) . ' LaSalle Software Application.');
+        echo "\n";
+        $this->line('  You are installing to your ' . $this->getLaravel()->environment() . ' environment.');
+        $this->line('-----------------------------------------------------------------------');
+        $this->line('  My installation utility will:');
+        if (env('LASALLE_APP_NAME') == 'adminbackendapp')  $this->line('  * ask about your database');
+        if (env('LASALLE_APP_NAME') == 'adminbackendapp')  $this->line('  * finish installing Laravel\'s Nova package');
+        $this->line('  * ask about some parameters in .env');
+        if (env('LASALLE_APP_NAME') == 'adminbackendapp')  $this->line('  * run the database migration');
+        if (env('LASALLE_APP_NAME') == 'adminbackendapp')  $this->line('  * run the database seeding');
+        $this->line('-----------------------------------------------------------------------');
+        // END: INTRO
 
 
         // START: ARE YOU SURE YOU WANT TO RUN THIS COMMAND?
-        $this->echoBlankLine();
-        $this->info('Are you absolutely sure that you want to run this command?');
-        $runConfirmation = $this->ask('(type "yes" to continue)');
+        echo "\n\n\n";
+        $this->alert('Are you absolutely sure that you want to run this command?');
+        $runConfirmation = $this->ask('<fg=yellow>(type the word "yes" to continue)</>');
         if ($runConfirmation != strtolower("yes")) {
-            $this->error('OK, you did not type "yes", so I am *not* going to continue running this command. Bye!');
+            $this->line('<fg=red;bg=yellow>OK, you did not type "yes", so I am NOT going to continue running this command. Bye!</>');
             $this->echoOutro();
             return;
         }
-        $this->info('ok... you said that you want to continue running this command. Let us continue then...');
+        $this->comment('ok... you said that you want to continue running this command. Let us continue then...');
         // END: ARE YOU SURE YOU WANT TO RUN THIS COMMAND?
 
 
@@ -99,147 +116,166 @@ class LasalleinstallCommand extends Command
         if (env('LASALLE_APP_NAME') == 'adminbackendapp') {
 
             // did you set up the database?
-            $this->echoBlankLine();
-            $this->info('-----------------------------------------------------------------------');
-            $this->info("** You are installing LaSalle Software's Administrative Back-end App **");
-            $this->info('-----------------------------------------------------------------------');
+            echo "\n\n";
+            $this->line('-----------------------------------------------------------------------');
+            $this->line('  YOUR DATABASE');
+            $this->line('-----------------------------------------------------------------------');
+            $this->line("  My install utility does *not* set up your database.");
+            $this->line("  So, you must set up your db before running this install utility. ");
+            $this->line('-----------------------------------------------------------------------');
+            $this->line("   If you have *not* yet set up your database in your .env, then:");
+            $this->line("   i)   exit this installation command line utility");
+            $this->line("   ii)  set up your database in your .env");
+            $this->line("   iii) re-run this installation command line utility");
+            $this->line('-----------------------------------------------------------------------');
             echo "\n";
-            $this->info('My Back-end App needs a database.');
-            if (! $this->ask('Is your database set up (y/n)?')) {
-                $this->error('You have yet to set up your database for this Back-end app.');
-                $this->error('Please set up your database, and then re-run this installation command');
+
+            $this->comment('******************************');
+            $this->comment('  <fg=yellow>* Is your database set up? *</>');
+            $this->comment('******************************');
+            $runConfirmation = $this->ask('<fg=yellow>(y/n)</>');
+            if ($runConfirmation != strtolower('y')){
+                $this->line('  <fg=red;bg=yellow>You have NOT set up your database.</>');
+                $this->line('  <fg=red;bg=yellow>So go set up your database, and then re-run my installation utility.</>');
                 $this->echoOutro();
                 return;
             }
 
-            // check if using the Laravel db defaults
-            if (
-                (env('DB_DATABASE') == 'homestead') &&
-                (env('DB_USERNAME') == 'homestead') &&
-                (env('DB_PASSWORD') == 'secret')
-            ) {
-                $this->error('**HOLD ON THERE!** You are using the Laravel database default database, username, and password');
-                if (!$this->ask('Are you absolutely sure that your database is set up correctly (y/n)?')) {
-                    $this->error('You are not sure if your database is set up. Thank you for double checking');
-                    $this->echoBlankLine();
-                    $this->line('Please double check that your database is properly set up, and then re-run this installation command');
-                    $this->echoOutro();
-                    return;
-                }
-            }
-
-            $this->info('ok... you said that your database is set up properly. Let us continue then...');
+            $this->comment('ok... you said that your database is set up properly. Let us continue then...');
+            echo "\n\n";
             // END: THE adminbackendapp NEEDS A DATABASE
         }
-
-
-        // START: SET THE PARAMS IN .ENV
-
-        // SET APP_NAME
-        $this->echoBlankLine();
-        echo "-----------------------------------------------------\n";
-        $this->info('What is your APP_NAME?');
-        $this->info('An example is: LaSalle Software Administration App');
-        $appName = $this->ask('(I do *not* check for syntax or for anything, so please type c-a-r-e-f-u-l-l-y!)');
-        $this->info(' ..you typed "' . $appName . '"');
-        $this->info(' ..setting APP_NAME in .env to "'. $appName . '"...');
-        $this->writeEnvironmentFileWithNewKey('DummyAppName', $appName, true);
-        $this->info(' ..completed setting your APP_NAME in .env to "' . $appName . '"');
-
-        // SET APP_URL
-        $this->echoBlankLine();
-        echo "-----------------------------------------------------\n";
-        $this->info('What is your APP_URL?');
-        $this->info('An example is: https://lasallesoftware.ca');
-        $this->info('MUST start with "http://" or "https://"');
-        $appURL = $this->ask('(I do *not* check for syntax or for anything, so please type c-a-r-e-f-u-l-l-y!)');;
-        $this->info(' ..you typed "' . $appURL . '"');
-        $this->info(' ..setting APP_URL in .env to "'. $appURL . '"...');
-        $this->writeEnvironmentFileWithNewKey('DummyAppURL', $appURL, false);
-        $this->info(' ..completed setting APP_URL in .env to "' . $appURL . '"');
-
-        // SET LASALLE_APP_DOMAIN_NAME
-        $this->echoBlankLine();
-        $lasalleAppDomainName = $this->getLasalleAppDomainName($appURL);
-        $this->info(' ..setting LASALLE_APP_DOMAIN_NAME in .env to "'. $lasalleAppDomainName . '""...');
-        $this->writeEnvironmentFileWithNewKey('DummyLasalleAppDomainName', $lasalleAppDomainName, false);
-        $this->info(' ..completed setting LASALLE_APP_DOMAIN_NAME in .env to "' . $lasalleAppDomainName . '"');
-
-        // END: SET THE PARAMS IN .ENV
-
 
 
         // START: THE adminbackendapp NEEDS LARAVEL's FIRST-PARTY "NOVA" ADMIN PACKAGE
         if (env('LASALLE_APP_NAME') == 'adminbackendapp') {
 
-            // is NOVA is installed?;
+            echo "\n\n";
+            $this->line('-----------------------------------------------------------------------');
+            $this->line('  LARAVEL\'s FIRST PARTY NOVA ADMINISTRATION PACKAGE');
+            $this->line('-----------------------------------------------------------------------');
+
+            // if NOVA is not installed
             if (! class_exists('Laravel\Nova\Nova')) {
-                $this->echoBlankLine();
-                $this->error('Laravel Nova is not installed. You must install Nova!');
-                $this->error('Please install Nova, then re-run this installation command.');
+                echo "\n";
+                $this->line('  <fg=red;bg=yellow>Nova is not installed. You must install Nova!');
+                $this->line('  <fg=red;bg=yellow>So install Nova, then re-run my installation utilty.');
                 $this->echoOutro();
                 return;
             }
 
+            echo "\n";
+            $this->comment('ok... you said that your database is set up properly. Let us continue then...');
 
             // NOVA is installed, so run "php artisan nova:install"
-            $this->echoBlankLine();
-            echo "-----------------------------------------------------\n";
-            $this->info(' ..running the Laravel first-party administration package "Nova" set-up...');
+            echo "\n\n";
+            $this->comment('Now running the Laravel first-party administration package "Nova" set-up...');
+            echo "\n\n";
             $this->call('nova:install');
 
             // delete the app/nova files because we definitely do not want this user resource showing up in our Nova menu
-            $this->echoBlankLine();
+            echo "\n";
             $this->deleteFile(app_path().'/Nova/Resource.php');
             $this->deleteFile(app_path().'/Nova/User.php');
-            $this->info(' ..completed the Nova set-up.');
+            echo "\n\n";
+            $this->comment('Finished the Nova set-up.');
         }
         // END: THE adminbackendapp NEEDS LARAVEL's FIRST-PARTY "NOVA" ADMIN PACKAGE
+
+
+        // START: SET THE PARAMS IN .ENV
+
+        // SET APP_NAME
+        echo "\n\n";
+        $this->line('-----------------------------------------------------------------------');
+        $this->line('  YOUR .ENV PARAMETERS');
+        $this->line('-----------------------------------------------------------------------');
+
+
+        echo "\n\n";
+        $this->comment('****************************');
+        $this->comment('  <fg=yellow>* What is your APP_NAME *</>');
+        $this->comment('****************************');
+        $this->comment('An example is: LaSalle Software Administration App');
+        $appName = $this->ask('<fg=yellow>(I do *not* check for syntax or for anything, so please type c-a-r-e-f-u-l-l-y!)</>');
+        $this->comment('You typed "' . $appName . '".');
+        $this->comment('Setting APP_NAME in .env to "'. $appName . '"...');
+        $this->writeEnvironmentFileWithNewKey('DummyAppName', $appName, true);
+        $this->comment('Finished setting your APP_NAME in .env to "' . $appName . '"');
+
+        // SET APP_URL
+        echo "\n\n";
+        $this->comment('****************************');
+        $this->comment('  <fg=yellow>* What is your APP_URL *</>');
+        $this->comment('****************************');
+        $this->comment('An example is: https://lasallesoftware.ca');
+        $this->comment('MUST start with "http://" or "https://"');
+        $appURL = $this->ask('<fg=yellow>(I do *not* check for syntax or for anything, so please type c-a-r-e-f-u-l-l-y!)</>');;
+        $this->comment('You typed "' . $appURL . '"');
+        $this->comment('Setting APP_URL in .env to "'. $appURL . '"...');
+        $this->writeEnvironmentFileWithNewKey('DummyAppURL', $appURL, false);
+        $this->comment('Finished setting APP_URL in .env to "' . $appURL . '"');
+
+        // SET LASALLE_APP_DOMAIN_NAME
+        echo "\n\n";
+        $lasalleAppDomainName = $this->getLasalleAppDomainName($appURL);
+        $this->comment('Setting LASALLE_APP_DOMAIN_NAME in .env to "'. $lasalleAppDomainName . '""...');
+        $this->writeEnvironmentFileWithNewKey('DummyLasalleAppDomainName', $lasalleAppDomainName, false);
+        $this->info('Finished setting LASALLE_APP_DOMAIN_NAME in .env to "' . $lasalleAppDomainName . '"');
+
+        // END: SET THE PARAMS IN .ENV
+
+
+
+
 
 
         // START: THE adminbackendapp NEEDS THE DATABASE MIGRATIONS AND SEEDS
         if (env('LASALLE_APP_NAME') == 'adminbackendapp') {
 
-            // SET LASALLE_POPULATE_DATABASE_WITH_TEST_DATA to false AS A BELT-AND-SUSPENDERS SAFETY THING
-            $this->setLasallePopulateDatabaseWithTestDataToFalse();
+            // WHEN PRODUCTION, SET LASALLE_POPULATE_DATABASE_WITH_TEST_DATA TO FALSE (yeah, not really necessary.. "belt and suspenders" thing)
+            if (strtolower($this->getLaravel()->environment()) === 'production') $this->setLasallePopulateDatabaseWithTestDataToFalse();
 
-            $this->echoBlankLine();
-            echo "-----------------------------------------------------";
-            $this->ask('About to run the database migration -- press any key to continue');
-            $this->info('  ..running the database migration...');
+            echo "\n\n";
+            $this->line('-----------------------------------------------------------------------');
+            $this->line('  DATABASE MIGRATION');
+            $this->line('-----------------------------------------------------------------------');
+
+            echo "\n\n";
+            $this->comment('*********************************');
+            $this->comment('  <fg=yellow>* About to run the database migration *</>');
+            $this->comment('*********************************');
+            $this->ask('<fg=yellow>press any key to continue...</>');
+            $this->comment('Now running the database migration...');
             $this->call('migrate');
-            $this->info(' ..completed the database migration.');
+            $this->comment('Finished the database migration.');
 
             // lslibrary:customseed checks if the blog backend is installed, and if so it migrates the blog database table
-            $this->echoBlankLine();
-            echo "-----------------------------------------------------";
-            $this->ask('About to run the database seeding -- press any key to continue');
-            $this->info('  ..running the database seeding...');
+            echo "\n\n";
+            $this->comment('*********************************');
+            $this->comment('  <fg=yellow>* About to run the database seeding *</>');
+            $this->comment('*********************************');
+            $this->ask('<fg=yellow>press any key to continue...</>');
+            $this->comment('Now running the database seeding...');
             $this->call('lslibrary:customseed');
 
             // optional blog back-end
             if (class_exists('Lasallesoftware\Blogbackend\Version')) {
-                $this->echoBlankLine();
+                echo "\n\n";
                 $this->call('lsblogbackend:blogcustomseed');
             }
-            $this->info(' ..completed the database seeding.');
+            $this->comment('Finished the database seeding.');
         }
         // END: THE adminbackendapp NEEDS THE DATABASE MIGRATIONS AND SEEDS
 
 
 
         // C'EST FINI
+        echo "\n\n\n";
+        $this->line('-----------------------------------------------------------------------');
+        $this->line('  Congratulations! You finished the installation!');
+        $this->line('-----------------------------------------------------------------------');
         $this->echoOutro();
-    }
-
-    /**
-     * Echo a blank line
-     *
-     * @return string
-     */
-    protected function echoBlankLine()
-    {
-        return $this->info("\n");
     }
 
     /**
@@ -249,10 +285,11 @@ class LasalleinstallCommand extends Command
      */
     protected function echoOutro()
     {
-        echo "\n\n====================================================================\n";
-        echo "              ** lslibrary:lasalleinstall is finished **";
-        echo "\n====================================================================\n\n";
-
+        echo "\n\n";
+        $this->info('====================================================================');
+        $this->info('              ** lslibrary:lasalleinstall has finished **');
+        $this->info('====================================================================');
+        echo "\n\n";
         return;
     }
 
@@ -266,7 +303,7 @@ class LasalleinstallCommand extends Command
     {
         if ($this->fileExists($file)) {
             $this->files->delete($file);
-            $this->info(' ..completed deleting ' . $file);
+            $this->comment('Deleted ' . $file);
         }
     }
 
@@ -293,7 +330,6 @@ class LasalleinstallCommand extends Command
         $envFile = file_get_contents($this->laravel->environmentFilePath());
 
         $pattern = $this->pattern($patternToSearchFor);
-
 
         $replacement = $useQuotesInTheReplacement ? "'" . $envFileDummyKey . "'" : $envFileDummyKey;
 
