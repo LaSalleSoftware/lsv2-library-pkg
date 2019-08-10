@@ -218,7 +218,7 @@ class Person extends CommonModel
      */
     public function personbydomain()
     {
-        return $this->hasMany('\Lasallesoftware\Library\Profiles\Models\Personbydomain');
+        return $this->hasOne('\Lasallesoftware\Library\Authentication\Models\Personbydomain');
     }
 
     /*
@@ -267,7 +267,12 @@ class Person extends CommonModel
      */
     public function address()
     {
-        return $this->belongsToMany('Lasallesoftware\Library\Profiles\Models\Address', 'person_address', 'person_id', 'address_id');
+        return $this->belongsToMany(
+            'Lasallesoftware\Library\Profiles\Models\Address',
+            'person_address',
+            'person_id',
+            'address_id'
+        );
     }
 
     /*

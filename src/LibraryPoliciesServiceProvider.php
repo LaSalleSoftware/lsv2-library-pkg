@@ -56,23 +56,22 @@ trait LibraryPoliciesServiceProvider
             'Lasallesoftware\Library\Profiles\Models\Lookup_address_type'   => 'Lasallesoftware\Library\Policies\Lookup_address_typePolicy',
             'Lasallesoftware\Library\Profiles\Models\Installed_domain'      => 'Lasallesoftware\Library\Policies\Installed_domainPolicy',
             'Lasallesoftware\Library\Profiles\Models\Lookup_email_type'     => 'Lasallesoftware\Library\Policies\Lookup_email_typePolicy',
-            'Lasallesoftware\Library\LaSalleSoftwareEvents\Models\Lookup_lasallesoftware_event' =>
-                'Lasallesoftware\Library\Policies\Lookup_lasallesoftware_eventPolicy',
+            'Lasallesoftware\Library\LaSalleSoftwareEvents\Models\Lookup_lasallesoftware_event' => 'Lasallesoftware\Library\Policies\Lookup_lasallesoftware_eventPolicy',
             'Lasallesoftware\Library\Authentication\Models\Lookup_role'     => 'Lasallesoftware\Library\Policies\Lookup_rolePolicy',
             'Lasallesoftware\Library\Profiles\Models\Lookup_social_type'    => 'Lasallesoftware\Library\Policies\Lookup_social_typePolicy',
             'Lasallesoftware\Library\Profiles\Models\Lookup_telephone_type' => 'Lasallesoftware\Library\Policies\Lookup_telephone_typePolicy',
             'Lasallesoftware\Library\Profiles\Models\Lookup_website_type'   => 'Lasallesoftware\Library\Policies\Lookup_website_typePolicy',
 
-            'Lasallesoftware\Library\Profiles\Models\Address'   => 'Lasallesoftware\Library\Policies\AddressPolicy',
-            'Lasallesoftware\Library\Profiles\Models\Email'     => 'Lasallesoftware\Library\Policies\EmailPolicy',
-            'Lasallesoftware\Library\Profiles\Models\Social'    => 'Lasallesoftware\Library\Policies\SocialPolicy',
-            'Lasallesoftware\Library\Profiles\Models\Telephone' => 'Lasallesoftware\Library\Policies\TelephonePolicy',
-            'Lasallesoftware\Library\Profiles\Models\Website'   => 'Lasallesoftware\Library\Policies\WebsitePolicy',
+            'Lasallesoftware\Library\Profiles\Models\Address'               => 'Lasallesoftware\Library\Policies\AddressPolicy',
+            'Lasallesoftware\Library\Profiles\Models\Email'                 => 'Lasallesoftware\Library\Policies\EmailPolicy',
+            'Lasallesoftware\Library\Profiles\Models\Social'                => 'Lasallesoftware\Library\Policies\SocialPolicy',
+            'Lasallesoftware\Library\Profiles\Models\Telephone'             => 'Lasallesoftware\Library\Policies\TelephonePolicy',
+            'Lasallesoftware\Library\Profiles\Models\Website'               => 'Lasallesoftware\Library\Policies\WebsitePolicy',
 
-            'Lasallesoftware\Library\Profiles\Models\Company'   => 'Lasallesoftware\Library\Policies\CompanyPolicy',
-            'Lasallesoftware\Library\Profiles\Models\Person'    => 'Lasallesoftware\Library\Policies\PersonPolicy',
+            'Lasallesoftware\Library\Profiles\Models\Company'               => 'Lasallesoftware\Library\Policies\CompanyPolicy',
+            'Lasallesoftware\Library\Profiles\Models\Person'                => 'Lasallesoftware\Library\Policies\PersonPolicy',
 
-            //'Lasallesoftware\Library\Authentication\Models\Personbydomain' => 'Lasallesoftware\Library\Policies\PersonbydomainPolicy',
+            'Lasallesoftware\Library\Authentication\Models\Personbydomain'  => 'Lasallesoftware\Library\Policies\PersonbydomainPolicy',
 
         ];
     }

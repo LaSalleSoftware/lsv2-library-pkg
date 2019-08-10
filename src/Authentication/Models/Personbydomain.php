@@ -22,13 +22,18 @@
 
 namespace Lasallesoftware\Library\Authentication\Models;
 
-// Laravel facades
-use Illuminate\Support\Facades\DB;
+// LaSalle Software
+use Lasallesoftware\Library\Authentication\Models\PersonbydomainNovaFormProcessing;
 
 // Laravel classes
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
+// Laravel facades
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+
 
 /**
  * This is the model class for personbydomain.
@@ -39,8 +44,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class Personbydomain extends Authenticatable
 {
-    use Notifiable;
-
+    use Notifiable, PersonbydomainNovaFormProcessing;
 
     ///////////////////////////////////////////////////////////////////
     //////////////          PROPERTIES              ///////////////////
@@ -96,6 +100,37 @@ class Personbydomain extends Authenticatable
 
 
     ///////////////////////////////////////////////////////////////////
+    //////////////         MODEL EVENTS             ///////////////////
+    ///////////////////////////////////////////////////////////////////
+
+    /**
+     * The "booting" method of the model.
+     *
+     * Laravel will execute this function automatically
+     * https://github.com/laravel/framework/blob/e6c8aa0e39d8f91068ad1c299546536e9f25ef63/src/Illuminate/Database/Eloquent/Model.php#L197
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        // parent's boot function should occur first
+        parent::boot();
+
+        // Do this when the "creating" model event is dispatched
+        // https://laracasts.com/discuss/channels/eloquent/is-there-any-way-to-listen-for-an-eloquent-event-in-the-model-itself
+        //
+        static::creating(function($personbydomain) {
+            self::processTheCreateNovaForm($personbydomain);
+        });
+
+        // Do this when the "updating" model event is dispatched
+        static::updating(function($personbydomain) {
+            self::processTheUpdateNovaForm($personbydomain);
+        });
+    }
+
+
+    ///////////////////////////////////////////////////////////////////
     //////////////        RELATIONSHIPS             ///////////////////
     ///////////////////////////////////////////////////////////////////
 
@@ -128,7 +163,7 @@ class Personbydomain extends Authenticatable
      */
     public function installed_domain()
     {
-        return $this->belongsTo('Lasallesoftware\Library\Profiles\Models\Installed_domain');
+        return $this->belongsTo('Lasallesoftware\Library\Profiles\Models\Lookup_address_type');
     }
 
     /*
@@ -176,8 +211,6 @@ class Personbydomain extends Authenticatable
     */
     public function lookup_role()
     {
-        //return $this->belongsToMany('Lasallesoftware\Library\Authentication\Models\Lookup_user_group');
-
         return $this->belongsToMany(
             'Lasallesoftware\Library\Authentication\Models\Lookup_role',
             'personbydomain_lookup_roles',

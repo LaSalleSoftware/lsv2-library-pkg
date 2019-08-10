@@ -490,7 +490,7 @@ class LasalleGuard implements StatefulGuard
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////     START: METHODS FROM THE SUPPORTSBASICAUTH CONTRACT THAT EXIST IN THE ORIGINAL SESSIONGUARD.PHP  ///////
-    //////            BUT ARE NOT USED IN MY LASALLEGUARD.php BECAUSED I DO NOT IMPLEMENT THE                  ///////
+    //////            BUT ARE NOT USED IN MY LASALLEGUARD.php BECAUSE I DO NOT IMPLEMENT THE                  ///////
     //////            SUPPORTSBASICAUTH CONTRACT                                                               ///////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -502,7 +502,7 @@ class LasalleGuard implements StatefulGuard
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////       END: METHODS FROM THE SUPPORTSBASICAUTH CONTRACT THAT EXIST IN THE ORIGINAL SESSIONGUARD.PHP  ///////
-    //////            BUT ARE NOT USED IN MY LASALLEGUARD.php BECAUSED I DO NOT IMPLEMENT THE                  ///////
+    //////            BUT ARE NOT USED IN MY LASALLEGUARD.php BECAUSE I DO NOT IMPLEMENT THE                  ///////
     //////            SUPPORTSBASICAUTH CONTRACT                                                               ///////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

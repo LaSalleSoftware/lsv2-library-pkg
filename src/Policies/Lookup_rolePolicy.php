@@ -47,7 +47,7 @@ class Lookup_rolePolicy extends CommonPolicy
 
 
     /**
-     * Determine whether the user can view a lookup_roles' details.
+     * Owners & superadministrators can view lookup_roles.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Authentication\Models\Lookup_role     $model
@@ -55,11 +55,11 @@ class Lookup_rolePolicy extends CommonPolicy
      */
     public function view(User $user, Model $model)
     {
-        return $user->hasRole('owner');
+        return $user->hasRole('owner') || $user->hasRole('superadministrator');
     }
 
     /**
-     * Determine whether the user can create lookup_roles.
+     * Only owners can view lookup_roles.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @return bool
@@ -70,7 +70,7 @@ class Lookup_rolePolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can update a lookup_role.
+     * Only owners can update lookup_roles.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Authentication\Models\Lookup_role     $model
@@ -78,11 +78,11 @@ class Lookup_rolePolicy extends CommonPolicy
      */
     public function update(User $user, Model $model)
     {
-        if (!$user->hasRole('owner')) {
+        if ($this->isRecordDoNotDelete($model)) {
             return false;
         }
 
-        if ($this->isRecordDoNotDelete($model)) {
+        if (!$user->hasRole('owner')) {
             return false;
         }
 
@@ -90,7 +90,7 @@ class Lookup_rolePolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can delete a lookup_role.
+     * Determine whether the user can delete a lookup_roles.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @param  \Lasallesoftware\Library\Authentication\Models\Lookup_role     $model
@@ -98,18 +98,22 @@ class Lookup_rolePolicy extends CommonPolicy
      */
     public function delete(User $user, Model $model)
     {
-        if (!$user->hasRole('owner')) {
-            return false;
-        }
-
+        // if the record is in the do-not-delete array, then not delete-able
         if ($this->isRecordDoNotDelete($model)) {
             return false;
         }
 
+        // if the lookup_roles record exists in the personbydomain_lookup_roles pivot table, then not delete-able
         if (DB::table('personbydomain_lookup_roles')->where('lookup_role_id', $model->id)->first()) {
             return false;
         }
 
+        // if the user is not an owner, then not delete-able
+        if (!$user->hasRole('owner')) {
+            return false;
+        }
+
+        // still here? then delete-able
         return true;
     }
 
@@ -143,5 +147,48 @@ class Lookup_rolePolicy extends CommonPolicy
         }
 
         return true;
+    }
+
+    /**
+     * Determine whether the user can attach any personbydomains to lookup_roles.
+     *
+     * Basically, no, cannot attach here. Go to the Personbydomains menu item!
+     *
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
+     * @param  \Lasallesoftware\Library\Authentication\Models\Lookup_role     $model
+     * @return bool
+     */
+    public function attachAnyPersonbydomain(User $user, Model $model)
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can detach any personbydomains to lookup_roles.
+     *
+     * Basically, no, cannot detach here. Go to the Personbydomains menu item!
+     *
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
+     * @param  \Lasallesoftware\Library\Authentication\Models\Lookup_role     $model
+     * @return bool
+     */
+    public function detachPersonbydomain(User $user, Model $model)
+    {
+        return false;
+    }
+
+    /**
+     * To suppress the edit-attached button!
+     *
+     *
+     * See this fabulous post: https://github.com/laravel/nova-issues/issues/1003#issuecomment-497008278
+     *
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
+     * @param  \Lasallesoftware\Library\Authentication\Models\Lookup_role     $model
+     * @return bool
+     */
+    public function attachPersonbydomain(User $user, Model $model)
+    {
+        return false;
     }
 }

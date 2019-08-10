@@ -93,8 +93,8 @@ class Lookup_role extends CommonModel
         return $this->belongsToMany(
             'Lasallesoftware\Library\Authentication\Models\Personbydomain',
             'personbydomain_lookup_roles',
-            'personbydomain_id',
-            'lookup_role_id'
+            'lookup_role_id',
+            'personbydomain_id'
         );
     }
 }

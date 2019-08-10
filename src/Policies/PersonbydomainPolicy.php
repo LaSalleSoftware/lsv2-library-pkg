@@ -23,34 +23,36 @@
 namespace Lasallesoftware\Library\Policies;
 
 // LaSalle Software class
+// Yes, the User and Model are derived from the same model class.. but! The user is still the user!
+// And, the model is still the model.
 use Lasallesoftware\Library\Common\Policies\CommonPolicy;
 use Lasallesoftware\Library\Authentication\Models\Personbydomain as User;
-use Lasallesoftware\Library\Profiles\Models\Person as Model;
+use Lasallesoftware\Library\Authentication\Models\Personbydomain as Model;
 
 // Laravel facade
 use Illuminate\Support\Facades\DB;
 
 
 /**
- * Class emailPolicy
+ * Class PersonbydomainPolicy
  *
  * @package Lasallesoftware\Library\Policies
  */
-class PersonPolicy extends CommonPolicy
+class PersonbydomainPolicy extends CommonPolicy
 {
     /**
      * Records that are not deletable.
      *
      * @var array
      */
-    protected $recordsDoNotDelete = [1,2];
+    protected $recordsDoNotDelete = [1];
 
 
     /**
      * Determine whether the user can view a person's details.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Person                $model
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $model
      * @return bool
      */
     public function view(User $user, Model $model)
@@ -73,17 +75,19 @@ class PersonPolicy extends CommonPolicy
      * Determine whether the user can update a person.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Person                $model
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $model
      * @return bool
      */
     public function update(User $user, Model $model)
     {
+        // if the user role is neither "owner" nor "superadministrator", then not update-able
         if  ((!$user->hasRole('owner')) && (!$user->hasRole('superadministrator'))) {
             return false;
         }
 
-        if ($this->isRecordDoNotDelete($model)) {
-            return false;
+        // a superadmin cannot update an owner
+        if (($user->hasRole('superadministrator')) && ($this->getRoleIdOfTheModelPersonbydomain($model) == 1)) {
+                return false;
         }
 
         return true;
@@ -93,43 +97,23 @@ class PersonPolicy extends CommonPolicy
      * Determine whether the user can delete a person.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Person                $model
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $model
      * @return bool
      */
     public function delete(User $user, Model $model)
     {
-        // if the user role is either "owner" or "superadministrator", then email address is deletable
-        if  ((!$user->hasRole('owner')) && (!$user->hasRole('superadministrator'))) {
-            return false;
-        }
-
-        // if person is on the "do not delete" list, then not deletable
+        // if person is on the "do not delete" list, then not delete-able
         if ($this->isRecordDoNotDelete($model)) {
             return false;
         }
 
-        // if this person is in the person_address pivot table, then this person is not deletable
-        if ( DB::table('person_address')->where('person_id', $model->id)->first() ) {
+        // if the user role is neither "owner" nor "superadministrator", then not delete-able
+        if  ((!$user->hasRole('owner')) && (!$user->hasRole('superadministrator'))) {
             return false;
         }
 
-        // if this person is in the person_email pivot table, then this person is not deletable
-        if ( DB::table('person_email')->where('person_id', $model->id)->first() ) {
-            return false;
-        }
-
-        // if this person is in the person_social pivot table, then this person is not deletable
-        if ( DB::table('person_social')->where('person_id', $model->id)->first() ) {
-            return false;
-        }
-
-        // if this person is in the person_telephone pivot table, then this person is not deletable
-        if ( DB::table('person_telephone')->where('person_id', $model->id)->first() ) {
-            return false;
-        }
-
-        // if this person is in the person_website pivot table, then this person is not deletable
-        if ( DB::table('person_website')->where('person_id', $model->id)->first() ) {
+        // a superadmin cannot update an owner
+        if (($user->hasRole('superadministrator')) && ($this->getRoleIdOfTheModelPersonbydomain($model) == 1)) {
             return false;
         }
 
@@ -141,7 +125,7 @@ class PersonPolicy extends CommonPolicy
      * Determine whether the user can restore a person.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Person                $model
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $model
      * @return bool
      */
     public function restore(User $user, Model $model)
@@ -153,7 +137,7 @@ class PersonPolicy extends CommonPolicy
      * Determine whether the user can permanently delete a person.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Person                $model
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $model
      * @return bool
      */
     public function forceDelete(User $user, Model $model)
@@ -169,33 +153,43 @@ class PersonPolicy extends CommonPolicy
         return true;
     }
 
-
     /**
-     * Determine whether the user can attach any personbydomains to persons.
+     * Determine whether the user can attach any lookup user roles to the personbydomain.
      *
-     * Basically, no, cannot attach here. Go to the Personbydomains menu item!
+     * Note: one role per user!
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Person                $model
-     * @return bool
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $model
+     * @return mixed
      */
-    public function attachAnyPersonbydomain(User $user, Model $model)
+    public function attachAnyLookup_role(User $user, Model $model)
     {
-        return false;
+        // if a role is already associated (attached) to the user, then do not add any more roles!
+        return $this->getRoleIdOfTheModelPersonbydomain($model) ? false : true;
     }
 
     /**
-     * Determine whether the user can detach any personbydomains to persons.
+     * Determine whether the user can attach any lookup user roles to the personbydomain.
      *
-     * Basically, no, cannot detach here. Go to the Personbydomains menu item!
+     * Note: one role per user!
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Person                $model
-     * @return bool
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $model
+     * @return mixed
      */
-    public function detachPersonbydomain(User $user, Model $model)
+    public function detachLookup_role(User $user, Model $model)
     {
-        return false;
+        // do not delete the first pivot table record!
+        if ($model->id == 1) {
+            return false;
+        }
+
+        // super admins cannot delete an owner role
+        if (($user->hasRole('superadministrator')) && ($this->getRoleIdOfTheModelPersonbydomain($model) == 1)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -205,11 +199,26 @@ class PersonPolicy extends CommonPolicy
      * See this fabulous post: https://github.com/laravel/nova-issues/issues/1003#issuecomment-497008278
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Person                $model
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $model
      * @return bool
      */
-    public function attachPersonbydomain(User $user, Model $model)
+    public function attachLookup_role(User $user, Model $model)
     {
         return false;
+    }
+
+    /**
+     * Get the lookup_role_id of the model's personbydomain
+     *
+     * @param  $model
+     * @return mixed
+     */
+    private function getRoleIdOfTheModelPersonbydomain($model)
+    {
+        return DB::table('personbydomain_lookup_roles')
+            ->where('personbydomain_id', $model->id)
+            ->pluck('lookup_role_id')
+            ->first()
+        ;
     }
 }

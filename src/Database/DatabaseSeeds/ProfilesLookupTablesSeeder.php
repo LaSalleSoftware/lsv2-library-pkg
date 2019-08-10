@@ -118,20 +118,8 @@ class ProfilesLookupTablesSeeder extends BaseSeeder
         // lookup_email_types table
 
         DB::table('lookup_email_types')->insert([
-            'title'       => 'Primary',
+            'title'       => 'Main',
             'description' => 'Main email address',
-            'enabled'     => 1,
-            'created_at'  => Carbon::now(),
-            'created_by'  => 1,
-            'updated_at'  => null,
-            'updated_by'  => null,
-            'locked_at'   => null,
-            'locked_by'   => null,
-        ]);
-
-        DB::table('lookup_email_types')->insert([
-            'title'       => 'Secondary',
-            'description' => 'Use if the Primary email address is not working',
             'enabled'     => 1,
             'created_at'  => Carbon::now(),
             'created_by'  => 1,
@@ -156,6 +144,19 @@ class ProfilesLookupTablesSeeder extends BaseSeeder
         DB::table('lookup_email_types')->insert([
             'title'       => 'Other',
             'description' => 'Other',
+            'enabled'     => 1,
+            'created_at'  => Carbon::now(),
+            'created_by'  => 1,
+            'updated_at'  => null,
+            'updated_by'  => null,
+            'locked_at'   => null,
+            'locked_by'   => null,
+        ]);
+
+        // Lasallesoftware\Library\Authentication\Models\PersonbydomainNovaFormProcessing::populateEmailsTable(Personbydomain $personbydomain)
+        DB::table('lookup_email_types')->insert([
+            'title'       => 'Created By Nova Personbydomain Form',
+            'description' => 'Created By Nova Personbydomain Form',
             'enabled'     => 1,
             'created_at'  => Carbon::now(),
             'created_by'  => 1,

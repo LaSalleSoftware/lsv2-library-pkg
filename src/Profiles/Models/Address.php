@@ -198,7 +198,12 @@ class Address extends CommonModel
      */
     public function person()
     {
-        return $this->belongsToMany('Lasallesoftware\Library\Profiles\Models\Person', 'person_address', 'address_id', 'person_id');
+        return $this->belongsToMany(
+            'Lasallesoftware\Library\Profiles\Models\Person',
+            'person_address',
+            'address_id',
+            'person_id'
+        );
     }
 
     /*

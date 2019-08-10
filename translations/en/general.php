@@ -41,6 +41,8 @@ return [
     'resource_label_singular_lookup_telephone_types'        => 'Lookup Telephone Type',
     'resource_label_plural_lookup_website_types'            => 'Lookup Website Types',
     'resource_label_singular_lookup_website_types'          => 'Lookup Website Type',
+    'resource_label_plural_personbydomains'                 => 'Personbydomains',
+    'resource_label_singular_personbydomains'               => 'Personbydomain',
 
     'resource_label_plural_addresses'                       => 'Addresses',
     'resource_label_singular_addresses'                     => 'Address',
@@ -59,7 +61,10 @@ return [
     'resource_label_singular_persons'                       => 'Person',
 
     // Nova Panels Labels
-    'panel_system_fields' => 'System Fields',
+    'panel_domain_fields'  => 'Domain',
+    'panel_persons_fields' => 'Person',
+    'panel_roles_fields'   => 'Role',
+    'panel_system_fields'  => 'System Fields',
 
     // Nova Field Labels
     'field_name_created_at'         => 'created at',
@@ -72,9 +77,13 @@ return [
 
     'field_name_address'            => 'Address',
     'field_name_email'              => 'Email Address',
+    'field_name_email_verified_at'  => 'Email Verified At',
     'field_name_social'             => 'Social Site',
     'field_name_telephone'          => 'Telephone Number',
     'field_name_website'            => 'Website',
+
+    'field_name_primary_email'      => 'Primary Email Address',
+    'field_name_password'           => 'Password',
 
     'field_name_anniversary'        => 'Anniversary',
     'field_name_birthday'           => 'Birthday',
@@ -83,6 +92,8 @@ return [
     'field_name_comments'           => 'Comments',
     'field_name_featured_image'     => 'Featured Image',
     'field_name_first_name'         => 'First Name',
+    'field_name_person'             => 'Person',
+    'field_name_person_id'          => 'Person ID',
     'field_name_position'           => 'Position',
     'field_name_profile'            => 'Profile',
     'field_name_middle_name'        => 'Middle Name',
@@ -98,6 +109,8 @@ return [
     'field_name_extension'          => 'Extension',
 
     'field_name_domain'             => 'Domain',
+    'field_name_domain_id'          => 'Domain ID',
+    'field_name_domain_name'        => 'Domain Name',
     'field_name_slug'               => 'Slug',
     'field_name_title'              => 'Title',
 

@@ -127,7 +127,7 @@ class Installed_domain extends CommonModel
     ///////////////////////////////////////////////////////////////////
 
     /*
-     * One to many relationship with personbydomain.
+     * One to one relationship with personbydomain.
      *
      * Method name must be:
      *    * the model name,
