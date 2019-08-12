@@ -91,6 +91,8 @@ class Login extends CommonModel
         $login->uuid              = $data['uuid'];
         $login->created_at        = Carbon::now(null);
         $login->created_by        = $data['created_by'];
+        $login->updated_at        = Carbon::now(null);
+        $login->updated_by        = $data['created_by'];
 
         if ($login->save()) {
             // Return the new ID
@@ -125,6 +127,27 @@ class Login extends CommonModel
 
         return $model->update();
     }
+
+    /**
+     * Update the "updated" fields of a specific token, using the query builder.
+     *
+     * No model need be passed.
+     * Called by Lasallesoftware\Library\Authentication\CustomGuards\LasdalleGuard::user()
+     *
+     * @param  string  $token                The token!
+     * @param  id      $personbydomain_id    The personbydomain_id
+     * @return void
+     */
+    public function updateTheUpdateFieldsWithTheTokenAndUserId($token, $personbydomain_id = null)
+    {
+        DB::table('logins')
+            ->where('token', $token)
+            ->update([
+                'updated_at' => Carbon::now(null),
+                'updated_by' => $personbydomain_id == null ? null : $personbydomain_id,
+            ]);
+    }
+
 
     /**
      * Get the records for a personbydomain_id
@@ -190,5 +213,50 @@ class Login extends CommonModel
     public function personbydomain()
     {
         return $this->belongsTo('Lasallesoftware\Library\Authentication\Models\Personbydomain');
+    }
+
+
+    ///////////////////////////////////////////////////////////////////
+    ///////////      DELETE INACTIVE LOGINS          //////////////////
+    ///////////////////////////////////////////////////////////////////
+
+    /**
+     * Delete logins records that have become inactive.
+     *
+     * The default config value for lasallesoftware-library.lasalle_number_of_minutes_allowed_before_deleting_the_logins_record
+     * is 10 minutes.
+     *
+     * So, if it's been at least 10 minutes since the last request, then logged out!
+     *
+     * There is a unit test for this method at Tests\Unit\Library\Authentication\LoginsTable::DeleteOrphanedRecordsTest.
+     *
+     * There is a php artisan command for this, so it can be run in the scheduler, at
+     * Lasallesoftware\Library\Commands\DeleteInactiveLoginsRecordsCommand.
+     *
+     * @return void
+     */
+    public function deleteInactiveLoginsRecords()
+    {
+        // How many minutes before a logins record is inactive?
+        $minutesToInactivity = config(
+            'lasallesoftware-library.lasalle_number_of_minutes_allowed_before_deleting_the_logins_record',
+            10
+        );
+
+        // When is now?
+        $now = \Carbon\Carbon::now();
+
+        // Go through all the records, deleting inactive records.
+        // Yes, I have Adam's book on higher order functions. But you know what Freud said: "sometimes a foreach is just a foreach".
+        foreach ($this->all() as $login) {
+
+            // convert the updated_at date to carbon
+            $updated_at = Carbon::parse($login->updated_at);
+
+            // if the record is inactive, then delete it
+            if ($updated_at->diffInMinutes($now, true) >= $minutesToInactivity) {
+                $this->deleteExistingLoginsRecordByModel($login);
+            }
+        }
     }
 }

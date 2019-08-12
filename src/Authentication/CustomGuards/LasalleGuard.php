@@ -186,7 +186,6 @@ class LasalleGuard implements StatefulGuard
     //  ** public function check();
     //  ** public function guest();
 
-
     // The following methods in the Guard contract reside in this class:
     //  ** public function user();
     //  ** public function id();
@@ -231,6 +230,7 @@ class LasalleGuard implements StatefulGuard
         // and there is a record in the personbydomains database table, then we have the logged in person!
         // if ((! is_null($resultGetLogin)) && ($this->user = $this->provider->retrieveById($id))) {
         if ((! is_null($resultGetLogin)) && ($this->user = $this->getUserById($id))) {
+            $this->loginModel->updateTheUpdateFieldsWithTheTokenAndUserId($loginToken, $id);
             $this->fireAuthenticatedEvent($this->user);
         }
 
