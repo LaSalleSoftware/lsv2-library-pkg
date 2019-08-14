@@ -72,6 +72,7 @@ trait LibraryPoliciesServiceProvider
             'Lasallesoftware\Library\Profiles\Models\Person'                => 'Lasallesoftware\Library\Policies\PersonPolicy',
 
             'Lasallesoftware\Library\Authentication\Models\Personbydomain'  => 'Lasallesoftware\Library\Policies\PersonbydomainPolicy',
+            'Lasallesoftware\Library\Authentication\Models\Login'           => 'Lasallesoftware\Library\Policies\LoginPolicy',
 
         ];
     }

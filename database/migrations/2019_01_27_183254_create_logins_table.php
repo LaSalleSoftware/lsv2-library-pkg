@@ -58,7 +58,12 @@ class CreateLoginsTable extends BaseMigration
                 $table->increments('id')->unsigned();
 
                 $table->integer('personbydomain_id')->unsigned();
-                $table->foreign('personbydomain_id')->references('id')->on('personbydomains');
+                $table
+                    ->foreign('personbydomain_id')
+                    ->references('id')
+                    ->on('personbydomains')
+                    ->onDelete('cascade')
+                ;
 
                 $table->string('token');
 

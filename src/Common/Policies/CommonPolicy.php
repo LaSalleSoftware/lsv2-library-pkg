@@ -29,13 +29,13 @@ use Lasallesoftware\Library\Authentication\Models\Personbydomain;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 // Laravel facade
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 /**
  * Class BasePolicy
  *
- * @package Lasallesoftware\Library\Policies
+ * @package Lasallesoftware\Library\Common\Policies
  */
 class CommonPolicy
 {
@@ -53,5 +53,20 @@ class CommonPolicy
         if (in_array($model->id, $this->recordsDoNotDelete)) {
             return true;
         }
+    }
+
+    /**
+     * Get the lookup_role_id of the model's personbydomain
+     *
+     * @param  $model
+     * @return mixed
+     */
+    public function getRoleIdOfTheModelPersonbydomain($model)
+    {
+        return DB::table('personbydomain_lookup_roles')
+            ->where('personbydomain_id', $model->id)
+            ->pluck('lookup_role_id')
+            ->first()
+        ;
     }
 }

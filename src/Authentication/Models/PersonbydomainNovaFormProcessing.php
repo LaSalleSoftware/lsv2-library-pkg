@@ -22,6 +22,9 @@
 
 namespace Lasallesoftware\Library\Authentication\Models;
 
+// LaSalle Software
+use Lasallesoftware\Library\Authentication\Models\Login;
+
 // Laravel Facade
 use Illuminate\Support\Facades\DB;
 
@@ -112,6 +115,7 @@ trait PersonbydomainNovaFormProcessing
         //self::processDomain($personbydomain);
     }
 
+
     ///////////////////////////////////////////////////////////////////
     ////////////          MAIN PROCESSING           ///////////////////
     ///////////////////////////////////////////////////////////////////
@@ -126,6 +130,7 @@ trait PersonbydomainNovaFormProcessing
         // persons fields
         self::populatedPersonFirstNameField($personbydomain);
         self::populatedPersonSurnameField($personbydomain);
+        self::populatedPersonNamealculatedField($personbydomain);
 
         // email address
         self::processEmailaddress($personbydomain);
@@ -172,6 +177,18 @@ trait PersonbydomainNovaFormProcessing
     protected static function populatedPersonSurNameField(Personbydomain $personbydomain)
     {
         $personbydomain->person_surname = self::getPersonSurnameFromId($personbydomain->person_id);
+    }
+
+    /**
+     * Populate the name_calculated field
+     *
+     * @param  Personbydomain  $personbydomain
+     */
+    protected static function populatedPersonNamealculatedField(Personbydomain $personbydomain)
+    {
+        $first_name = self::getPersonFirstNameFromId($personbydomain->person_id);
+        $surname    = self::getPersonSurnameFromId($personbydomain->person_id);
+        $personbydomain->name_calculated = $first_name . " " . $surname;
     }
 
     /**
@@ -336,4 +353,19 @@ trait PersonbydomainNovaFormProcessing
     }
 
 
+    ///////////////////////////////////////////////////////////////////
+    ////////////            LOGINS TABLE            ///////////////////
+    ///////////////////////////////////////////////////////////////////
+
+    /**
+     * Delete logins database table records with a specific personbydomain_id
+     *
+     * @param  int    $personbydomainId     The personbydomain_id
+     * @return mixed
+     */
+    protected static function deleteLoginsRecordsByPersonbydomainId($personbydomainId)
+    {
+        $login = new Login;
+        $login->deleteLoginsByPersonbydomainId($personbydomainId);
+    }
 }

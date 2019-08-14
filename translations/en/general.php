@@ -43,6 +43,8 @@ return [
     'resource_label_singular_lookup_website_types'          => 'Lookup Website Type',
     'resource_label_plural_personbydomains'                 => 'Personbydomains',
     'resource_label_singular_personbydomains'               => 'Personbydomain',
+    'resource_label_plural_logins'                          => 'Logins',
+    'resource_label_singular_logins'                        => 'Login',
 
     'resource_label_plural_addresses'                       => 'Addresses',
     'resource_label_singular_addresses'                     => 'Address',
@@ -118,6 +120,8 @@ return [
     'field_name_excerpt'            => 'Excerpt',
     'field_name_meta_description'   => 'Meta_Description',
     'field_name_publish_on'         => 'Publish_on',
+
+    'field_name_token'         => 'Token',
 
     // Nova Field Headings
     'field_heading_system_fields'          => 'Automated system fields:',

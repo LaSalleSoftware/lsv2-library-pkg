@@ -63,6 +63,17 @@ class Login extends CommonModel
     protected $guarded = ['*'];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * Here because the updated_at field is displayed in the Nova resource index view.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'updated_at' => 'datetime',
+    ];
+
+    /**
      * Indicates if the model should be timestamped.
      *
      * LaSalle Software handles the created_at and updated_at fields, so false.
@@ -194,6 +205,28 @@ class Login extends CommonModel
         $modelToDelete->delete();
     }
 
+    /**
+     * Delete logins records with a specific personbydomain_id
+     *
+     * @param  int     $personbydomainId    The personbydomain_id.
+     * @return bool
+     */
+    public function deleteLoginsByPersonbydomainId($personbydomainId)
+    {
+        // Disable foreign key checks!
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        //$result = $this->where('personbydomain_id', $personbydomainId)->delete();
+
+        $result = DB::table('logins')->where('personbydomain_id', '=', $personbydomainId)->delete();
+
+
+        // Enable foreign key checks!
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        return $result;
+    }
+
 
     ///////////////////////////////////////////////////////////////////
     //////////////        RELATIONSHIPS             ///////////////////
@@ -212,7 +245,7 @@ class Login extends CommonModel
     */
     public function personbydomain()
     {
-        return $this->belongsTo('Lasallesoftware\Library\Authentication\Models\Personbydomain');
+        return $this->belongsTo('Lasallesoftware\Library\Authentication\Models\Personbydomain', 'personbydomain_id', 'id');
     }
 
 

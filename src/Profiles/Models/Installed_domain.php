@@ -142,23 +142,6 @@ class Installed_domain extends CommonModel
         return $this->hasMany('\Lasallesoftware\Library\Authentication\Models\Personbydomain');
     }
 
-    /*
-     * One to many relationship with login.
-     *
-     * Method name must be:
-     *    * the model name,
-     *    * NOT the table name,
-     *    * singular;
-     *    * lowercase.
-     *
-     * @return Eloquent
-     */
-    public function login()
-    {
-        return $this->hasMany('\Lasallesoftware\Library\Authentication\Models\Login');
-    }
-
-
     /* *********************************************************** */
     /*                     START: BLOG PACKAGE                     */
     /* *********************************************************** */

@@ -206,19 +206,4 @@ class PersonbydomainPolicy extends CommonPolicy
     {
         return false;
     }
-
-    /**
-     * Get the lookup_role_id of the model's personbydomain
-     *
-     * @param  $model
-     * @return mixed
-     */
-    private function getRoleIdOfTheModelPersonbydomain($model)
-    {
-        return DB::table('personbydomain_lookup_roles')
-            ->where('personbydomain_id', $model->id)
-            ->pluck('lookup_role_id')
-            ->first()
-        ;
-    }
 }

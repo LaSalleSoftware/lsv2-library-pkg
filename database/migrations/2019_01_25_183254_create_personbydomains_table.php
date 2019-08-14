@@ -75,6 +75,8 @@ class CreatePersonbydomainsTable extends BaseMigration
                 $table->integer('person_id')->unsigned();
                 $table->foreign('person_id')->references('id')->on('persons');
 
+                $table->text('name_calculated')->nullable();
+
                 $table->string('person_first_name');
                 //$table->foreign('person_first_name')->references('first_name')->on('persons'); --> not an index so can't FK
                 $table->string('person_surname');

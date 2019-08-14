@@ -163,7 +163,7 @@ class Personbydomain extends Authenticatable
      */
     public function installed_domain()
     {
-        return $this->belongsTo('Lasallesoftware\Library\Profiles\Models\Lookup_address_type');
+        return $this->belongsTo('Lasallesoftware\Library\Profiles\Models\Installed_domain');
     }
 
     /*
@@ -195,6 +195,7 @@ class Personbydomain extends Authenticatable
     */
     public function login()
     {
+        //return $this->hasMany('Lasallesoftware\Library\Authentication\Models\Login', 'personbydomain_id', 'id');
         return $this->hasMany('Lasallesoftware\Library\Authentication\Models\Login');
     }
 
