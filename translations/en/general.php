@@ -62,6 +62,9 @@ return [
     'resource_label_plural_persons'                         => 'People',
     'resource_label_singular_persons'                       => 'Person',
 
+    'resource_label_plural_installed_domains_jwt_keys'      => 'JWT Keys',
+    'resource_label_singular_installed_domains_jwt_keys'    => 'JWT Key',
+
     // Nova Panels Labels
     'panel_domain_fields'  => 'Domain',
     'panel_persons_fields' => 'Person',
@@ -121,7 +124,8 @@ return [
     'field_name_meta_description'   => 'Meta_Description',
     'field_name_publish_on'         => 'Publish_on',
 
-    'field_name_token'         => 'Token',
+    'field_name_token'              => 'Token',
+    'field_name_key'                => 'Key',
 
     // Nova Field Headings
     'field_heading_system_fields'          => 'Automated system fields:',

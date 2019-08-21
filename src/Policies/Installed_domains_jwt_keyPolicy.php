@@ -25,15 +25,10 @@ namespace Lasallesoftware\Library\Policies;
 // LaSalle Software class
 use Lasallesoftware\Library\Common\Policies\CommonPolicy;
 use Lasallesoftware\Library\Authentication\Models\Personbydomain as User;
-use Lasallesoftware\Library\Authentication\Models\Login as Model;
+use Lasallesoftware\Library\Authentication\Models\Installed_domains_jwt_key as Model;
 
 
-/**
- * Class LoginPolicy
- *
- * @package Lasallesoftware\Library\Policies
- */
-class LoginPolicy extends CommonPolicy
+class Installed_domains_jwt_keyPolicy extends CommonPolicy
 {
     /**
      * Records that are not deletable.
@@ -44,10 +39,10 @@ class LoginPolicy extends CommonPolicy
 
 
     /**
-     * Determine whether the user can view a login's details.
+     * Determine whether the user can view details.
      *
-     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Authentication\Models\Login           $model
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain            $user
+     * @param  \Lasallesoftware\Library\Authentication\Models\Installed_domains_jwt_key $model
      * @return bool
      */
     public function view(User $user, Model $model)
@@ -56,33 +51,33 @@ class LoginPolicy extends CommonPolicy
     }
 
     /**
-     * No one, not even owners, can create logins db records!
+     * Determine whether the user can create.
      *
      * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @return bool
      */
     public function create(User $user)
     {
-        return false;
+        return ($user->hasRole('owner')) ? true : false;
     }
 
     /**
-     * No one, not even owners, can update logins db records!
+     * Determine whether the user can update.
      *
-     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Authentication\Models\Login           $model
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain            $user
+     * @param  \Lasallesoftware\Library\Authentication\Models\Installed_domains_jwt_key $model
      * @return bool
      */
     public function update(User $user, Model $model)
     {
-        return false;
+        return ($user->hasRole('owner')) ? true : false;
     }
 
     /**
-     * Determine whether the user can delete a login.
+     * Determine whether the user can delete.
      *
-     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Authentication\Models\Login           $model
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain            $user
+     * @param  \Lasallesoftware\Library\Authentication\Models\Installed_domains_jwt_key $model
      * @return bool
      */
     public function delete(User $user, Model $model)
@@ -96,12 +91,12 @@ class LoginPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can restore a person.
+     * Determine whether the user can restore.
      *
      * ** NOT USE THIS FEATURE **
      *
-     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Authentication\Models\Login           $model
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain            $user
+     * @param  \Lasallesoftware\Library\Authentication\Models\Installed_domains_jwt_key $model
      * @return bool
      */
     public function restore(User $user, Model $model)
@@ -110,12 +105,12 @@ class LoginPolicy extends CommonPolicy
     }
 
     /**
-     * Determine whether the user can permanently delete a person.
+     * Determine whether the user can permanently delete.
      *
      * ** NOT USE THIS FEATURE **
      *
-     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Authentication\Models\Login           $model
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain            $user
+     * @param  \Lasallesoftware\Library\Authentication\Models\Installed_domains_jwt_key $model
      * @return bool
      */
     public function forceDelete(User $user, Model $model)
@@ -124,25 +119,25 @@ class LoginPolicy extends CommonPolicy
     }
 
     /**
-     * No one can attach any personbydomain to the login.
+     * No one can attach any Installed_domain to the JWT key.
      *
-     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Authentication\Models\Login           $model
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain            $user
+     * @param  \Lasallesoftware\Library\Authentication\Models\Installed_domains_jwt_key $model
      * @return mixed
      */
-    public function attachAnyPersonbydomain(User $user, Model $model)
+    public function attachAnyInstalled_domain(User $user, Model $model)
     {
         return false;
     }
 
     /**
-     * No one can attach any personbydomain to the login.
+     * No one can attach any Installed_domain to the JWT key
      *
-     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Authentication\Models\Login           $model
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain            $user
+     * @param  \Lasallesoftware\Library\Authentication\Models\Installed_domains_jwt_key $model
      * @return mixed
      */
-    public function detachPersonbydomain(User $user, Model $model)
+    public function detachInstalled_domain(User $user, Model $model)
     {
         return ($user->hasRole('owner')) ? true : false;
     }
@@ -153,11 +148,11 @@ class LoginPolicy extends CommonPolicy
      *
      * See this fabulous post: https://github.com/laravel/nova-issues/issues/1003#issuecomment-497008278
      *
-     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Authentication\Models\Login           $model
+     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain            $user
+     * @param  \Lasallesoftware\Library\Authentication\Models\Installed_domains_jwt_key $model
      * @return bool
      */
-    public function attachPersonbydomain(User $user, Model $model)
+    public function attachInstalled_domain(User $user, Model $model)
     {
         return false;
     }

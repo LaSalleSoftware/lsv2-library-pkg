@@ -142,6 +142,24 @@ class Installed_domain extends CommonModel
         return $this->hasMany('\Lasallesoftware\Library\Authentication\Models\Personbydomain');
     }
 
+    /*
+     * One to one relationship with installed_domain_jwt_key.
+     *
+     * Method name must be:
+     *    * the model name,
+     *    * NOT the table name,
+     *    * singular;
+     *    * lowercase.
+     *
+     * @return Eloquent
+     */
+    public function installed_domains_jwt_key()
+    {
+        return $this->hasMany('\Lasallesoftware\Library\Authentication\Models\Installed_domains_jwt_key');
+    }
+
+
+
     /* *********************************************************** */
     /*                     START: BLOG PACKAGE                     */
     /* *********************************************************** */
