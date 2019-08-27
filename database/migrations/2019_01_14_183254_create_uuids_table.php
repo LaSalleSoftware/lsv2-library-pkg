@@ -56,7 +56,7 @@ class CreateUuidsTable extends BaseMigration
 
                 $table->uuid('uuid');
 
-                $table->string('comments')->nullable();
+                $table->text('comments')->nullable();
 
                 $table->timestamp('created_at')->useCurrent();
                 $table->integer('created_by')->unsigned()->default(1);

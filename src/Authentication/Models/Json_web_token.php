@@ -29,11 +29,11 @@ use Lasallesoftware\Library\Common\Models\CommonModel;
 use Illuminate\Support\Facades\DB;
 
 /**
- * This is the model class for installed_domain.
+ * This is the model class for Json_web_tokens.
  *
  * @package Lasallesoftware\Library\Authentication\Models
  */
-class Installed_domains_jwt_key extends CommonModel
+class Json_web_token extends CommonModel
 {
     ///////////////////////////////////////////////////////////////////
     //////////////          PROPERTIES              ///////////////////
@@ -44,7 +44,7 @@ class Installed_domains_jwt_key extends CommonModel
      *
      * @var string
      */
-    public $table = 'installed_domains_jwt_keys';
+    public $table = 'json_web_tokens';
 
     /**
      * Which fields may be mass assigned
@@ -61,36 +61,17 @@ class Installed_domains_jwt_key extends CommonModel
      */
     public $timestamps = false;
 
+
     /**
-     * The attributes that should be cast to native types.
+     * New JWT
      *
-     * @var array
+     * @param string  $jwt   The JSON Web Token
+     * @return bool
      */
-    protected $casts = [
-        'enabled'    => 'boolean',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-        'locked_at'  => 'datetime',
-    ];
-
-
-    ///////////////////////////////////////////////////////////////////
-    //////////////        RELATIONSHIPS             ///////////////////
-    ///////////////////////////////////////////////////////////////////
-
-    /*
-     * One to many (inverse) relationship with installed_domain.
-     *
-     * Method name must be:
-     *    * the model name,
-     *    * NOT the table name,
-     *    * singular;
-     *    * lowercase.
-     *
-     * @return Eloquent
-     */
-    public function installed_domain()
+    public function saveWithJWT($jwt)
     {
-        return $this->belongsTo('Lasallesoftware\Library\Profiles\Models\Installed_domain');
+        $json_web_tokens = new $this;
+        $json_web_tokens->jwt = $jwt;
+        $json_web_tokens->save();
     }
 }

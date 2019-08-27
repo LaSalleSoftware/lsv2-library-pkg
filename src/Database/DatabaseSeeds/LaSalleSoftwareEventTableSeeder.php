@@ -137,5 +137,18 @@ class LaSalleSoftwareEventTableSeeder extends BaseSeeder
             'locked_at'   => null,
             'locked_by'   => null,
         ]);
+
+        DB::table('lookup_lasallesoftware_events')->insert([
+            'id'          => 9,
+            'title'       => 'Client Front-end',
+            'description' => 'Initiated by a client front-end',
+            'enabled'     => 1,
+            'created_at'  => now(),
+            'created_by'  => 1,
+            'updated_at'  => null,
+            'updated_by'  => null,
+            'locked_at'   => null,
+            'locked_by'   => null,
+        ]);
     }
 }

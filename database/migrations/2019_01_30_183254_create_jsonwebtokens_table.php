@@ -28,18 +28,22 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 
 /**
- * Class CreateInstalleddomainsjwtkeysTable
+ * Class CreateJsonwebtokensTable
  *
- * The keys each domain uses to sign JWT.
+ * Incoming JWT from installed_domains. A JWT should be used just once. This table stores the incoming JWT's so that
+ * a check can be done to see if that incoming JWT was already used. If yes, the request is rejected. There are two
+ * assumptions here: i) that it is basically impossible to generated the same JWT twice; and, ii) since a legit JWT
+ * is unique, therefore a duplicate JWT is deemed not legit.
+ *
  */
-class CreateInstalleddomainsjwtkeysTable extends BaseMigration
+class CreateJsonwebtokensTable extends BaseMigration
 {
     /**
      * The name of the database table
      *
      * @var string
      */
-    protected $tableName = "installed_domains_jwt_keys";
+    protected $tableName = "json_web_tokens";
 
     /**
      * Run the migrations.
@@ -56,24 +60,12 @@ class CreateInstalleddomainsjwtkeysTable extends BaseMigration
 
                 $table->increments('id')->unsigned();
 
-                $table->integer('installed_domain_id')->unsigned()->index();
-                $table->foreign('installed_domain_id')->references('id')->on('installed_domains');
+                $table->text('jwt');
 
-                $table->text('key');
-
-                $table->boolean('enabled')->default(true);
+                // https://laravel.io/forum/02-04-2016-is-there-a-way-to-specify-the-length-of-an-index
+                $table->index([DB::raw('jwt(100)')]);
 
                 $table->timestamp('created_at')->useCurrent();
-                $table->integer('created_by')->unsigned();
-                //$table->foreign('created_by')->references('id')->on('persons');
-
-                $table->timestamp('updated_at')->nullable();
-                $table->integer('updated_by')->unsigned()->nullable();
-                //$table->foreign('updated_by')->references('id')->on('persons');
-
-                $table->timestamp('locked_at')->nullable();
-                $table->integer('locked_by')->unsigned()->nullable();
-                //$table->foreign('locked_by')->references('id')->on('persons');
             });
         }
     }
