@@ -30,6 +30,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\MessageBag;
 
 // Third party classes
 use GuzzleHttp\Client;
@@ -44,6 +45,13 @@ class CommonControllerForClients extends BaseController
      */
     protected $factory;
 
+    /**
+     * The message bag instance.
+     *
+     * @var \Illuminate\Support\MessageBag
+     */
+    protected $messages;
+
 
     /**
      * DisplaySinglePostController constructor.
@@ -55,27 +63,58 @@ class CommonControllerForClients extends BaseController
         $this->factory = $factory;
     }
 
-    public function xx($uuidComment)
+    /**
+     * Send a request to the LaSalle administrative back-end.
+     *
+     * @param  string  $uuidComment
+     * @param  string  $path
+     * @param  string  $slug
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function sendRequestToLasalleBackend($uuidComment, $path, $slug = null)
     {
         $token = $this->factory->createJWT($uuidComment);
 
         $headers = [
-            'Authorization'   => 'Bearer ' . $token,
-            'InstalledDomain' => 1,
-            'Accept'          => 'application/json',
+            'Authorization'    => 'Bearer ' . $token,
+            'RequestingDomain' => env('LASALLE_APP_DOMAIN_NAME'),
+            'Accept'           => 'application/json',
         ];
-
-
-        //$apiUrl = (substr(env('LASALLE_JWT_AUD_CLAIM'), 0, 8) == 'https://') ? env('LASALLE_JWT_AUD_CLAIM') : 'https://' . env('LASALLE_JWT_AUD_CLAIM');
 
         $apiUrl = (substr(env('LASALLE_JWT_AUD_CLAIM'), 0, 7) == 'https//') ? env('LASALLE_JWT_AUD_CLAIM') : 'http://' . env('LASALLE_JWT_AUD_CLAIM');
 
         $client = new Client();
 
-        return $client->request('GET', $apiUrl . ':8888/api/v1/singlearticleblog', [
-            'headers'         => $headers,
-            'connect_timeout' => 10,
-        ]);
+        try {
+            $response = $client->request('GET', $apiUrl . $path, [
+                'headers'         => $headers,
+                'connect_timeout' => 10,
+                'query'           => ['slug' => $slug],
+            ]);
 
+            return $response;
+        } catch (RequestException $e) {
+            return $this->createTheErrorMessageBag($e->getResponse());
+        } catch (\Exception $e) {
+            return $this->createTheErrorMessageBag($e->getResponse());
+        }
+    }
+
+    /**
+     * Our request returned an error? Well, let's create the MessageBag instance for the view.
+     *
+     * @param  \GuzzleHttp\Psr7\Response  $response
+     */
+    public function createTheErrorMessageBag($response)
+    {
+        $body           = json_decode($response->getBody());
+        $this->messages = new MessageBag();
+
+        $this->messages->add('StatusCode', $response->getStatusCode());
+        $this->messages->add('Error',    $body->error);
+        $this->messages->add('Reason',     $body->reason);
+
+        return;
     }
 }

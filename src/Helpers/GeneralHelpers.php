@@ -20,21 +20,28 @@
  *
  */
 
-namespace Lasallesoftware\Library\Common\Http\Controllers;
+namespace Lasallesoftware\Library\Helpers;
 
-// Laravel Framework
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class CommonController extends BaseController
+/**
+ * This is the General Helper class.
+ *
+ * @package Lasallesoftware\Library\Helpers
+ */
+trait GeneralHelpers
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    public function getRequestingDomainFromTheHeader($request)
+    /**
+     * Remove the "http://" or "https://" from the URL
+     *
+     * @param  string     $url   The URL.
+     * @return string
+     */
+    private function removeHttp(string $url): string
     {
-        return $request->header('RequestingDomain');
-    }
+        if (substr($url, 0, 7) == "http://") return substr($url, 7, strlen($url));
 
+        if (substr($url, 0, 8) == "https://") return substr($url, 8, strlen($url));
+
+        return $url;
+    }
 }
