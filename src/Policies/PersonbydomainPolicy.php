@@ -204,6 +204,7 @@ class PersonbydomainPolicy extends CommonPolicy
      */
     public function attachLookup_role(User $user, Model $model)
     {
-        return false;
+        // if a role is already associated (attached) to the user, then no edit-attaching
+        return $this->getRoleIdOfTheModelPersonbydomain($model) ? false : true;
     }
 }
