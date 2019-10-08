@@ -70,8 +70,13 @@ return [
     'panel_persons_fields' => 'Person',
     'panel_roles_fields'   => 'Role',
     'panel_system_fields'  => 'System Fields',
+    'panel_featured_image_fields' => 'Featured Image Fields',
 
     // Nova Field Labels
+    'field_name_featured_image_upload'   => 'Featured Image Upload',
+    'field_name_featured_image_code'     => 'Featured Image Code',
+    'field_name_featured_image_external' => 'Featured Image External',
+
     'field_name_created_at'         => 'created at',
     'field_name_created_by'         => 'created by',
     'field_name_updated_at'         => 'updated at',
@@ -95,7 +100,6 @@ return [
     'field_name_deceased'           => 'Deceased',
     'field_name_comments_date'      => 'Description for the Dates',
     'field_name_comments'           => 'Comments',
-    'field_name_featured_image'     => 'Featured Image',
     'field_name_first_name'         => 'First Name',
     'field_name_person'             => 'Person',
     'field_name_person_id'          => 'Person ID',
@@ -158,6 +162,13 @@ return [
 
     'field_help_publish_on1'               => 'display on and after this date',
     'field_help_publish_on2'               => "when left blank, will be today's date",
+
+    'field_help_featured_image_upload1'   => 'When specified, this field takes precedence and is the image used',
+    'field_help_featured_image_code1'     => 'To use code, please leave the other two featured image fields empty',
+    'field_help_featured_image_code2'     => 'Please specify your exact code to use as it will be rendered as-is',
+    'field_help_featured_image_external1' => 'To use an external image, please leave the other two featured image fields empty',
+    'field_help_featured_image_external2' => 'Please specify the exact URL where your image resides',
+    'field_help_featured_image_external3' => 'If all the featured image fields are empty, the default image specified in the config will be used',
 
     // Exceptions
     'exception_message_date_cast'          => "Date field must cast to 'date' in Eloquent model.",

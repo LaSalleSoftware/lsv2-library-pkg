@@ -115,6 +115,23 @@ return [
 
     /*
 	|--------------------------------------------------------------------------
+	| Default Featured Image
+	|--------------------------------------------------------------------------
+	|
+	| When no featured image is specified, use this image.
+	|
+	| Specify the type of image by commenting out the types that do not apply.
+    |  * "external_file" = specify the full URL (or path) where the featured image resides
+    |  * "code" = base64 or whatever that you want in the "src" of the IMG html tag (<img src="" >)
+	|
+	*/
+    'lasalle_featured_image_default_type'  => 'external_file',
+    //'lasalle_featured_image_default_type'  => 'code',
+    'lasalle_featured_image_default_image' => '/buffalo-bills.jpg',
+
+
+    /*
+	|--------------------------------------------------------------------------
 	| Excerpt Length
 	|--------------------------------------------------------------------------
 	|
