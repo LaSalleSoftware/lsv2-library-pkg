@@ -22,6 +22,9 @@
 
 namespace Lasallesoftware\Library\Common\Http\Controllers;
 
+// LaSalle Software
+use Lasallesoftware\Library\Helpers\GeneralHelpers;
+
 // Laravel Framework
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -31,10 +34,27 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class CommonController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use GeneralHelpers;
 
+    /**
+     * Get the installed domain specified in the request header, stripped of the "http:\\".
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @return mixed
+     */
+    public function getInstalledDomainFromTheRequest($request)
+    {
+        return $this->removeHttp($this->getRequestingDomainFromTheHeader($request));
+    }
+
+    /**
+     * Get the installed domain specified in the request's header.
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @return string                             Such as "hackintosh.lsv2-basicfrontend-app.com" (omit quotes).
+     */
     public function getRequestingDomainFromTheHeader($request)
     {
         return $request->header('RequestingDomain');
     }
-
 }

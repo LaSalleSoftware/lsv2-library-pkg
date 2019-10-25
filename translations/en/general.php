@@ -75,7 +75,7 @@ return [
     // Nova Field Labels
     'field_name_featured_image_upload'   => 'Featured Image Upload',
     'field_name_featured_image_code'     => 'Featured Image Code',
-    'field_name_featured_image_external' => 'Featured Image External',
+    'field_name_featured_image_external_file' => 'Featured Image External File',
 
     'field_name_created_at'         => 'created at',
     'field_name_created_by'         => 'created by',
@@ -168,7 +168,8 @@ return [
     'field_help_featured_image_code2'     => 'Please specify your exact code to use as it will be rendered as-is',
     'field_help_featured_image_external1' => 'To use an external image, please leave the other two featured image fields empty',
     'field_help_featured_image_external2' => 'Please specify the exact URL where your image resides',
-    'field_help_featured_image_external3' => 'If all the featured image fields are empty, the default image specified in the config will be used',
+    'field_help_featured_image_external3' => 'Using a base64 image? Enter it fully here (eg: data:image/jpeg;base64,/9j/4AAQSkZJ)',
+    'field_help_featured_image_external4' => 'If all the featured image fields are empty, the default image specified in the config will be used',
 
     // Exceptions
     'exception_message_date_cast'          => "Date field must cast to 'date' in Eloquent model.",
