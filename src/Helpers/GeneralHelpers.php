@@ -36,12 +36,32 @@ trait GeneralHelpers
      * @param  string     $url   The URL.
      * @return string
      */
-    private function removeHttp(string $url): string
+    public function removeHttp(string $url): string
     {
         if (substr($url, 0, 7) == "http://") return substr($url, 7, strlen($url));
 
         if (substr($url, 0, 8) == "https://") return substr($url, 8, strlen($url));
 
         return $url;
+    }
+
+
+    /**
+     * Is a value in an array?
+     *
+     * This helper exists as the base comparison in the Whitelist middleware
+     * (Lasallesoftware\Library\Firewall\Http\Middleware\Whitelist). I took this comparison out of the middleware and put
+     * it here so I can unit test this comparison easily.
+     *
+     * Also, I looked through the Laravel array helpers and did not like any of them for this particular situation.
+     *
+     *
+     * @param  mixed  $needle
+     * @param  array  $haystack
+     * @return bool
+     */
+    public function isValueInArray($needle, array $haystack) : bool
+    {
+        return (in_array($needle, $haystack)) ? true : false;
     }
 }

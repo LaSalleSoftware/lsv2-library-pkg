@@ -33,13 +33,8 @@ use Lasallesoftware\Library\Commands\DeleteInactiveLoginsRecordsCommand;
 // custom guard class
 use Lasallesoftware\Library\Authentication\CustomGuards\LasalleGuard;
 
-// model class
-use Lasallesoftware\Library\Profiles\Models\Person;
-
-// observer class
-use Lasallesoftware\Library\Observers\PersonObserver;
-
-// Laravel class
+// Laravel classes
+use Illuminate\Routing\Router;
 // https://github.com/laravel/framework/blob/5.6/src/Illuminate/Support/ServiceProvider.php
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -67,7 +62,7 @@ class LibraryServiceProvider extends ServiceProvider
      * You should never attempt to register any event listeners, routes, or any other piece of functionality within
      * the register method. Otherwise, you may accidentally use a service that is provided by a service provider
      * which has not loaded yet."
-     * (https://laravel.com/docs/5.6/providers#the-register-method(
+     * (https://laravel.com/docs/5.6/providers#the-register-method)
      *
      * @return void
      */
@@ -147,9 +142,11 @@ class LibraryServiceProvider extends ServiceProvider
      * have been registered, meaning you have access to all other services that have been registered by the framework"
      * (https://laravel.com/docs/5.6/providers)
      *
+     * @param  Router $router
+     *
      * @return void
      */
-    public function boot()
+    public function boot(Router $router)
     {
         $this->publishConfig();
 
@@ -169,6 +166,8 @@ class LibraryServiceProvider extends ServiceProvider
         // Decided to directly edit the app's config/auth.php instead of modifying them here
         //$this->mergeAuthGuardsConfigKey();
         //$this->overrideDefaultAuthConfigKey();
+
+        $this->registerMiddleware($router);
     }
 
     /**
@@ -285,5 +284,21 @@ class LibraryServiceProvider extends ServiceProvider
         ];
 
         $this->app['config']->set('auth.defaults', $newDefaultAuth);
+    }
+
+    /**
+     * Register middleware.
+     *
+     * @param Router $router
+     *
+     * @return void
+     */
+    public function registerMiddleware($router)
+    {
+        $router->aliasMiddleware('whitelist', 'Lasallesoftware\Library\Firewall\Http\Middleware\Whitelist');
+
+        // Add a middleware to the end of a middleware group
+        // https://github.com/laravel/framework/blob/6.x/src/Illuminate/Routing/Router.php#L902
+        $router->pushMiddlewareToGroup('web', 'whitelist');
     }
 }
