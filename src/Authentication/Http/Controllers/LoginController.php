@@ -56,7 +56,7 @@ class LoginController extends CommonController
      * @var string
      */
     //protected $redirectTo = '/home';
-    protected $redirectTo = '/nova';
+    protected $redirectTo = '/nova/resources/personbydomains';
 
     /**
      * The UuidGenerator instance
