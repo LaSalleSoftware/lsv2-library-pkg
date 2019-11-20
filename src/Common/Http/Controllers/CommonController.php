@@ -23,7 +23,6 @@
 namespace Lasallesoftware\Library\Common\Http\Controllers;
 
 // LaSalle Software
-use http\Client\Response;
 use Lasallesoftware\Library\Helpers\GeneralHelpers;
 
 // Laravel Framework
