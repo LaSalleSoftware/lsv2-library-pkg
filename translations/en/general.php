@@ -73,6 +73,7 @@ return [
     'panel_featured_image_fields' => 'Featured Image Fields',
 
     // Nova Field Labels
+    'field_name_featured_image'     => 'Featured Image',
     'field_name_featured_image_upload'   => 'Featured Image Upload',
     'field_name_featured_image_code'     => 'Featured Image Code',
     'field_name_featured_image_external_file' => 'Featured Image External File',
