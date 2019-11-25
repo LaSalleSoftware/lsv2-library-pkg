@@ -29,7 +29,14 @@ class Version
      *
      * @var string
      */
-    const VERSION = '1.9.3';
+    const VERSION = '2.0.0';
+
+    /**
+     * This package's release date.
+     *
+     * @var string
+     */
+    const RELEASEDATE = 'November 25, 2019';
 
     /**
      * This package's name.
@@ -46,6 +53,16 @@ class Version
     public function version()
     {
         return static::VERSION;
+    }
+
+    /**
+     * Get the release date of this package.
+     *
+     * @return string
+     */
+    public function releasedate()
+    {
+        return static::RELEASEDATE;
     }
 
     /**
