@@ -217,6 +217,7 @@ class LasalleinstallCommand extends Command
         $this->comment('  <fg=yellow>* What is your APP_NAME *</>');
         $this->comment('****************************');
         $this->comment('An example is: LaSalle Software Administration App');
+        $this->comment('  <fg=yellow>(to leave the APP_NAME as it is already, just hit enter)</>');
         $appName = $this->ask('<fg=yellow>(I do *not* check for syntax or for anything, so please type c-a-r-e-f-u-l-l-y!)</>');
         $this->comment('You typed "' . $appName . '".');
         $this->comment('Setting APP_NAME in .env to "'. $appName . '"...');
@@ -230,6 +231,7 @@ class LasalleinstallCommand extends Command
         $this->comment('****************************');
         $this->comment('An example is: https://lasallesoftware.ca');
         $this->comment('MUST start with "http://" or "https://"');
+        $this->comment('  <fg=yellow>(to leave the APP_NAME as it is already, just hit enter)</>');
         $appURL = $this->ask('<fg=yellow>(I do *not* check for syntax or for anything, so please type c-a-r-e-f-u-l-l-y!)</>');;
         $this->comment('You typed "' . $appURL . '"');
         $this->comment('Setting APP_URL in .env to "'. $appURL . '"...');
