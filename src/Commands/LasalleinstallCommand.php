@@ -217,12 +217,16 @@ class LasalleinstallCommand extends Command
         $this->comment('  <fg=yellow>* What is your APP_NAME *</>');
         $this->comment('****************************');
         $this->comment('An example is: LaSalle Software Administration App');
+        $this->comment(' ');
         $this->comment('  <fg=yellow>(to leave the APP_NAME as it is already, just hit enter)</>');
         $appName = $this->ask('<fg=yellow>(I do *not* check for syntax or for anything, so please type c-a-r-e-f-u-l-l-y!)</>');
-        $this->comment('You typed "' . $appName . '".');
-        $this->comment('Setting APP_NAME in .env to "'. $appName . '"...');
-        $this->writeEnvironmentFileWithNewKey('DummyAppName', $appName, true);
-        $this->comment('Finished setting your APP_NAME in .env to "' . $appName . '"');
+        if ($appName != "") {
+            $this->comment('You typed "' . $appName . '".');
+            $this->comment('Setting APP_NAME in .env to "'. $appName . '"...');
+            $this->writeEnvironmentFileWithNewKey('DummyAppName', $appName, true);
+            $this->comment('Finished setting your APP_NAME in .env to "' . $appName . '"');
+        }
+
 
         // SET APP_URL
         echo "\n\n";
@@ -231,25 +235,26 @@ class LasalleinstallCommand extends Command
         $this->comment('****************************');
         $this->comment('An example is: https://lasallesoftware.ca');
         $this->comment('MUST start with "http://" or "https://"');
+        $this->comment(' ');
         $this->comment('  <fg=yellow>(to leave the APP_NAME as it is already, just hit enter)</>');
-        $appURL = $this->ask('<fg=yellow>(I do *not* check for syntax or for anything, so please type c-a-r-e-f-u-l-l-y!)</>');;
-        $this->comment('You typed "' . $appURL . '"');
-        $this->comment('Setting APP_URL in .env to "'. $appURL . '"...');
-        $this->writeEnvironmentFileWithNewKey('DummyAppURL', $appURL, false);
-        $this->comment('Finished setting APP_URL in .env to "' . $appURL . '"');
+        $appURL = $this->ask('<fg=yellow>(I do *not* check for syntax or for anything, so please type c-a-r-e-f-u-l-l-y!)</>');
+        if ($appURL != "") {
+            $this->comment('You typed "' . $appURL . '"');
+            $this->comment('Setting APP_URL in .env to "'. $appURL . '"...');
+            $this->writeEnvironmentFileWithNewKey('DummyAppURL', $appURL, false);
+            $this->comment('Finished setting APP_URL in .env to "' . $appURL . '"');;
+        }
+
 
         // SET LASALLE_APP_DOMAIN_NAME
-        echo "\n\n";
-        $lasalleAppDomainName = $this->getLasalleAppDomainName($appURL);
-        $this->comment('Setting LASALLE_APP_DOMAIN_NAME in .env to "'. $lasalleAppDomainName . '""...');
-        $this->writeEnvironmentFileWithNewKey('DummyLasalleAppDomainName', $lasalleAppDomainName, false);
-        $this->info('Finished setting LASALLE_APP_DOMAIN_NAME in .env to "' . $lasalleAppDomainName . '"');
-
+        if ($appURL != "") {
+            echo "\n\n";
+            $lasalleAppDomainName = $this->getLasalleAppDomainName($appURL);
+            $this->comment('Setting LASALLE_APP_DOMAIN_NAME in .env to "'.$lasalleAppDomainName.'""...');
+            $this->writeEnvironmentFileWithNewKey('DummyLasalleAppDomainName', $lasalleAppDomainName, false);
+            $this->info('Finished setting LASALLE_APP_DOMAIN_NAME in .env to "'.$lasalleAppDomainName.'"');
+        }
         // END: SET THE PARAMS IN .ENV
-
-
-
-
 
 
         // START: THE adminbackendapp NEEDS THE DATABASE MIGRATIONS AND SEEDS
