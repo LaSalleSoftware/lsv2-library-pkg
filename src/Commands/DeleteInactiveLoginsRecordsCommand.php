@@ -24,10 +24,7 @@ namespace Lasallesoftware\Library\Commands;
 
 // LaSalle Software
 use Lasallesoftware\Library\Authentication\Models\Login;
-
-// Laravel classes
-use Illuminate\Console\Command;
-
+use Lasallesoftware\Library\Common\Commands\CommonCommand;
 
 /**
  * Class DeleteInactiveLoginsRecords
@@ -38,7 +35,7 @@ use Illuminate\Console\Command;
  *
  * @package Lasallesoftware\Library\Commands\DeleteInactiveLoginsRecordsCommand
  */
-class DeleteInactiveLoginsRecordsCommand extends Command
+class DeleteInactiveLoginsRecordsCommand extends CommonCommand
 {
     /**
      * The console command name.

@@ -22,8 +22,10 @@
 
 namespace Lasallesoftware\Library\Commands;
 
+// LaSalle Software class
+use Lasallesoftware\Library\Common\Commands\CommonCommand;
+
 // Laravel classes
-use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -37,7 +39,7 @@ use Symfony\Component\Console\Input\InputOption;
  *
  * @package Lasallesoftware\Library\Commands\CustomdropCommand
  */
-class CustomdropCommand extends Command
+class CustomdropCommand extends CommonCommand
 {
     use ConfirmableTrait;
 
@@ -110,32 +112,6 @@ class CustomdropCommand extends Command
         echo "\n\n====================================================================\n";
         echo "              ** lslibrary:customdrop is finished **";
         echo "\n====================================================================\n\n";
-    }
-
-    /**
-     * Drop all of the database tables.
-     *
-     * @param  string  $database
-     * @return void
-     */
-    protected function dropAllTables($database)
-    {
-        $this->laravel['db']->connection($database)
-            ->getSchemaBuilder()
-            ->dropAllTables();
-    }
-
-    /**
-     * Drop all of the database views.
-     *
-     * @param  string  $database
-     * @return void
-     */
-    protected function dropAllViews($database)
-    {
-        $this->laravel['db']->connection($database)
-            ->getSchemaBuilder()
-            ->dropAllViews();
     }
 
     /**

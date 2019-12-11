@@ -27,7 +27,8 @@ namespace Lasallesoftware\Library;
 use Lasallesoftware\Library\Commands\CustomseedCommand;
 use Lasallesoftware\Library\Commands\CustomdropCommand;
 use Lasallesoftware\Library\Commands\InstalleddomainseedCommand;
-use Lasallesoftware\Library\Commands\LasalleinstallCommand;
+use Lasallesoftware\Library\Commands\LasalleinstallenvCommand;
+use Lasallesoftware\Library\Commands\LasalleinstalladminappCommand;
 use Lasallesoftware\Library\Commands\DeleteInactiveLoginsRecordsCommand;
 
 // custom guard class
@@ -99,9 +100,14 @@ class LibraryServiceProvider extends ServiceProvider
             'command.lslibrary:installeddomainseeder',
         ]);
 
-        $this->app->bind('command.lslibrary:lasalleinstall', LasalleinstallCommand::class);
+        $this->app->bind('command.lslibrary:lasalleinstallenv', LasalleinstallenvCommand::class);
         $this->commands([
-            'command.lslibrary:lasalleinstall',
+            'command.lslibrary:lasalleinstallenv',
+        ]);
+
+        $this->app->bind('command.lslibrary:lasalleinstalladminapp', LasalleinstalladminappCommand::class);
+        $this->commands([
+            'command.lslibrary:lasalleinstalladminapp',
         ]);
 
         $this->app->bind('command.lslibrary:deleteinactiveloginsrecords', DeleteInactiveLoginsRecordsCommand::class);

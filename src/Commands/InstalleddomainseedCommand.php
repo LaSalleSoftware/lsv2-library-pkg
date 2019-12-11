@@ -35,10 +35,10 @@
 
 namespace Lasallesoftware\Library\Commands;
 
-// Laravel classes
-use Illuminate\Console\Command;
+// LaSalle Software class
+use Lasallesoftware\Library\Common\Commands\CommonCommand;
 
-class InstalleddomainseedCommand extends Command
+class InstalleddomainseedCommand extends CommonCommand
 {
     /**
      * The console command name.

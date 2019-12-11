@@ -35,10 +35,10 @@
 
 namespace Lasallesoftware\Library\Commands;
 
-// Laravel classes
-use Illuminate\Console\Command;
+// LaSalle Software class
+use Lasallesoftware\Library\Common\Commands\CommonCommand;
 
-class CustomseedCommand extends Command
+class CustomseedCommand extends CommonCommand
 {
     /**
      * The console command name.
@@ -68,18 +68,24 @@ class CustomseedCommand extends Command
     {
         //consoleOutput()->comment('Starting the custom database seeder...');
         $this->info('Starting the custom database seeder...');
-
         $this->call('db:seed', [
             '--class' => 'Lasallesoftware\\Library\\Database\\DatabaseSeeds\\DatabaseSeeder',
         ]);
+        $this->comment('Finished the custom database seeder.');
+
 
         // Adding this was done "after the fact", when my tests do this seeding. So, to prevent duplicate records
         // I am not executing this seeding in the "testing" env
         if (app('config')->get('app.env') != "testing") {
+
             if (class_exists('\Lasallesoftware\Blogbackend\Database\DatabaseSeeds\CategoryTableSeeder')) {
+
+                echo "\n\n";
+                $this->info('Starting the custom BLOG database seeder...');
                 $this->call('db:seed', [
                     '--class' => 'Lasallesoftware\\Blogbackend\\Database\\DatabaseSeeds\\DatabaseSeeder',
                 ]);
+                $this->comment('Finished the custom BLOG database seeder.');
             }
         }
     }
