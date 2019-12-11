@@ -140,7 +140,7 @@ class LasalleinstalladminappCommand extends CommonCommand
         // START: DID YOU RUN LSLIBRARY:LASALLEINSTALLENV ALREADY?
         echo "\n\n";
         $this->alert('Did you already run lslibrary:lasalleinstallenv? You must run it first!');
-        $runConfirmation = $this->ask('<fg=yellow>(type the word "oops" to exit this artian command...)</>');
+        $runConfirmation = $this->ask('<fg=yellow>(type the word "oops" to exit this artisan command...)</>');
         if ($runConfirmation == strtolower("oops")) {
             $this->line('<fg=red;bg=yellow>Good stuff! Please run "php artisan lslibrary:lasalleinstallenv" and then re-run this artisan command.</>');
             $this->echoOutro();
@@ -174,7 +174,7 @@ class LasalleinstalladminappCommand extends CommonCommand
 
             echo "\n\n";
             $this->line('-----------------------------------------------------------------------');
-            $this->line("  Now setting up Laravel Nova's first part admin package");
+            $this->line("  Now setting up Laravel Nova's first party admin package");
             $this->line('-----------------------------------------------------------------------');
 
             // if NOVA is not installed
