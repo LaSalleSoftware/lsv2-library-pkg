@@ -79,41 +79,43 @@ class PersonTableSeeder extends BaseSeeder
 
         ]);
 
-        DB::table('persons')->insert([
-            'id'             => 2,
-            'name_calculated' => 'Bob Bloom',
-            'salutation'     => 'Mr.',
-            'first_name'     => 'Bob',
-            'middle_name'    => '',
-            'surname'        => 'Bloom',
-            'position'       => 'Developer',
-            'description'    => 'This person must be an "owner".',
-            'comments'       => null,
-            'profile'        => null,
-            'featured_image' => null,
-            'birthday'       => null,
-            'anniversary'    => null,
-            'deceased'       => null,
-            'comments_date'  => null,
-            'uuid'           => $uuid,
-            'created_at'     => Carbon::now(),
-            'created_by'     => 1,
-            'updated_at'     => null,
-            'updated_by'     => null,
-            'locked_at'      => null,
-            'locked_by'      => null,
-        ]);
-
-
-        //*** NOVA NOTE!! ***//
-        //
-        // Anyone can log into Nova in "local".
-        // However, only those emails listed in the NovaServiceProvider.php can log into Nova
-        // in non-local environments (eg, testing).
-        //
-        // https://nova.laravel.com/docs/2.0/installation.html#authorizing-nova
 
         if ($this->doPopulateWithTestData()) {
+
+            DB::table('persons')->insert([
+                'id'             => 2,
+                'name_calculated' => 'Bob Bloom',
+                'salutation'     => 'Mr.',
+                'first_name'     => 'Bob',
+                'middle_name'    => '',
+                'surname'        => 'Bloom',
+                'position'       => 'Developer',
+                'description'    => 'This person must be an "owner".',
+                'comments'       => null,
+                'profile'        => null,
+                'featured_image' => null,
+                'birthday'       => null,
+                'anniversary'    => null,
+                'deceased'       => null,
+                'comments_date'  => null,
+                'uuid'           => $uuid,
+                'created_at'     => Carbon::now(),
+                'created_by'     => 1,
+                'updated_at'     => null,
+                'updated_by'     => null,
+                'locked_at'      => null,
+                'locked_by'      => null,
+            ]);
+
+
+            //*** NOVA NOTE!! ***//
+            //
+            // Anyone can log into Nova in "local".
+            // However, only those emails listed in the NovaServiceProvider.php can log into Nova
+            // in non-local environments (eg, testing).
+            //
+            // https://nova.laravel.com/docs/2.0/installation.html#authorizing-nova
+
 
             DB::table('persons')->insert([
                 'id'             => 3,

@@ -30,6 +30,10 @@ use http\Exception\BadQueryStringException;
 use Illuminate\Console\ConfirmableTrait;
 use Symfony\Component\Console\Input\InputOption;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\DB;
+
+// Third party classes
+use Illuminate\Support\Carbon;
 
 /**
  * Class LasalleinstallpartoneCommand
@@ -140,7 +144,7 @@ class LasalleinstalladminappCommand extends CommonCommand
         // START: DID YOU RUN LSLIBRARY:LASALLEINSTALLENV ALREADY?
         echo "\n\n";
         $this->alert('Did you already run lslibrary:lasalleinstallenv? You must run it first!');
-        $runConfirmation = $this->ask('<fg=yellow>(type the word "oops" to exit this artisan command...)</>');
+        $runConfirmation = $this->ask('<fg=yellow;bg=red>(type the word "oops" to exit this artisan command, or just press enter to continue...)</>');
         if ($runConfirmation == strtolower("oops")) {
             $this->line('<fg=red;bg=yellow>Good stuff! Please run "php artisan lslibrary:lasalleinstallenv" and then re-run this artisan command.</>');
             $this->echoOutro();
@@ -156,7 +160,7 @@ class LasalleinstalladminappCommand extends CommonCommand
         // START: DID YOU SET UP YOUR DATABASE?
         echo "\n\n\n";
         $this->alert('Did you already set up your database, and double check that the DB vars are set in .env?');
-        $runConfirmation = $this->ask('<fg=yellow>(type the word "yes" to continue)</>');
+        $runConfirmation = $this->ask('<fg=yellow;bg=red>(type the word "yes" to continue)</>');
         if ($runConfirmation != strtolower("yes")) {
             $this->line('<fg=red;bg=yellow>OK, you want to set up your DB, and check your vars in .env, so I am NOT going to continue running this command. Bye!</>');
             $this->echoOutro();
@@ -221,8 +225,8 @@ class LasalleinstalladminappCommand extends CommonCommand
         // Drop the database tables
         echo "\n";
         $this->comment('Do you want to DROP the existing database?');
-        $runConfirmation = $this->ask('<fg=yellow>(type the word "yes" to continue)</>');
-        if ($runConfirmation == strtolower("yes")) {
+        $runConfirmation = $this->ask('<fg=yellow;bg=red>(type the word "drop" to DROP your database)</>');
+        if ($runConfirmation == strtolower("drop")) {
             $this->comment('Now about to DROP your existing database...');
             $database = $this->input->getOption('database');
             $this->dropAllTables($database);
@@ -241,16 +245,76 @@ class LasalleinstalladminappCommand extends CommonCommand
         $this->comment('Now running the database seeding...');
         $this->call('lslibrary:customseed');
         //$this->comment('Your database was seeded.');
+
+
+        // Set up the first owner.
+        // Only the test data populates the first owner, which happens to be "bob.bloom@lasallesoftware.ca", "secret")
+        if (! env('LASALLE_POPULATE_DATABASE_WITH_TEST_DATA')) {
+
+            echo "\n\n";
+            $this->line('================================================================================');
+            $this->line('                       SETTING UP YOUR FIRST OWNER');
+            $this->line('================================================================================');
+            $this->line(' ');
+            $this->line("Your administrative app requires someone with an 'owner' role.");
+            $this->line('An owner has the highest level of permissions in your admin app.');
+            $this->line('Only a few people should be assigned this ownership role.');
+            $this->line('--------------------------------------------------------------------------------');
+            $this->line('Please set up the first owner of your admin site by specifying the first name,');
+            $this->line('surname, and email address of your first owner:');
+            $this->line('--------------------------------------------------------------------------------');
+            echo "\n\n";
+            $this->line('-----------------------------------------------------------------------');
+            $this->line("Admin Site Owner's First Name:");
+            $this->line('-----------------------------------------------------------------------');
+            echo "\n";
+            $this->comment("What is the first name of your first owner?");
+            $ownerFirstName = $this->ask("<bg=red>(I do *not* check for spelling or for anything, so please type c-a-r-e-f-u-l-l-y!)</>");
+            $this->comment('Thank you! The first name you entered: '. $ownerFirstName);
+
+            echo "\n\n";
+            $this->line('-----------------------------------------------------------------------');
+            $this->line("Admin Site Owner's Surname:");
+            $this->line('-----------------------------------------------------------------------');
+            echo "\n";
+            $this->comment("What is the surname of your first owner?");
+            $ownerSurname = $this->ask("<bg=red>(I do *not* check for spelling or for anything, so please type c-a-r-e-f-u-l-l-y!)</>");
+            $this->comment('Thank you! The surname you entered: '. $ownerSurname);
+
+            echo "\n\n";
+            $this->line('-----------------------------------------------------------------------');
+            $this->line("Admin Site Owner's Email Address:");
+            $this->line('-----------------------------------------------------------------------');
+            echo "\n";
+            $this->comment("What is the email address of your first owner?");
+            $ownerEmailAddress = $this->ask("<bg=red>(I do *not* check for spelling or for anything, so please type c-a-r-e-f-u-l-l-y!)</>");
+            $this->comment('Thank you! The email address you entered: '. $ownerEmailAddress);
+
+            $this->createTheFirstOwner($ownerFirstName, $ownerSurname, $ownerEmailAddress);
+
+            echo "\n\n";
+            $this->line('================================================================================');
+            $this->line('Congratulations! You just set up your first owner!');
+            $this->line('================================================================================');
+            $this->line(' ');
+            $this->line('Here are your credentials to log into your admin app:');
+            $this->line(' ');
+            $this->comment(' email address: ' . $ownerEmailAddress);
+            $this->comment('      password: secret');
+            $this->line(' ');
+            $this->line(' ');
+            $this->line('<bg=red>Note: please change your password when you log in.</>');
+            $this->line('================================================================================');
+        }
         // END: DATABASE DROP, MIGRATION, AND SEEDS
         // -------------------------------------------------------------------------------------------------------------
 
 
 
         // -------------------------------------------------------------------------------------------------------------
-        // START: DONE!
-        echo "\n\n\n";
+        // START: FINISHED!
         $this->echoOutro();
-        // END: DONE!
+        // END: FINISHED!
         // -------------------------------------------------------------------------------------------------------------
     }
 
@@ -287,6 +351,155 @@ class LasalleinstalladminappCommand extends CommonCommand
         $envFile = preg_replace($pattern, $replacement, $envFile);
 
         file_put_contents($this->laravel->environmentFilePath(), $envFile);
+    }
+
+    /**
+     * Create the admin app's first owner.
+     *
+     * @param  string $firstName     The first owner's first name.
+     * @param  string $surname       The first owner's surname.
+     * @param  string $emailAddress  The first owner's email address.
+     * @return void
+     */
+    protected function createTheFirstOwner($firstName, $surname, $emailAddress)
+    {
+        $firstName = ucfirst($firstName);
+        $surname   = ucfirst($surname);
+
+        $uuid = 'created from lasalleinstalladminapp';
+        $this->createUuidsRecord($uuid);
+        $this->createEmailsRecord($emailAddress, $uuid);
+        $this->createPersonsRecord($firstName, $surname, $uuid);
+        $this->createPersonbydomainsRecord($firstName, $surname, $emailAddress, $uuid);
+    }
+
+    /**
+     * Create the UUID record for creating the first owner.
+     *
+     * Using the DB facade for expediency.
+     *
+     * @param  string $uuid          The uuid code for creating the first owner using this custom artisan command.
+     * @return void
+     */
+    protected function createUuidsRecord($uuid)
+    {
+        DB::table('uuids')->insert([
+            'lasallesoftware_event_id' => 1,
+            'uuid'                     => $uuid,
+            'created_at'               => Carbon::now(),
+            'created_by'               => 1,
+        ]);
+    }
+
+    /**
+     * Create the emails record for the first owner.
+     *
+     * Using the DB facade for expediency.
+     *
+     * @param  string $emailAddress  The first owner's email address.
+     * @param  string $uuid          The uuid code for creating the first owner using this custom artisan command.
+     * @return void
+     */
+    protected function createEmailsRecord($emailAddress, $uuid)
+    {
+        DB::table('emails')->insert([
+            'id'                    => 1,
+            'lookup_email_type_id'  => 1,
+            'email_address'         => $emailAddress,
+            'description'           => null,
+            'comments'              => null,
+            'uuid'                  => $uuid,
+            'created_at'            => Carbon::now(),
+            'created_by'            => 1,
+            'updated_at'            => null,
+            'updated_by'            => null,
+            'locked_at'             => null,
+            'locked_by'             => null,
+        ]);
+    }
+
+    /**
+     * Create the persons record for the first owner.
+     *
+     * Using the DB facade for expediency.
+     *
+     * @param  string $firstName     The first owner's first name.
+     * @param  string $surname       The first owner's surname.
+     * @param  string $uuid          The uuid code for creating the first owner using this custom artisan command.
+     * @return void
+     */
+    protected function createPersonsRecord($firstName, $surname, $uuid)
+    {
+        DB::table('persons')->insert([
+            'id'             => 2,
+            'name_calculated' => $firstName . ' ' . $surname,
+            'salutation'     => null,
+            'first_name'     => $firstName,
+            'middle_name'    => null,
+            'surname'        => $surname,
+            'position'       => null,
+            'description'    => 'This person must be an "owner".',
+            'comments'       => null,
+            'profile'        => null,
+            'featured_image' => null,
+            'birthday'       => null,
+            'anniversary'    => null,
+            'deceased'       => null,
+            'comments_date'  => null,
+            'uuid'           => $uuid,
+            'created_at'     => Carbon::now(),
+            'created_by'     => 1,
+            'updated_at'     => null,
+            'updated_by'     => null,
+            'locked_at'      => null,
+            'locked_by'      => null,
+        ]);
+
+        // populate the person_email pivot table with the above email address
+        DB::table('person_email')->insert([
+            'id'          => 1,
+            'person_id'   => 2,
+            'email_id'    => 1,
+        ]);
+    }
+
+    /**
+     * Create the personbydomains record for the first owner.
+     *
+     * Using the DB facade for expediency.
+     *
+     * @param  string $firstName     The first owner's first name.
+     * @param  string $surname       The first owner's surname.
+     * @param  string $emailAddress  The first owner's email address.
+     * @param  string $uuid          The uuid code for creating the first owner using this custom artisan command.
+     * @return void
+     */
+    protected function createPersonbydomainsRecord($firstName, $surname, $emailAddress, $uuid)
+    {
+        DB::table('personbydomains')->insert([
+            'person_id'             => 2,
+            'person_first_name'     => $firstName,
+            'person_surname'        => $surname,
+            'name_calculated'       => $firstName . ' ' . $surname,
+            'email'                 => $emailAddress,
+            'email_verified_at'     => Carbon::now(),
+            'password'              => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+            'installed_domain_id'   => 1,
+            'installed_domain_title' => app('config')->get('lasallesoftware-library.lasalle_app_domain_name'),
+            'uuid'                  => 'created_during_initial_seeding',
+            'created_at'            => Carbon::now(),
+            'created_by'            => 1,
+            'updated_at'            => null,
+            'updated_by'            => null,
+            'locked_at'             => null,
+            'locked_by'             => null,
+        ]);
+
+        DB::table('personbydomain_lookup_roles')->insert([
+            'id'                => 1,
+            'personbydomain_id' => 1,
+            'lookup_role_id'    => 1,
+        ]);
     }
 
     /**

@@ -38,39 +38,36 @@ class PersonByDomainsTableSeeder extends BaseSeeder
      */
     public function run()
     {
-        $installed_domain_id = 1;  // Admin back-end domain
-
-        // for the owner role
-        $person = $this->getPerson(2);
-        DB::table('personbydomains')->insert([
-            'person_id'             => $person->id,
-            'person_first_name'     => $person->first_name,
-            'person_surname'        => $person->surname,
-            'name_calculated'       => $person->first_name . ' ' . $person->surname,
-            'email'                 => $person->email[0]->email_address,
-            'email_verified_at'     => Carbon::now(),
-            'password'              => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-            'installed_domain_id'   => 1,
-            'installed_domain_title' => $this->getDomainTitle($installed_domain_id),
-            'uuid'                  => 'created_during_initial_seeding',
-            'created_at'            => Carbon::now(),
-            'created_by'            => 1,
-            'updated_at'            => null,
-            'updated_by'            => null,
-            'locked_at'             => null,
-            'locked_by'             => null,
-        ]);
-
-        DB::table('personbydomain_lookup_roles')->insert([
-            'id'                => 1,
-            'personbydomain_id' => 1,
-            'lookup_role_id'    => 1,
-        ]);
-
-
         if ($this->doPopulateWithTestData()) {
 
+            $installed_domain_id = 1;  // Admin back-end domain
 
+            // for the owner role
+            $person = $this->getPerson(2);
+            DB::table('personbydomains')->insert([
+                'person_id'             => $person->id,
+                'person_first_name'     => $person->first_name,
+                'person_surname'        => $person->surname,
+                'name_calculated'       => $person->first_name . ' ' . $person->surname,
+                'email'                 => $person->email[0]->email_address,
+                'email_verified_at'     => Carbon::now(),
+                'password'              => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+                'installed_domain_id'   => 1,
+                'installed_domain_title' => $this->getDomainTitle($installed_domain_id),
+                'uuid'                  => 'created_during_initial_seeding',
+                'created_at'            => Carbon::now(),
+                'created_by'            => 1,
+                'updated_at'            => null,
+                'updated_by'            => null,
+                'locked_at'             => null,
+                'locked_by'             => null,
+            ]);
+
+            DB::table('personbydomain_lookup_roles')->insert([
+                'id'                => 1,
+                'personbydomain_id' => 1,
+                'lookup_role_id'    => 1,
+            ]);
 
             // for the super administrator role
             $person = $this->getPerson(3);

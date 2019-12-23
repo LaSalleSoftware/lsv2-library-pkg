@@ -91,31 +91,31 @@ class ProfilesTablesSeeder extends BaseSeeder
         //////////////              EMAILS              ///////////////////
         ///////////////////////////////////////////////////////////////////
 
-        // email address for the owner role
-        DB::table('emails')->insert([
-            'id'                    => 1,
-            'lookup_email_type_id'  => 1,
-            'email_address'         => 'bob.bloom@lasallesoftware.ca',
-            'description'           => null,
-            'comments'              => null,
-            'uuid'                  => $uuid,
-            'created_at'            => Carbon::now(),
-            'created_by'            => 1,
-            'updated_at'            => null,
-            'updated_by'            => null,
-            'locked_at'             => null,
-            'locked_by'             => null,
-        ]);
-
-        // populate the person_email pivot table with the above email address
-        DB::table('person_email')->insert([
-            'id'          => 1,
-            'person_id'   => 2,
-            'email_id'    => 1,
-        ]);
-
 
         if ($this->doPopulateWithTestData()) {
+
+            // email address for the owner role
+            DB::table('emails')->insert([
+                'id'                    => 1,
+                'lookup_email_type_id'  => 1,
+                'email_address'         => 'bob.bloom@lasallesoftware.ca',
+                'description'           => null,
+                'comments'              => null,
+                'uuid'                  => $uuid,
+                'created_at'            => Carbon::now(),
+                'created_by'            => 1,
+                'updated_at'            => null,
+                'updated_by'            => null,
+                'locked_at'             => null,
+                'locked_by'             => null,
+            ]);
+
+            // populate the person_email pivot table with the above email address
+            DB::table('person_email')->insert([
+                'id'          => 1,
+                'person_id'   => 2,
+                'email_id'    => 1,
+            ]);
 
             // email address for the super administrator role
             DB::table('emails')->insert([

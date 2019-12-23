@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 // Third party classes
-use Illuminate\Support\Carbon;;
+use Illuminate\Support\Carbon;
 
 class UuidTableSeeder extends BaseSeeder
 {
