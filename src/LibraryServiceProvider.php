@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Lasalle Software library
+ * This file is part of the Lasalle Software library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,47 +14,40 @@
  * @license    http://opensource.org/licenses/MIT MIT
  * @author     Bob Bloom
  * @email      bob.bloom@lasallesoftware.ca
- * @link       https://lasallesoftware.ca
- * @link       https://packagist.org/packages/lasallesoftware/lsv2-library-pkg
- * @link       https://github.com/LaSalleSoftware/lsv2-library-pkg
  *
+ * @see       https://lasallesoftware.ca
+ * @see       https://packagist.org/packages/lasallesoftware/lsv2-library-pkg
+ * @see       https://github.com/LaSalleSoftware/lsv2-library-pkg
  */
 
 namespace Lasallesoftware\Library;
 
 // LaSalle Software classes
 // custom artisan commands
-use Lasallesoftware\Library\Commands\CustomseedCommand;
-use Lasallesoftware\Library\Commands\CustomdropCommand;
-use Lasallesoftware\Library\Commands\InstalleddomainseedCommand;
-use Lasallesoftware\Library\Commands\LasalleinstallenvCommand;
-use Lasallesoftware\Library\Commands\LasalleinstalladminappCommand;
-use Lasallesoftware\Library\Commands\DeleteInactiveLoginsRecordsCommand;
-
-// custom guard class
-use Lasallesoftware\Library\Authentication\CustomGuards\LasalleGuard;
-
-// Laravel classes
 use Illuminate\Routing\Router;
-// https://github.com/laravel/framework/blob/5.6/src/Illuminate/Support/ServiceProvider.php
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Gate;
-
-// Laravel Nova class
 use Laravel\Nova\Nova;
-
+use Lasallesoftware\Library\Authentication\CustomGuards\LasalleGuard;
+use Lasallesoftware\Library\Commands\CustomdropCommand;
+use Lasallesoftware\Library\Commands\CustomseedCommand;
+use Lasallesoftware\Library\Commands\DeleteInactiveLoginsRecordsCommand;
+// custom guard class
+use Lasallesoftware\Library\Commands\InstalleddomainseedCommand;
+// Laravel classes
+use Lasallesoftware\Library\Commands\LasalleinstalladminappCommand;
+// https://github.com/laravel/framework/blob/5.6/src/Illuminate/Support/ServiceProvider.php
+use Lasallesoftware\Library\Commands\LasalleinstallenvCommand;
+// Laravel Nova class
+use Lasallesoftware\Library\Commands\LasalleinstallfrontendappCommand;
 
 // see https://laravel.com/docs/5.7/packages
 
 /**
- * Class LibraryServiceProvider
- *
- * @package Lasallesoftware\Library
+ * Class LibraryServiceProvider.
  */
 class LibraryServiceProvider extends ServiceProvider
 {
     use LibraryPoliciesServiceProvider;
-
 
     /**
      * Register any application services.
@@ -64,8 +57,6 @@ class LibraryServiceProvider extends ServiceProvider
      * the register method. Otherwise, you may accidentally use a service that is provided by a service provider
      * which has not loaded yet."
      * (https://laravel.com/docs/5.6/providers#the-register-method)
-     *
-     * @return void
      */
     public function register()
     {
@@ -79,9 +70,53 @@ class LibraryServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the artisan commands for this package.
+     * Bootstrap any package services.
      *
-     * @return void
+     * "So, what if we need to register a view composer within our service provider?
+     * This should be done within the boot method. This method is called after all other service providers
+     * have been registered, meaning you have access to all other services that have been registered by the framework"
+     * (https://laravel.com/docs/5.6/providers)
+     */
+    public function boot(Router $router)
+    {
+        $this->publishConfig();
+
+        $this->loadRoutes();
+
+        $this->loadMigrations();
+        $this->loadDatabaseFactories();
+
+        $this->loadTranslations();
+        $this->publishTranslations();
+
+        $this->loadViews();
+        //$this->publishViews();
+
+        $this->registerPolicies();
+
+        // Decided to directly edit the app's config/auth.php instead of modifying them here
+        //$this->mergeAuthGuardsConfigKey();
+        //$this->overrideDefaultAuthConfigKey();
+
+        $this->registerMiddleware($router);
+    }
+
+    /**
+     * Register middleware.
+     *
+     * @param Router $router
+     */
+    public function registerMiddleware($router)
+    {
+        $router->aliasMiddleware('whitelist', 'Lasallesoftware\Library\Firewall\Http\Middleware\Whitelist');
+
+        // Add a middleware to the end of a middleware group
+        // https://github.com/laravel/framework/blob/6.x/src/Illuminate/Routing/Router.php#L902
+        $router->pushMiddlewareToGroup('web', 'whitelist');
+    }
+
+    /**
+     * Register the artisan commands for this package.
      */
     protected function registerArtisanCommands()
     {
@@ -110,6 +145,11 @@ class LibraryServiceProvider extends ServiceProvider
             'command.lslibrary:lasalleinstalladminapp',
         ]);
 
+        $this->app->bind('command.lslibrary:lasalleinstallfrontendapp', LasalleinstallfrontendappCommand::class);
+        $this->commands([
+            'command.lslibrary:lasalleinstallfrontendapp',
+        ]);
+
         $this->app->bind('command.lslibrary:deleteinactiveloginsrecords', DeleteInactiveLoginsRecordsCommand::class);
         $this->commands([
             'command.lslibrary:deleteinactiveloginsrecords',
@@ -120,13 +160,10 @@ class LibraryServiceProvider extends ServiceProvider
      * Register the bindings for the custom authentication guard.
      *
      * Referenced https://github.com/tymondesigns/jwt-auth/blob/develop/src/Providers/AbstractServiceProvider.php#L96
-     *
-     * @return void
      */
     protected function registerCustomAuthenticationGuard()
     {
         $this->app['auth']->extend('lasalle', function ($app, $name, array $config) {
-
             $guard = new LasalleGuard(
                 'session',
                 $app['auth']->createUserProvider($config['provider']),
@@ -136,62 +173,23 @@ class LibraryServiceProvider extends ServiceProvider
                 $app->make('Lasallesoftware\Library\Authentication\Models\Login')
             );
             $app->refresh('request', $guard, 'setRequest');
+
             return $guard;
         });
     }
 
     /**
-     * Bootstrap any package services.
-     *
-     * "So, what if we need to register a view composer within our service provider?
-     * This should be done within the boot method. This method is called after all other service providers
-     * have been registered, meaning you have access to all other services that have been registered by the framework"
-     * (https://laravel.com/docs/5.6/providers)
-     *
-     * @param  Router $router
-     *
-     * @return void
-     */
-    public function boot(Router $router)
-    {
-        $this->publishConfig();
-
-        $this->loadRoutes();
-
-        $this->loadMigrations();
-        $this->loadDatabaseFactories();
-
-        $this->loadTranslations();
-        $this->publishTranslations();
-
-        $this->loadViews();
-        //$this->publishViews();
-
-        $this->registerPolicies();
-
-        // Decided to directly edit the app's config/auth.php instead of modifying them here
-        //$this->mergeAuthGuardsConfigKey();
-        //$this->overrideDefaultAuthConfigKey();
-
-        $this->registerMiddleware($router);
-    }
-
-    /**
-     * Publish this package's configuration file
-     *
-     * @return void
+     * Publish this package's configuration file.
      */
     protected function publishConfig()
     {
         $this->publishes([
-            __DIR__ . '/../config/lasallesoftware-library.php' => config_path('lasallesoftware-library.php'),
+            __DIR__.'/../config/lasallesoftware-library.php' => config_path('lasallesoftware-library.php'),
         ], 'config');
     }
 
     /**
-     * Load this package's routes
-     *
-     * @return void
+     * Load this package's routes.
      */
     protected function loadRoutes()
     {
@@ -199,9 +197,7 @@ class LibraryServiceProvider extends ServiceProvider
     }
 
     /**
-     * Load this package's migrations
-     *
-     * @return void
+     * Load this package's migrations.
      */
     protected function loadMigrations()
     {
@@ -209,21 +205,18 @@ class LibraryServiceProvider extends ServiceProvider
     }
 
     /**
-     * Load this package's database factories
-     *
-     * @return void
+     * Load this package's database factories.
      */
     protected function loadDatabaseFactories()
     {
         $this->app
             ->make('Illuminate\Database\Eloquent\Factory')
-            ->load(__DIR__ . '/../database/factories');
+            ->load(__DIR__.'/../database/factories')
+        ;
     }
 
     /**
-     * Load this package's translations
-     *
-     * @return void
+     * Load this package's translations.
      */
     protected function loadTranslations()
     {
@@ -232,9 +225,7 @@ class LibraryServiceProvider extends ServiceProvider
 
     /**
      * Publish this package's translation files to the application's
-     * resources/lang/vendor directory
-     *
-     * @return void
+     * resources/lang/vendor directory.
      */
     protected function publishTranslations()
     {
@@ -244,9 +235,7 @@ class LibraryServiceProvider extends ServiceProvider
     }
 
     /**
-     * Load this package's views
-     *
-     * @return void
+     * Load this package's views.
      */
     protected function loadViews()
     {
@@ -255,9 +244,7 @@ class LibraryServiceProvider extends ServiceProvider
 
     /**
      * Publish this package's views to the application's
-     * resources/views/vendor directory
-     *
-     * @return void
+     * resources/views/vendor directory.
      */
     protected function publishViews()
     {
@@ -267,20 +254,16 @@ class LibraryServiceProvider extends ServiceProvider
     }
 
     /**
-     * Merge config keys
-     *
-     * @return void
+     * Merge config keys.
      */
     protected function mergeAuthGuardsConfigKey()
     {
-        $path = __DIR__ . '/../config/auth-guards.php';
+        $path = __DIR__.'/../config/auth-guards.php';
         $this->mergeConfigFrom($path, 'auth.guards');
     }
 
     /**
-     * Override the auth config file's defaults key
-     *
-     * @return void
+     * Override the auth config file's defaults key.
      */
     protected function overrideDefaultAuthConfigKey()
     {
@@ -290,21 +273,5 @@ class LibraryServiceProvider extends ServiceProvider
         ];
 
         $this->app['config']->set('auth.defaults', $newDefaultAuth);
-    }
-
-    /**
-     * Register middleware.
-     *
-     * @param Router $router
-     *
-     * @return void
-     */
-    public function registerMiddleware($router)
-    {
-        $router->aliasMiddleware('whitelist', 'Lasallesoftware\Library\Firewall\Http\Middleware\Whitelist');
-
-        // Add a middleware to the end of a middleware group
-        // https://github.com/laravel/framework/blob/6.x/src/Illuminate/Routing/Router.php#L902
-        $router->pushMiddlewareToGroup('web', 'whitelist');
     }
 }
