@@ -36,11 +36,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
 /**
- * Class LasalleinstallpartoneCommand
+ * Class LasalleinstalladminappCommand
  *
- * First of two artisan command installation scripts
- *
- * @package Lasallesoftware\Library\Commands\LasalleinstallpartoneCommand
+ * @package Lasallesoftware\Library\Commands\LasalleinstalladminappCommand
  */
 class LasalleinstalladminappCommand extends CommonCommand
 {
@@ -486,7 +484,7 @@ class LasalleinstalladminappCommand extends CommonCommand
             'password'              => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
             'installed_domain_id'   => 1,
             'installed_domain_title' => app('config')->get('lasallesoftware-library.lasalle_app_domain_name'),
-            'uuid'                  => 'created_during_initial_seeding',
+            'uuid'                  => $uuid,
             'created_at'            => Carbon::now(),
             'created_by'            => 1,
             'updated_at'            => null,
