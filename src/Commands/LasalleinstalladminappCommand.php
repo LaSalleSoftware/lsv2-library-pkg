@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Lasalle Software library
+ * This file is part of the Lasalle Software library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,31 +14,26 @@
  * @license    http://opensource.org/licenses/MIT MIT
  * @author     Bob Bloom
  * @email      bob.bloom@lasallesoftware.ca
- * @link       https://lasallesoftware.ca
- * @link       https://packagist.org/packages/lasallesoftware/lsv2-library-pkg
- * @link       https://github.com/LaSalleSoftware/lsv2-library-pkg
  *
+ * @see       https://lasallesoftware.ca
+ * @see       https://packagist.org/packages/lasallesoftware/lsv2-library-pkg
+ * @see       https://github.com/LaSalleSoftware/lsv2-library-pkg
  */
 
 namespace Lasallesoftware\Library\Commands;
 
 // LaSalle Software class
-use Lasallesoftware\Library\Common\Commands\CommonCommand;
-
-// Laravel classes
-use http\Exception\BadQueryStringException;
 use Illuminate\Console\ConfirmableTrait;
-use Symfony\Component\Console\Input\InputOption;
+// Laravel classes
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\DB;
-
-// Third party classes
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Lasallesoftware\Library\Common\Commands\CommonCommand;
+// Third party classes
+use Symfony\Component\Console\Input\InputOption;
 
 /**
- * Class LasalleinstalladminappCommand
- *
- * @package Lasallesoftware\Library\Commands\LasalleinstalladminappCommand
+ * Class LasalleinstalladminappCommand.
  */
 class LasalleinstalladminappCommand extends CommonCommand
 {
@@ -74,22 +69,17 @@ class LasalleinstalladminappCommand extends CommonCommand
 
     /**
      * Create a new config command instance.
-     *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @return void
      */
     public function __construct(Filesystem $files)
     {
         parent::__construct();
 
-        $this->files   = $files;
+        $this->files = $files;
         $this->baseDir = __DIR__.'/tmp';
     }
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle()
     {
@@ -101,23 +91,26 @@ class LasalleinstalladminappCommand extends CommonCommand
         $this->info('================================================================================');
         echo "\n\n";
 
-        if (env('LASALLE_APP_NAME') != 'adminbackendapp') {
+        if ('adminbackendapp' != env('LASALLE_APP_NAME')) {
             $this->line("This installation artisan command is specifically for my LaSalle Software's admin application.");
-            $this->line('You are installing my ' . mb_strtoupper(env('LASALLE_APP_NAME')) . ' LaSalle Software application.');
-            $this->line("So I am exiting you out of this artisan command.");
-            $this->line("exiting...");
-            $this->line("You are now exited from lslibrary:lasalleinstalladminapp.");
+            $this->line('You are installing my '.mb_strtoupper(env('LASALLE_APP_NAME')).' LaSalle Software application.');
+            $this->line('So I am exiting you out of this artisan command.');
+            $this->line('exiting...');
+            $this->line('You are now exited from lslibrary:lasalleinstalladminapp.');
             echo "\n\n";
+
             return;
         }
 
+        // -------------------------------------------------------------------------------------------------------------
+        // START: INTRO
         $this->line('--------------------------------------------------------------------------------');
         $this->line('                       Welcome to my LaSalle Software\'s');
         $this->line('             Administrative Back-end App\' Installation Artisan Command!');
         $this->line('--------------------------------------------------------------------------------');
-        $this->line('  You are installing the ' . mb_strtoupper(env('LASALLE_APP_NAME')) . ' LaSalle Software Application.');
+        $this->line('  You are installing the '.mb_strtoupper(env('LASALLE_APP_NAME')).' LaSalle Software Application.');
         echo "\n";
-        $this->line('  You are installing to your ' . $this->getLaravel()->environment() . ' environment.');
+        $this->line('  You are installing to your '.$this->getLaravel()->environment().' environment.');
         $this->line('--------------------------------------------------------------------------------');
         $this->line('  This command does stuff to set up my admin app, stuff that does not happen');
         $this->line('  with my other apps: Nova preparation, optional database drop, database');
@@ -136,56 +129,52 @@ class LasalleinstalladminappCommand extends CommonCommand
         // END: INTRO
         // -------------------------------------------------------------------------------------------------------------
 
-
-
         // -------------------------------------------------------------------------------------------------------------
         // START: DID YOU RUN LSLIBRARY:LASALLEINSTALLENV ALREADY?
         echo "\n\n";
         $this->alert('Did you already run lslibrary:lasalleinstallenv? You must run it first!');
         $runConfirmation = $this->ask('<fg=yellow;bg=red>(type the word "oops" to exit this artisan command, or just press enter to continue...)</>');
-        if ($runConfirmation == strtolower("oops")) {
+        if ($runConfirmation == strtolower('oops')) {
             $this->line('<fg=red;bg=yellow>Good stuff! Please run "php artisan lslibrary:lasalleinstallenv" and then re-run this artisan command.</>');
             $this->echoOutro();
+
             return;
         }
         $this->comment('ok... Let us get this show on the road...');
         // END: DID YOU RUN LSLIBRARY:LASALLEINSTALLENV ALREADY?
         // -------------------------------------------------------------------------------------------------------------
 
-
-
         // -------------------------------------------------------------------------------------------------------------
         // START: DID YOU SET UP YOUR DATABASE?
         echo "\n\n\n";
         $this->alert('Did you already set up your database, and double check that the DB vars are set in .env?');
         $runConfirmation = $this->ask('<fg=yellow;bg=red>(type the word "yes" to continue)</>');
-        if ($runConfirmation != strtolower("yes")) {
+        if ($runConfirmation != strtolower('yes')) {
             $this->line('<fg=red;bg=yellow>OK, you want to set up your DB, and check your vars in .env, so I am NOT going to continue running this command. Bye!</>');
             $this->echoOutro();
+
             return;
         }
         $this->comment('ok... you said that you want to continue running this command. Let us continue then...');
         // END: DID YOU SET UP YOUR DATABASE?
         // -------------------------------------------------------------------------------------------------------------
 
-
-
         // -------------------------------------------------------------------------------------------------------------
         // START: THE adminbackendapp NEEDS LARAVEL's FIRST-PARTY "NOVA" ADMIN PACKAGE
-        if (env('LASALLE_APP_NAME') == 'adminbackendapp') {
-
+        if ('adminbackendapp' == env('LASALLE_APP_NAME')) {
             echo "\n\n";
             $this->line('-----------------------------------------------------------------------');
             $this->line("  Now setting up Laravel Nova's first party admin package");
             $this->line('-----------------------------------------------------------------------');
 
             // if NOVA is not installed
-            if (! class_exists('Laravel\Nova\Nova')) {
+            if (!class_exists('Laravel\Nova\Nova')) {
                 echo "\n";
                 $this->line('  <fg=red;bg=yellow>The first party Laravel Nova commercial package is not installed.');
                 $this->line('  <fg=red;bg=yellow>Nova is critical to my admin app. You buy and must install Nova!');
                 $this->line('  <fg=red;bg=yellow>So please install Nova, then re-run this artisan command.');
                 $this->echoOutro();
+
                 return;
             }
             // NOVA is installed, so run "php artisan nova:install"
@@ -204,8 +193,6 @@ class LasalleinstalladminappCommand extends CommonCommand
         // END: THE adminbackendapp NEEDS LARAVEL's FIRST-PARTY "NOVA" ADMIN PACKAGE
         // -------------------------------------------------------------------------------------------------------------
 
-
-
         // -------------------------------------------------------------------------------------------------------------
         // START: DATABASE DROP, MIGRATION, AND SEEDS
 
@@ -216,7 +203,7 @@ class LasalleinstalladminappCommand extends CommonCommand
 
         // Set an env var to false when production
         // (probably not really necessary)
-        if (strtolower($this->getLaravel()->environment()) === 'production') {
+        if ('production' === strtolower($this->getLaravel()->environment())) {
             $this->setLasallePopulateDatabaseWithTestDataToFalse();
         }
 
@@ -224,11 +211,11 @@ class LasalleinstalladminappCommand extends CommonCommand
         echo "\n";
         $this->comment('Do you want to DROP the existing database?');
         $runConfirmation = $this->ask('<fg=yellow;bg=red>(type the word "drop" to DROP your database)</>');
-        if ($runConfirmation == strtolower("drop")) {
+        if ($runConfirmation == strtolower('drop')) {
             $this->comment('Now about to DROP your existing database...');
             $database = $this->input->getOption('database');
             $this->dropAllTables($database);
-            $this->info("Your database was dropped.");
+            $this->info('Your database was dropped.');
         }
 
         // Migration
@@ -244,11 +231,9 @@ class LasalleinstalladminappCommand extends CommonCommand
         $this->call('lslibrary:customseed');
         //$this->comment('Your database was seeded.');
 
-
         // Set up the first owner.
         // Only the test data populates the first owner, which happens to be "bob.bloom@lasallesoftware.ca", "secret")
-        if (! env('LASALLE_POPULATE_DATABASE_WITH_TEST_DATA')) {
-
+        if (!env('LASALLE_POPULATE_DATABASE_WITH_TEST_DATA')) {
             echo "\n\n";
             $this->line('================================================================================');
             $this->line('                       SETTING UP YOUR FIRST OWNER');
@@ -266,27 +251,27 @@ class LasalleinstalladminappCommand extends CommonCommand
             $this->line("Admin Site Owner's First Name:");
             $this->line('-----------------------------------------------------------------------');
             echo "\n";
-            $this->comment("What is the first name of your first owner?");
-            $ownerFirstName = $this->ask("<bg=red>(I do *not* check for spelling or for anything, so please type c-a-r-e-f-u-l-l-y!)</>");
-            $this->comment('Thank you! The first name you entered: '. $ownerFirstName);
+            $this->comment('What is the first name of your first owner?');
+            $ownerFirstName = $this->ask('<bg=red>(I do *not* check for spelling or for anything, so please type c-a-r-e-f-u-l-l-y!)</>');
+            $this->comment('Thank you! The first name you entered: '.$ownerFirstName);
 
             echo "\n\n";
             $this->line('-----------------------------------------------------------------------');
             $this->line("Admin Site Owner's Surname:");
             $this->line('-----------------------------------------------------------------------');
             echo "\n";
-            $this->comment("What is the surname of your first owner?");
-            $ownerSurname = $this->ask("<bg=red>(I do *not* check for spelling or for anything, so please type c-a-r-e-f-u-l-l-y!)</>");
-            $this->comment('Thank you! The surname you entered: '. $ownerSurname);
+            $this->comment('What is the surname of your first owner?');
+            $ownerSurname = $this->ask('<bg=red>(I do *not* check for spelling or for anything, so please type c-a-r-e-f-u-l-l-y!)</>');
+            $this->comment('Thank you! The surname you entered: '.$ownerSurname);
 
             echo "\n\n";
             $this->line('-----------------------------------------------------------------------');
             $this->line("Admin Site Owner's Email Address:");
             $this->line('-----------------------------------------------------------------------');
             echo "\n";
-            $this->comment("What is the email address of your first owner?");
-            $ownerEmailAddress = $this->ask("<bg=red>(I do *not* check for spelling or for anything, so please type c-a-r-e-f-u-l-l-y!)</>");
-            $this->comment('Thank you! The email address you entered: '. $ownerEmailAddress);
+            $this->comment('What is the email address of your first owner?');
+            $ownerEmailAddress = $this->ask('<bg=red>(I do *not* check for spelling or for anything, so please type c-a-r-e-f-u-l-l-y!)</>');
+            $this->comment('Thank you! The email address you entered: '.$ownerEmailAddress);
 
             $this->createTheFirstOwner($ownerFirstName, $ownerSurname, $ownerEmailAddress);
 
@@ -297,7 +282,7 @@ class LasalleinstalladminappCommand extends CommonCommand
             $this->line(' ');
             $this->line('Here are your credentials to log into your admin app:');
             $this->line(' ');
-            $this->comment(' email address: ' . $ownerEmailAddress);
+            $this->comment(' email address: '.$ownerEmailAddress);
             $this->comment('      password: secret');
             $this->line(' ');
             $this->line(' ');
@@ -307,8 +292,6 @@ class LasalleinstalladminappCommand extends CommonCommand
         // END: DATABASE DROP, MIGRATION, AND SEEDS
         // -------------------------------------------------------------------------------------------------------------
 
-
-
         // -------------------------------------------------------------------------------------------------------------
         // START: FINISHED!
         $this->echoOutro();
@@ -317,7 +300,7 @@ class LasalleinstalladminappCommand extends CommonCommand
     }
 
     /**
-     * Echo the final message
+     * Echo the final message.
      *
      * return void
      */
@@ -328,13 +311,10 @@ class LasalleinstalladminappCommand extends CommonCommand
         $this->info('              ** lslibrary:lasalleinstalladminapp has finished **');
         $this->info('====================================================================');
         echo "\n\n";
-        return;
     }
 
     /**
-     * Set LASALLE_POPULATE_DATABASE_WITH_TEST_DATA to false
-     *
-     * @return void
+     * Set LASALLE_POPULATE_DATABASE_WITH_TEST_DATA to false.
      */
     protected function setLasallePopulateDatabaseWithTestDataToFalse()
     {
@@ -354,15 +334,14 @@ class LasalleinstalladminappCommand extends CommonCommand
     /**
      * Create the admin app's first owner.
      *
-     * @param  string $firstName     The first owner's first name.
-     * @param  string $surname       The first owner's surname.
-     * @param  string $emailAddress  The first owner's email address.
-     * @return void
+     * @param string $firstName    the first owner's first name
+     * @param string $surname      the first owner's surname
+     * @param string $emailAddress the first owner's email address
      */
     protected function createTheFirstOwner($firstName, $surname, $emailAddress)
     {
         $firstName = ucfirst($firstName);
-        $surname   = ucfirst($surname);
+        $surname = ucfirst($surname);
 
         $uuid = 'created from lasalleinstalladminapp';
         $this->createUuidsRecord($uuid);
@@ -376,16 +355,15 @@ class LasalleinstalladminappCommand extends CommonCommand
      *
      * Using the DB facade for expediency.
      *
-     * @param  string $uuid          The uuid code for creating the first owner using this custom artisan command.
-     * @return void
+     * @param string $uuid the uuid code for creating the first owner using this custom artisan command
      */
     protected function createUuidsRecord($uuid)
     {
         DB::table('uuids')->insert([
             'lasallesoftware_event_id' => 1,
-            'uuid'                     => $uuid,
-            'created_at'               => Carbon::now(),
-            'created_by'               => 1,
+            'uuid' => $uuid,
+            'created_at' => Carbon::now(),
+            'created_by' => 1,
         ]);
     }
 
@@ -394,25 +372,24 @@ class LasalleinstalladminappCommand extends CommonCommand
      *
      * Using the DB facade for expediency.
      *
-     * @param  string $emailAddress  The first owner's email address.
-     * @param  string $uuid          The uuid code for creating the first owner using this custom artisan command.
-     * @return void
+     * @param string $emailAddress the first owner's email address
+     * @param string $uuid         the uuid code for creating the first owner using this custom artisan command
      */
     protected function createEmailsRecord($emailAddress, $uuid)
     {
         DB::table('emails')->insert([
-            'id'                    => 1,
-            'lookup_email_type_id'  => 1,
-            'email_address'         => $emailAddress,
-            'description'           => null,
-            'comments'              => null,
-            'uuid'                  => $uuid,
-            'created_at'            => Carbon::now(),
-            'created_by'            => 1,
-            'updated_at'            => null,
-            'updated_by'            => null,
-            'locked_at'             => null,
-            'locked_by'             => null,
+            'id' => 1,
+            'lookup_email_type_id' => 1,
+            'email_address' => $emailAddress,
+            'description' => null,
+            'comments' => null,
+            'uuid' => $uuid,
+            'created_at' => Carbon::now(),
+            'created_by' => 1,
+            'updated_at' => null,
+            'updated_by' => null,
+            'locked_at' => null,
+            'locked_by' => null,
         ]);
     }
 
@@ -421,43 +398,42 @@ class LasalleinstalladminappCommand extends CommonCommand
      *
      * Using the DB facade for expediency.
      *
-     * @param  string $firstName     The first owner's first name.
-     * @param  string $surname       The first owner's surname.
-     * @param  string $uuid          The uuid code for creating the first owner using this custom artisan command.
-     * @return void
+     * @param string $firstName the first owner's first name
+     * @param string $surname   the first owner's surname
+     * @param string $uuid      the uuid code for creating the first owner using this custom artisan command
      */
     protected function createPersonsRecord($firstName, $surname, $uuid)
     {
         DB::table('persons')->insert([
-            'id'             => 2,
-            'name_calculated' => $firstName . ' ' . $surname,
-            'salutation'     => null,
-            'first_name'     => $firstName,
-            'middle_name'    => null,
-            'surname'        => $surname,
-            'position'       => null,
-            'description'    => 'This person must be an "owner".',
-            'comments'       => null,
-            'profile'        => null,
+            'id' => 2,
+            'name_calculated' => $firstName.' '.$surname,
+            'salutation' => null,
+            'first_name' => $firstName,
+            'middle_name' => null,
+            'surname' => $surname,
+            'position' => null,
+            'description' => 'This person must be an "owner".',
+            'comments' => null,
+            'profile' => null,
             'featured_image' => null,
-            'birthday'       => null,
-            'anniversary'    => null,
-            'deceased'       => null,
-            'comments_date'  => null,
-            'uuid'           => $uuid,
-            'created_at'     => Carbon::now(),
-            'created_by'     => 1,
-            'updated_at'     => null,
-            'updated_by'     => null,
-            'locked_at'      => null,
-            'locked_by'      => null,
+            'birthday' => null,
+            'anniversary' => null,
+            'deceased' => null,
+            'comments_date' => null,
+            'uuid' => $uuid,
+            'created_at' => Carbon::now(),
+            'created_by' => 1,
+            'updated_at' => null,
+            'updated_by' => null,
+            'locked_at' => null,
+            'locked_by' => null,
         ]);
 
         // populate the person_email pivot table with the above email address
         DB::table('person_email')->insert([
-            'id'          => 1,
-            'person_id'   => 2,
-            'email_id'    => 1,
+            'id' => 1,
+            'person_id' => 2,
+            'email_id' => 1,
         ]);
     }
 
@@ -466,37 +442,36 @@ class LasalleinstalladminappCommand extends CommonCommand
      *
      * Using the DB facade for expediency.
      *
-     * @param  string $firstName     The first owner's first name.
-     * @param  string $surname       The first owner's surname.
-     * @param  string $emailAddress  The first owner's email address.
-     * @param  string $uuid          The uuid code for creating the first owner using this custom artisan command.
-     * @return void
+     * @param string $firstName    the first owner's first name
+     * @param string $surname      the first owner's surname
+     * @param string $emailAddress the first owner's email address
+     * @param string $uuid         the uuid code for creating the first owner using this custom artisan command
      */
     protected function createPersonbydomainsRecord($firstName, $surname, $emailAddress, $uuid)
     {
         DB::table('personbydomains')->insert([
-            'person_id'             => 2,
-            'person_first_name'     => $firstName,
-            'person_surname'        => $surname,
-            'name_calculated'       => $firstName . ' ' . $surname,
-            'email'                 => $emailAddress,
-            'email_verified_at'     => Carbon::now(),
-            'password'              => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-            'installed_domain_id'   => 1,
+            'person_id' => 2,
+            'person_first_name' => $firstName,
+            'person_surname' => $surname,
+            'name_calculated' => $firstName.' '.$surname,
+            'email' => $emailAddress,
+            'email_verified_at' => Carbon::now(),
+            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+            'installed_domain_id' => 1,
             'installed_domain_title' => app('config')->get('lasallesoftware-library.lasalle_app_domain_name'),
-            'uuid'                  => $uuid,
-            'created_at'            => Carbon::now(),
-            'created_by'            => 1,
-            'updated_at'            => null,
-            'updated_by'            => null,
-            'locked_at'             => null,
-            'locked_by'             => null,
+            'uuid' => $uuid,
+            'created_at' => Carbon::now(),
+            'created_by' => 1,
+            'updated_at' => null,
+            'updated_by' => null,
+            'locked_at' => null,
+            'locked_by' => null,
         ]);
 
         DB::table('personbydomain_lookup_roles')->insert([
-            'id'                => 1,
+            'id' => 1,
             'personbydomain_id' => 1,
-            'lookup_role_id'    => 1,
+            'lookup_role_id' => 1,
         ]);
     }
 
