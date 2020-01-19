@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Lasalle Software library
+ * This file is part of the Lasalle Software library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,19 +14,18 @@
  * @license    http://opensource.org/licenses/MIT MIT
  * @author     Bob Bloom
  * @email      bob.bloom@lasallesoftware.ca
- * @link       https://lasallesoftware.ca
- * @link       https://packagist.org/packages/lasallesoftware/lsv2-library-pkg
- * @link       https://github.com/LaSalleSoftware/lsv2-library-pkg
  *
+ * @see       https://lasallesoftware.ca
+ * @see       https://packagist.org/packages/lasallesoftware/lsv2-library-pkg
+ * @see       https://github.com/LaSalleSoftware/lsv2-library-pkg
  */
 
 namespace Lasallesoftware\Library\Policies;
 
 // LaSalle Software class
-use Lasallesoftware\Library\Common\Policies\CommonPolicy;
 use Lasallesoftware\Library\Authentication\Models\Personbydomain as User;
+use Lasallesoftware\Library\Common\Policies\CommonPolicy;
 use Lasallesoftware\Library\Profiles\Models\Installed_domain as Model;
-
 
 //                       SPECIAL NOTE!
 //
@@ -34,11 +33,8 @@ use Lasallesoftware\Library\Profiles\Models\Installed_domain as Model;
 // then -- gasp! -- modify the table directly. Viewing the table in the admin is just a convenience!
 //
 
-
 /**
- * Class Installed_domainPolicy
- *
- * @package Lasallesoftware\Library\Policies
+ * Class Installed_domainPolicy.
  */
 class Installed_domainPolicy extends CommonPolicy
 {
@@ -49,52 +45,44 @@ class Installed_domainPolicy extends CommonPolicy
      */
     protected $recordsDoNotDelete = [];
 
-
     /**
      * Only owners can see installed_domains! No C-U-D operations are allowed.
      *
-     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Installed_domain      $model
      * @return bool
      */
     public function view(User $user, Model $model)
     {
-        return $user->hasRole('owner') ? true: false;
+        return $user->hasRole('owner') ? true : false;
     }
 
     /**
      * Only owners can see installed_domains! No C-U-D operations are allowed.
      *
-     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
      * @return bool
      */
     public function create(User $user)
     {
-        return false;
+        return $user->hasRole('owner') ? true : false;
     }
 
     /**
      * Only owners can see installed_domains! No C-U-D operations are allowed.
      *
-     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Installed_domain      $model
      * @return bool
      */
     public function update(User $user, Model $model)
     {
-        return false;
+        return $user->hasRole('owner') ? true : false;
     }
 
     /**
      * Only owners can see installed_domains! No C-U-D operations are allowed.
      *
-     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Installed_domain      $model
      * @return bool
      */
     public function delete(User $user, Model $model)
     {
-        return false;
+        return $user->hasRole('owner') ? true : false;
     }
 
     /**
@@ -102,8 +90,6 @@ class Installed_domainPolicy extends CommonPolicy
      *
      *  This feature is not used!
      *
-     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Installed_domain      $model
      * @return bool
      */
     public function restore(User $user, Model $model)
@@ -116,8 +102,6 @@ class Installed_domainPolicy extends CommonPolicy
      *
      * This feature is not used!
      *
-     * @param  \Lasallesoftware\Library\Authentication\Models\Personbydomain  $user
-     * @param  \Lasallesoftware\Library\Profiles\Models\Installed_domain      $model
      * @return bool
      */
     public function forceDelete(User $user, Model $model)
