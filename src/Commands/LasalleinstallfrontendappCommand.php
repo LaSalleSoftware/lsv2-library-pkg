@@ -186,7 +186,7 @@ class LasalleinstallfrontendappCommand extends CommonCommand
         $lasalleAppDomainName = env('LASALLE_APP_DOMAIN_NAME');
 
         DB::table('installed_domains')->insert([
-            'title' => $lasalleAppDomainName,
+            'title' => strtolower($lasalleAppDomainName),
             'description' => $lasalleAppDomainName,
             'enabled' => 1,
             'created_at' => Carbon::now(),
