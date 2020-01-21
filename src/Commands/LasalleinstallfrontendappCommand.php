@@ -183,11 +183,9 @@ class LasalleinstallfrontendappCommand extends CommonCommand
      */
     protected function createInstalleddomainsRecord()
     {
-        $lasalleAppDomainName = env('LASALLE_APP_DOMAIN_NAME');
-
         DB::table('installed_domains')->insert([
-            'title' => strtolower($lasalleAppDomainName),
-            'description' => $lasalleAppDomainName,
+            'title' => env('LASALLE_APP_DOMAIN_NAME'),
+            'description' => env('LASALLE_APP_DOMAIN_NAME'),
             'enabled' => 1,
             'created_at' => Carbon::now(),
             'created_by' => 1,
