@@ -20,7 +20,7 @@
  *
  */
 
-namespace Lasallesoftware\Library\Http\Controllers\Auth;
+namespace Lasallesoftware\Library\Authentication\Http\Controllers;
 
 // LaSalle Software
 use Lasallesoftware\Library\Common\Http\Controllers\CommonController;
@@ -29,7 +29,7 @@ use Lasallesoftware\Library\Common\Http\Controllers\CommonController;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 
 
-class VerificationController extends CommomnController
+class VerificationController extends CommonController
 {
     /*
     |--------------------------------------------------------------------------
