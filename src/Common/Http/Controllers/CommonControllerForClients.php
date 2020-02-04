@@ -77,10 +77,14 @@ class CommonControllerForClients extends BaseController
         $token = $this->factory->createJWT($uuidComment);
 
         $headers = [
-            'Authorization'    => 'Bearer ' . $token,
-            'RequestingDomain' => env('LASALLE_APP_DOMAIN_NAME'),
-            'Accept'           => 'application/json',
+            'Authorization'                           => 'Bearer ' . $token,
+            'RequestingDomain'                        => env('LASALLE_APP_DOMAIN_NAME'),
+            'Accept'                                  => 'application/json',
         ];
+
+        if ($path == $this->getApiPath('homepageblogposts')) {
+            $headers['NumberOfBlogPostsToDisplayOnTheHomePage'] = config('lasallesoftware-frontendapp.lasalle_number_of_recent_blog_posts_to_display_on_the_home_page');
+        }
 
         $apiUrl = $this->getApiURL();
 
@@ -150,6 +154,7 @@ class CommonControllerForClients extends BaseController
             'allcategoryblogposts'   => '/api/v1/allcategoryblogposts',
             'alltagblogposts'        => '/api/v1/alltagblogposts',
             'allauthorblogposts'     => '/api/v1/allauthorblogposts',
+            'homepageblogposts'      => '/api/v1/homepageblogposts',
             'singleblogpost'         => '/api/v1/singleblogpost',
         ];
     }
