@@ -130,8 +130,18 @@ class CommonControllerForClients extends BaseController
         $this->messages = new MessageBag();
 
         $this->messages->add('StatusCode', $response->getStatusCode());
-        $this->messages->add('Error',      $body->error);
-        $this->messages->add('Reason',     $body->reason);
+        
+        if (isset($body->error)) {
+            $this->messages->add('Error', $body->error);
+        } else {
+            $this->messages->add('Error', 'no error was specified');
+        }
+
+        if (isset($body->reason)) {
+            $this->messages->add('Reason', $body->reason);
+        } else {
+            $this->messages->add('Error', 'no reason was specified');
+        }
 
         return;
     }
