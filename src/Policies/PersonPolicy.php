@@ -82,7 +82,7 @@ class PersonPolicy extends CommonPolicy
             return false;
         }
 
-        if ($this->isRecordDoNotDelete($model)) {
+        if ($model->id == 1) {
             return false;
         }
 
