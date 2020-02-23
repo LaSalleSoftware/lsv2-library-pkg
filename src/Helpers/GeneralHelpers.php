@@ -45,7 +45,6 @@ trait GeneralHelpers
         return $url;
     }
 
-
     /**
      * Is a value in an array?
      *
@@ -63,5 +62,21 @@ trait GeneralHelpers
     public function isValueInArray($needle, array $haystack) : bool
     {
         return (in_array($needle, $haystack)) ? true : false;
+    }
+
+    /**
+     * A quick text sanitize.
+     * 
+     * Added for the contact form package.
+     *
+     * @param   string    $text   Text to undergo a quick sanitize
+     * @return  string
+     */
+    public function quickSanitize($text) : string
+    {
+        $santizedText = trim($text);
+        $santizedText = strip_tags($santizedText);
+
+        return $santizedText;
     }
 }
