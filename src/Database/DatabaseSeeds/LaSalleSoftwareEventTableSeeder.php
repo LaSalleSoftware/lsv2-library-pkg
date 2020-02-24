@@ -154,7 +154,7 @@ class LaSalleSoftwareEventTableSeeder extends BaseSeeder
         DB::table('lookup_lasallesoftware_events')->insert([
             'id'          => 10,
             'title'       => 'Contact Form',
-            'description' => "Initiated by the contact form's security step (two) Lasallesoftware\Contactform\Http\Controllers;SecuritystepController::ProcessSecurityStep().",
+            'description' => "Initiated by the contact form's security step (two) [Lasallesoftware\Contactform\Http\Controllers;SecuritystepController::ProcessSecurityStep()].",
             'enabled'     => 1,
             'created_at'  => now(),
             'created_by'  => 1,
