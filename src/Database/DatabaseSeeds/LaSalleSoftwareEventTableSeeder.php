@@ -154,7 +154,33 @@ class LaSalleSoftwareEventTableSeeder extends BaseSeeder
         DB::table('lookup_lasallesoftware_events')->insert([
             'id'          => 10,
             'title'       => 'Contact Form',
-            'description' => "Initiated by the contact form's security step (two) [Lasallesoftware\Contactform\Http\Controllers;SecuritystepController::ProcessSecurityStep()].",
+            'description' => "Initiated by the contact form [Lasallesoftware\Contactform\Http\Controllers\ContactformController::HandleContactForm()].",
+            'enabled'     => 1,
+            'created_at'  => now(),
+            'created_by'  => 1,
+            'updated_at'  => null,
+            'updated_by'  => null,
+            'locked_at'   => null,
+            'locked_by'   => null,
+        ]);
+
+        DB::table('lookup_lasallesoftware_events')->insert([
+            'id'          => 11,
+            'title'       => 'Contact Form Submission - Security Form',
+            'description' => "Initiated by the contact form's security form [Lasallesoftware\Contactform\Http\Controllers\SecurityController::HandleSecurity()].",
+            'enabled'     => 1,
+            'created_at'  => now(),
+            'created_by'  => 1,
+            'updated_at'  => null,
+            'updated_by'  => null,
+            'locked_at'   => null,
+            'locked_by'   => null,
+        ]);
+
+        DB::table('lookup_lasallesoftware_events')->insert([
+            'id'          => 12,
+            'title'       => 'Contact Form Submission - Confirmation Form',
+            'description' => "Initiated by the contact form's confirmation view[Lasallesoftware\Contactform\Http\Controllers\ConfirmationController::HandleConfirmation()].",
             'enabled'     => 1,
             'created_at'  => now(),
             'created_by'  => 1,
