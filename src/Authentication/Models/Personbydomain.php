@@ -235,6 +235,22 @@ class Personbydomain extends Authenticatable
         return $this->belongsTo('Lasallesoftware\Blogbackend\Models\Post');
     }
 
+    /*
+     * One to one (inverse) relationship with contact_form.
+     *
+     * Method name must be:
+     *    * the model name,
+     *    * NOT the table name,
+     *    * singular;
+     *    * lowercase.
+     *
+     * @return Eloquent
+     */
+    public function contact_form()
+    {
+        return $this->belongsTo('Lasallesoftware\Contentform\Models\Contact_form');
+    }
+
 
     ///////////////////////////////////////////////////////////////////
     //////////////          LOCAL SCOPES            ///////////////////

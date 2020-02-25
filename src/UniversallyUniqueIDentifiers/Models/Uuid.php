@@ -82,4 +82,20 @@ class Uuid extends CommonModel
     {
         return $this->belongsTo('Lasallesoftware\Library\LaSalleSoftwareEvents\Lookup_lasallesoftware_event');
     }
+
+    /*
+     * One to one (inverse) relationship with contact_form.
+     *
+     * Method name must be:
+     *    * the model name,
+     *    * NOT the table name,
+     *    * singular;
+     *    * lowercase.
+     *
+     * @return Eloquent
+     */
+    public function contact_form()
+    {
+        return $this->belongsTo('Lasallesoftware\Contentform\Models\Contact_form');
+    }
 }
