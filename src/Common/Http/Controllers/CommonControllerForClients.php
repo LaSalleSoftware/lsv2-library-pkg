@@ -24,6 +24,7 @@ namespace Lasallesoftware\Library\Common\Http\Controllers;
 
 // LaSalle Software
 use Lasallesoftware\Blogfrontend\JWT\Factory;
+use Lasallesoftware\Library\UniversallyUniqueIDentifiers\UuidGenerator;
 
 // Laravel Framework
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -46,6 +47,11 @@ class CommonControllerForClients extends BaseController
     protected $factory;
 
     /**
+     * @var Lasallesoftware\Library\UniversallyUniqueIDentifiers\UuidGenerator
+     */
+    protected $uuidGenerator;
+
+    /**
      * The message bag instance.
      *
      * @var \Illuminate\Support\MessageBag
@@ -58,23 +64,29 @@ class CommonControllerForClients extends BaseController
      *
      * @param  Lasallesoftware\Blogfrontend\JWT\Factory  $factory
      */
-    public function __construct(Factory $factory)
+    public function __construct(Factory $factory, UuidGenerator $uuidGenerator)
     {
-        $this->factory = $factory;
+        $this->factory       = $factory;
+        $this->uuidGenerator = $uuidGenerator;
+    }
+
+    public function makeUuid($comment, $lasallesoftareEventId = 9)
+    {
+        return $this->uuidGenerator->createUuid($lasallesoftareEventId, $comment, 1);
     }
 
     /**
      * Send a request to the LaSalle administrative back-end.
      *
-     * @param  string  $uuidComment
+     * @param  string  $uuid
      * @param  string  $path
      * @param  string  $slug
      * @return mixed|\Psr\Http\Message\ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function sendRequestToLasalleBackend($uuidComment, $path, $slug = null)
+    public function sendRequestToLasalleBackend($uuid, $path, $slug = null)
     {
-        $token = $this->factory->createJWT($uuidComment);
+        $token = $this->factory->createJWT($uuid);
 
         $headers = [
             'Authorization'                           => 'Bearer ' . $token,
