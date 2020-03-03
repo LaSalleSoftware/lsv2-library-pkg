@@ -87,6 +87,7 @@ class CommonControllerForClients extends BaseController
     public function sendRequestToLasalleBackend($uuid, $path, $slug = null)
     {
         $token = $this->factory->createJWT($uuid);
+        
 
         $headers = [
             'Authorization'                           => 'Bearer ' . $token,
@@ -113,6 +114,8 @@ class CommonControllerForClients extends BaseController
         } else {
             $query = ['slug' => $slug];
         }
+
+        dd($apiUrl . $path);
 
         try {
             $response = $client->request('GET', $apiUrl . $path, [
@@ -178,6 +181,7 @@ class CommonControllerForClients extends BaseController
             'allauthorblogposts'     => '/api/v1/allauthorblogposts',
             'homepageblogposts'      => '/api/v1/homepageblogposts',
             'singleblogpost'         => '/api/v1/singleblogpost',
+            'contactformfrontendcreatedatabaserecord' => '/api/v1/contactform/createdatabaserecord',
         ];
     }
 

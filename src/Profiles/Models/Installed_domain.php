@@ -158,6 +158,21 @@ class Installed_domain extends CommonModel
         return $this->hasMany('\Lasallesoftware\Library\Authentication\Models\Installed_domains_jwt_key');
     }
 
+    /*
+     * One to one relationship with contact_form.
+     *
+     * Method name must be:
+     *    * the model name,
+     *    * NOT the table name,
+     *    * singular;
+     *    * lowercase.
+     *
+     * @return Eloquent
+     */
+     public function contact_form()
+    {
+        return $this->hasMany('Lasallesoftware\Contactformbackend\Models\Contact_form');
+    }
 
 
     /* *********************************************************** */
