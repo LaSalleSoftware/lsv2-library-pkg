@@ -116,7 +116,7 @@ class CommonController extends BaseController
     /**
      * Get the author's name from the personbydomain's ID
      *
-     * @param  int $personbydomainId
+     * @param  int      $personbydomainId
      * @return string
      */
     public function getAuthorNameFromThePersonbydomain($personbydomainId)

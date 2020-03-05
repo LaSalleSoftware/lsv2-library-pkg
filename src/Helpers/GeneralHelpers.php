@@ -26,7 +26,7 @@ namespace Lasallesoftware\Library\Helpers;
 /**
  * This is the General Helper class.
  *
- * @package Lasallesoftware\Library\Helpers
+ * @package Lasallesoftware\Library\Helpers\GeneralHelpers
  */
 trait GeneralHelpers
 {
