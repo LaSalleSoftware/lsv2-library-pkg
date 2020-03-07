@@ -30,6 +30,7 @@ use Lasallesoftware\Library\Authentication\Models\Personbydomain as User;
 use Lasallesoftware\Library\Authentication\Models\Personbydomain as Model;
 
 // Laravel facade
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -57,7 +58,10 @@ class PersonbydomainPolicy extends CommonPolicy
      */
     public function view(User $user, Model $model)
     {
-        return $user->hasRole('owner') || $user->hasRole('superadministrator');
+        return $user->hasRole('owner')              || 
+               $user->hasRole('superadministrator') || 
+               $user->hasRole('administrator')
+        ;
     }
 
     /**
@@ -81,9 +85,15 @@ class PersonbydomainPolicy extends CommonPolicy
     public function update(User $user, Model $model)
     {
         // if the user role is neither "owner" nor "superadministrator", then not update-able
-        if  ((!$user->hasRole('owner')) && (!$user->hasRole('superadministrator'))) {
-            return false;
+        //if  ((!$user->hasRole('owner')) && (!$user->hasRole('superadministrator'))) {
+        //    return false;
+        //}
+
+        if (($user->hasRole('administrator')) && ($model->id == Auth::id())) {
+            return true;
         }
+
+
 
         // a superadmin cannot update an owner
         if (($user->hasRole('superadministrator')) && ($this->getRoleIdOfTheModelPersonbydomain($model) == 1)) {
