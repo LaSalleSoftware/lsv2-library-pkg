@@ -76,12 +76,12 @@ class CreatePersonbydomainsTable extends BaseMigration
                 $table->foreign('person_id')->references('id')->on('persons');
 
                 $table->text('name_calculated')->nullable();
-
                 $table->string('person_first_name');
                 //$table->foreign('person_first_name')->references('first_name')->on('persons'); --> not an index so can't FK
                 $table->string('person_surname');
                 //$table->foreign('person_surname')->references('surname')->on('persons'); --> not an index so can't FK
-                $table->string('email')->unique;
+
+                $table->string('email');
                 $table->foreign('email')->references('email_address')->on('emails');
 
                 $table->timestamp('email_verified_at')->nullable();
@@ -104,6 +104,9 @@ class CreatePersonbydomainsTable extends BaseMigration
                 $table->timestamp('locked_at')->nullable();
                 $table->integer('locked_by')->nullable()->unsigned();
                 //$table->foreign('locked_by')->references('id')->on('persons');
+
+                $table->unique(['email']);
+                $table->unique(['person_id', 'email', 'installed_domain_id']);
             });
         }
     }
