@@ -264,10 +264,6 @@ class LasalleGuard implements StatefulGuard
      */
     public function validate(array $credentials = [])
     {
-        // added by Bob
-        $credentials = $this->createFullCredentials($credentials);
-
-
         $this->lastAttempted = $user = $this->provider->retrieveByCredentials($credentials);
 
         return $this->hasValidCredentials($user, $credentials);
@@ -312,23 +308,30 @@ class LasalleGuard implements StatefulGuard
      */
     public function attempt(array $credentials = [], $remember = false)
     {
-        // added by Bob
-        $credentials = $this->createFullCredentials($credentials);
-
-
         $this->fireAttemptEvent($credentials, $remember);
 
         $this->lastAttempted = $user = $this->provider->retrieveByCredentials($credentials);
+
+        echo "<pre>";
+        //echo "this->provider = " ;
+       // print_r($this->provider) ;
+       print_r($user);
+        echo "</pre>";
+        //echo "<pre>";
+        //print_r($this->provider->retrieveByCredentials($credentials));
+        //print_r($credentials);
+        //   dd("lastatt");
 
         // If an implementation of UserInterface was returned, we'll ask the provider
         // to validate the user against the given credentials, and if they are in
         // fact valid we'll log the users into the application and return true.
         if ($this->hasValidCredentials($user, $credentials)) {
+            //dd("OVER HERE");
             $this->login($user, $remember);
 
             return true;
         }
-
+//dd("hasValidCredentials FAILED!!  OVER HERE");
         // If the authentication attempt fails we will fire an event so that the user
         // may be notified of any suspicious attempts to access their account from
         // an unrecognized user. A developer may listen to this event as needed.
@@ -345,10 +348,6 @@ class LasalleGuard implements StatefulGuard
      */
     public function once(array $credentials = [])
     {
-        // added by Bob
-        $credentials = $this->createFullCredentials($credentials);
-
-
         $this->fireAttemptEvent($credentials);
 
         if ($this->validate($credentials)) {
@@ -786,34 +785,6 @@ class LasalleGuard implements StatefulGuard
     ///////////////////////////////////////////////////////////////////
     ////////             START: METHODS BY BOB               //////////
     ///////////////////////////////////////////////////////////////////
-
-    /**
-     * Return the entire crendtials array needed for the user provider, using the credentials array supplied.
-     *
-     * We need credentials for the Personbydomains table, not for the default Laravel users table!
-     *
-     * Assumption: the email key is labelled either "email" (from the Laravel users table -- considered
-     * the standard label for the email field); or, "email" (the email field name in
-     * the Personbydomains table).
-     *
-     * @param $partialCredentials
-     *
-     * @return array
-     */
-    public function createFullCredentials($partialCredentials)
-    {
-        if (! empty($partialCredentials['email'] )) {
-            $email = $partialCredentials['email'];
-        } else {
-            $email = $partialCredentials['email'];
-        }
-
-        return [
-            'email'                  => $email,
-            'installed_domain_title' => app('config')->get('lasallesoftware-library.lasalle_app_domain_name'),
-            'password'               => $partialCredentials['password'],
-        ];
-    }
 
     /**
      * Create the login token
