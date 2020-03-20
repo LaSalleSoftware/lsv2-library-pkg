@@ -312,26 +312,15 @@ class LasalleGuard implements StatefulGuard
 
         $this->lastAttempted = $user = $this->provider->retrieveByCredentials($credentials);
 
-        echo "<pre>";
-        //echo "this->provider = " ;
-       // print_r($this->provider) ;
-       print_r($user);
-        echo "</pre>";
-        //echo "<pre>";
-        //print_r($this->provider->retrieveByCredentials($credentials));
-        //print_r($credentials);
-        //   dd("lastatt");
-
         // If an implementation of UserInterface was returned, we'll ask the provider
         // to validate the user against the given credentials, and if they are in
         // fact valid we'll log the users into the application and return true.
         if ($this->hasValidCredentials($user, $credentials)) {
-            //dd("OVER HERE");
             $this->login($user, $remember);
 
             return true;
         }
-//dd("hasValidCredentials FAILED!!  OVER HERE");
+
         // If the authentication attempt fails we will fire an event so that the user
         // may be notified of any suspicious attempts to access their account from
         // an unrecognized user. A developer may listen to this event as needed.
