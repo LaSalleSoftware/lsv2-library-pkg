@@ -95,6 +95,7 @@ return [
 
     'field_name_primary_email'      => 'Primary Email Address',
     'field_name_password'           => 'Password',
+    'field_name_passwordconfirmation' => 'Password Confirmation',
 
     'field_name_anniversary'        => 'Anniversary',
     'field_name_birthday'           => 'Birthday',
@@ -171,6 +172,22 @@ return [
     'field_help_featured_image_external2' => 'Please specify the exact URL where your image resides',
     'field_help_featured_image_external3' => 'Using a base64 image? Enter it fully here (eg: data:image/jpeg;base64,/9j/4AAQSkZJ)',
     'field_help_featured_image_external4' => 'If all the featured image fields are empty, the default image specified in the config will be used',
+
+    'field_help_personbydomain_email_preamble1'    => 'This is where you create a user who can log into this admin back-end.',
+    'field_help_personbydomain_email_preamble2'    => 'Please see my docs on this. Really! Thank you!',
+    'field_help_personbydomain_email_see_website'  => '<a href="https://lasallesoftware.com/docs/v2/personbydomains" target="_blank">LaSalleSoftware.com/docs/v2/PersonByDomains</a> (opens a new window)',
+    
+    'field_help_personbydomain_email_full'         => 'You must type in the full email address, there is no search -- sorry ;-(',
+    'field_help_personbydomain_email_not_new'      => 'If this email address is new (ie, not yet in the emails table), then it will be created for you!',
+    'field_help_personbydomain_email_unique'       => 'This email address must be UNIQUE! Otherwise, you will see the "There was a problem submitting this form" error.',
+
+    'field_help_personbydomain_domain_message'     => 'What domain (website) is this personbydomain associated with?',
+
+    'field_help_personbydomain_person_associate'   => 'You must associate a personbydomain with a person.',
+    'field_help_personbydomain_person_setup'       => 'This person must be set up FIRST, before you create their personbydomain!',
+    'field_help_personbydomain_person_createlink'  => 'If this person is not yet set up, then create them <a href="/nova/resources/people/new?viaResource=&viaResourceId=&viaRelationship=">here</a>.',
+    'field_help_personbydomain_person_searchbox'   => 'If this person is already set up, then click the down arrow, start typing their full name, and click their name when you see it.',
+    'field_help_personbydomain_person_reminder'    => 'REMINDER: after creation, attach a ROLE!',
 
     // Exceptions
     'exception_message_date_cast'          => "Date field must cast to 'date' in Eloquent model.",
