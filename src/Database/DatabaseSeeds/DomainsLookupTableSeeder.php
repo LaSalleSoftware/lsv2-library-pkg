@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\DB;
 // Third party class
 use Illuminate\Support\Carbon;;
 
-class DomainslookupTableSeeder extends BaseSeeder
+class DomainsLookupTableSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.
