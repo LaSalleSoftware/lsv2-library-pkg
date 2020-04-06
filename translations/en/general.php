@@ -173,16 +173,16 @@ return [
     'field_help_featured_image_external3' => 'Using a base64 image? Enter it fully here (eg: data:image/jpeg;base64,/9j/4AAQSkZJ)',
     'field_help_featured_image_external4' => 'If all the featured image fields are empty, the default image specified in the config will be used',
 
+    'field_help_persons_salutation_message1'       => 'If you are here to create a person for a "personbydomain" (aka a "user"), then create a person here, and then click the "Create Personbydomain" in the screen that displays after you successfully created a person,',
+    'field_help_persons_salutation_message2'       => 'See <a href="https://lasallesoftware.com/docs/v2/persons" target="_blank">doc</a> (opens a new window)',   
+
     'field_help_personbydomain_email_preamble1'    => 'This is where you create a user who can log into this admin back-end.',
     'field_help_personbydomain_email_preamble2'    => 'Please see my docs on this. Really! Thank you!',
-    'field_help_personbydomain_email_see_website'  => '<a href="https://lasallesoftware.com/docs/v2/personbydomains" target="_blank">LaSalleSoftware.com/docs/v2/PersonByDomains</a> (opens a new window)',
-    
+    'field_help_personbydomain_email_see_website'  => '<a href="https://lasallesoftware.com/docs/v2/personbydomains" target="_blank">LaSalleSoftware.com/docs/v2/PersonByDomains</a> (opens a new window)',    
     'field_help_personbydomain_email_full'         => 'You must type in the full email address, there is no search -- sorry ;-(',
     'field_help_personbydomain_email_not_new'      => 'If this email address is new (ie, not yet in the emails table), then it will be created for you!',
     'field_help_personbydomain_email_unique'       => 'This email address must be UNIQUE! Otherwise, you will see the "There was a problem submitting this form" error.',
-
     'field_help_personbydomain_domain_message'     => 'What domain (website) is this personbydomain associated with?',
-
     'field_help_personbydomain_person_associate'   => 'You must associate a personbydomain with a person.',
     'field_help_personbydomain_person_setup'       => 'This person must be set up FIRST, before you create their personbydomain!',
     'field_help_personbydomain_person_createlink'  => 'If this person is not yet set up, then create them <a href="/nova/resources/people/new?viaResource=&viaResourceId=&viaRelationship=">here</a>.',
