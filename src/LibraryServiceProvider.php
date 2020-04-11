@@ -30,6 +30,7 @@ use Laravel\Nova\Nova;
 use Lasallesoftware\Library\Authentication\CustomGuards\LasalleGuard;
 use Lasallesoftware\Library\Commands\CustomdropCommand;
 use Lasallesoftware\Library\Commands\CustomseedCommand;
+use Lasallesoftware\Library\Commands\CustomDatabaseCreationForTestsCommand;
 use Lasallesoftware\Library\Commands\DeleteInactiveLoginsRecordsCommand;
 // custom guard class
 use Lasallesoftware\Library\Commands\InstalleddomainseedCommand;
@@ -128,6 +129,11 @@ class LibraryServiceProvider extends ServiceProvider
         $this->app->bind('command.lslibrary:customdrop', CustomdropCommand::class);
         $this->commands([
             'command.lslibrary:customdrop',
+        ]);
+
+        $this->app->bind('command.lslibrary:customdatabasecreationfortests', CustomDatabaseCreationForTestsCommand::class);
+        $this->commands([
+            'command.lslibrary:customdatabasecreationfortests',
         ]);
 
         $this->app->bind('command.lslibrary:installeddomainseeder', InstalleddomainseedCommand::class);
