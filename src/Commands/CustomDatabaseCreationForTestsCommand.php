@@ -72,27 +72,26 @@ class CustomDatabaseCreationForTestsCommand extends CommonCommand
      */
     public function handle()
     {
-        if (strtolower(app('config')->get('app.env')) == "production") {
+        $environment = trim(strtolower(app('config')->get('app.env')));
+
+        if ($environment == "production") {
             $this->info('Cancelled running lslibrary:customdrop because this is a production environment.');
             return;
         }
 
-        if (strtolower(app('config')->get('app.env')) != "testing") {
+        if ($environment != "testing") {
             $this->info('Cancelled running lslibrary:customdrop because this is *NOT* a test environment.');
             return;
         }
 
-
         $database = $this->input->getOption('database');
 
-       // $this->dropAllTables($database);
-
-       $this->call('db:wipe', array_filter([
+        $this->call('db:wipe', array_filter([
             '--database' => $database,
             '--force'    => true,
         ]));
 
-        DB::unprepared(File::get(base_path().'/tests/lsv2adminbackendapptest.sql'));        
+        DB::unprepared(File::get(base_path().'/tests/lasallesoftware.sql'));        
     }
 
     /**
