@@ -26,6 +26,9 @@ namespace Lasallesoftware\Library\Authentication\Http\Controllers;
 use Lasallesoftware\Library\Common\Http\Controllers\CommonController;
 use Lasallesoftware\Library\UniversallyUniqueIDentifiers\UuidGenerator;
 
+// LaSalle Software App
+//use App\Providers\RouteServiceProvider;
+
 // Laravel Framework
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -56,6 +59,7 @@ class LoginController extends CommonController
      * @var string
      */
     //protected $redirectTo = '/home';
+    //protected $redirectTo = RouteServiceProvider::HOME;
     protected $redirectTo = '/nova/resources/personbydomains';
 
     /**
@@ -89,9 +93,20 @@ class LoginController extends CommonController
      */
     public function showLoginForm()
     {
+        //return view('auth.login');
         return view('lasallesoftwarelibrary::basic.auth.login');
     }
 
+    /**
+     * Handle a login request to the application.
+     * 
+     * Overrides Illuminate\Foundation\Auth\AuthenticatesUsers::login(Request $request)
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function login(Request $request)
     {
         // first thing is to create a uuid

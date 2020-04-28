@@ -32,6 +32,8 @@ use Lasallesoftware\Library\Profiles\Models\Person_email;
 use Lasallesoftware\Library\Authentication\Models\Personbydomain;
 use Lasallesoftware\Library\Profiles\Models\Installed_domain;
 
+// LaSalle Software App
+use App\Providers\RouteServiceProvider;
 
 // Laravel Framework
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -62,7 +64,8 @@ class RegisterController extends CommonController
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = RouteServiceProvider::HOME;
+    //protected $redirectTo = '/home';
 
     /**
      * UuidGenerator instance.

@@ -25,6 +25,9 @@ namespace Lasallesoftware\Library\Authentication\Http\Controllers;
 // LaSalle Software
 use Lasallesoftware\Library\Common\Http\Controllers\CommonController;
 
+// LaSalle Software App
+use App\Providers\RouteServiceProvider;
+
 // Laravel Framework
 use Illuminate\Foundation\Auth\VerifiesEmails;
 
@@ -49,7 +52,8 @@ class VerificationController extends CommonController
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    //protected $redirectTo = '/home';
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
