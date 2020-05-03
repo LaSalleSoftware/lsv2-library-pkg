@@ -86,6 +86,7 @@ class CreatePersonbydomainsTable extends BaseMigration
 
                 $table->timestamp('email_verified_at')->nullable();
                 $table->string('password');
+                $table->rememberToken();
 
                 $table->integer('installed_domain_id')->unsigned();
                 $table->foreign('installed_domain_id')->references('id')->on('installed_domains');
