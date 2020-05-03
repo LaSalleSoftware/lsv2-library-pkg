@@ -30,19 +30,30 @@ use Illuminate\Database\Schema\Blueprint;
 class CreateFailedJobsTable extends BaseMigration
 {
     /**
+     * The name of the database table
+     *
+     * @var string
+     */
+    protected $tableName = "failed_jobs";
+
+    /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('failed_jobs', function (Blueprint $table) {
-            $table->id();
-            $table->text('connection');
-            $table->text('queue');
-            $table->longText('payload');
-            $table->longText('exception');
-            $table->timestamp('failed_at')->useCurrent();
-        });
+        if ((!Schema::hasTable($this->tableName)) &&
+            ($this->doTheMigration(env('APP_ENV'), env('LASALLE_APP_NAME')))) {
+
+            Schema::create($this->tableName, function (Blueprint $table) {
+                $table->id();
+                $table->text('connection');
+                $table->text('queue');
+                $table->longText('payload');
+                $table->longText('exception');
+                $table->timestamp('failed_at')->useCurrent();
+            });
+        }
     }
 }
