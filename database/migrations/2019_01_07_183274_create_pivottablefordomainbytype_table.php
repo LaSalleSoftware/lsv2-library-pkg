@@ -57,6 +57,15 @@ class CreatePivottablefordomainbytypeTable extends BaseMigration
                 $table->foreign('lookup_domain_type_id')->references('id')->on('lookup_domain_types');
             });
         }
+    }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists($this->tableName);
     }
 }

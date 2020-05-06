@@ -30,15 +30,23 @@ use Illuminate\Database\Schema\Blueprint;
 class CreatePivottablesforlookuprolesTable extends BaseMigration
 {
     /**
+     * The name of the database table
+     *
+     * @var string
+     */
+    protected $tableName = "personbydomain_lookup_roles";
+
+    /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        if (!Schema::hasTable('personbydomain_lookup_roles'))
-        {
-            Schema::create('personbydomain_lookup_roles', function (Blueprint $table)
+        if ((!Schema::hasTable($this->tableName)) &&
+            ($this->doTheMigration(env('APP_ENV'), env('LASALLE_APP_NAME')))) {
+
+            Schema::create($this->tableName, function (Blueprint $table)
             {
                 $table->engine = 'InnoDB';
 
@@ -50,5 +58,15 @@ class CreatePivottablesforlookuprolesTable extends BaseMigration
                 $table->foreign('lookup_role_id')->references('id')->on('lookup_roles');
             });
         }
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists($this->tableName);
     }
 }

@@ -36,8 +36,9 @@ class CreatePivottablesforpersonsTable extends BaseMigration
      */
     public function up()
     {
-        if (!Schema::hasTable('person_address'))
-        {
+        if ((!Schema::hasTable('person_address'))  &&
+            ($this->doTheMigration(env('APP_ENV'), env('LASALLE_APP_NAME')))) {
+        
             Schema::create('person_address', function (Blueprint $table)
             {
                 $table->engine = 'InnoDB';
@@ -51,8 +52,9 @@ class CreatePivottablesforpersonsTable extends BaseMigration
             });
         }
 
-        if (!Schema::hasTable('person_email'))
-        {
+        if ((!Schema::hasTable('person_email'))  &&
+            ($this->doTheMigration(env('APP_ENV'), env('LASALLE_APP_NAME')))) {
+        
             Schema::create('person_email', function (Blueprint $table)
             {
                 $table->engine = 'InnoDB';
@@ -66,8 +68,9 @@ class CreatePivottablesforpersonsTable extends BaseMigration
             });
         }
 
-        if (!Schema::hasTable('person_social'))
-        {
+        if ((!Schema::hasTable('person_social'))  &&
+            ($this->doTheMigration(env('APP_ENV'), env('LASALLE_APP_NAME')))) {
+        
             Schema::create('person_social', function (Blueprint $table)
             {
                 $table->engine = 'InnoDB';
@@ -81,8 +84,9 @@ class CreatePivottablesforpersonsTable extends BaseMigration
             });
         }
 
-        if (!Schema::hasTable('person_telephone'))
-        {
+        if ((!Schema::hasTable('person_telephone'))  &&
+            ($this->doTheMigration(env('APP_ENV'), env('LASALLE_APP_NAME')))) {
+        
             Schema::create('person_telephone', function (Blueprint $table)
             {
                 $table->engine = 'InnoDB';
@@ -96,8 +100,9 @@ class CreatePivottablesforpersonsTable extends BaseMigration
             });
         }
 
-        if (!Schema::hasTable('person_website'))
-        {
+        if ((!Schema::hasTable('person_website'))  &&
+            ($this->doTheMigration(env('APP_ENV'), env('LASALLE_APP_NAME')))) {
+        
             Schema::create('person_website', function (Blueprint $table)
             {
                 $table->engine = 'InnoDB';
@@ -110,5 +115,19 @@ class CreatePivottablesforpersonsTable extends BaseMigration
                 $table->foreign('website_id')->references('id')->on('websites');
             });
         }
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('person_address');
+        Schema::dropIfExists('person_email');
+        Schema::dropIfExists('person_social');
+        Schema::dropIfExists('person_telephone');
+        Schema::dropIfExists('person_website');
     }
 }
