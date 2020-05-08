@@ -172,6 +172,18 @@ class LasalleinstallenvCommand extends CommonCommand
         $this->writeEnvironmentFileWithNewKey('DummyLasalleAppDomainName', $lasalleAppDomainName, false);
         $this->info("Attempt to modify your env's LASALLE_APP_DOMAIN_NAME to ".$lasalleAppDomainName.' is finished!');
 
+        // SET NOVA_DOMAIN_NAME
+        echo "\n\n";
+        $this->line('-----------------------------------------------------------------------');
+        $this->line('  Now setting your NOVA_DOMAIN_NAME environment variable');
+        $this->line('-----------------------------------------------------------------------');
+        $this->comment(' ');
+        $this->comment('This is done automatically based on your LASALLE_APP_DOMAIN_NAME.');
+        $lasalleAppDomainName = $this->getLasalleAppDomainName($appURL);
+        $this->comment('Attempting to set LASALLE_APP_DOMAIN_NAME in your .env to "'.$lasalleAppDomainName.'""...');
+        $this->writeEnvironmentFileWithNewKey('DummyNovaDomainName', $lasalleAppDomainName, false);
+        $this->info("Attempt to modify your env's NOVA_DOMAIN_NAME to ".$lasalleAppDomainName.' is finished!');
+
         // START: ENVIRNOMENT VARIABLES JUST FOR THE ADMIN BACK-END APP
         if ('adminbackendapp' == env('LASALLE_APP_NAME')) {
             // SET DB_DATABASE
