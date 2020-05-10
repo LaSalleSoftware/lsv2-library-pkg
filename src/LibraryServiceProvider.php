@@ -23,25 +23,25 @@
 namespace Lasallesoftware\Library;
 
 // LaSalle Software classes
-// custom artisan commands
-use Illuminate\Routing\Router;
-use Illuminate\Support\ServiceProvider;
-use Laravel\Nova\Nova;
 use Lasallesoftware\Library\Authentication\CustomGuards\LasalleGuard;
+use Lasallesoftware\Library\Authentication\Http\Middleware\RedirectSomeRoutes;
 use Lasallesoftware\Library\Commands\CustomdropCommand;
 use Lasallesoftware\Library\Commands\CustomseedCommand;
 use Lasallesoftware\Library\Commands\CustomDatabaseCreationForTestsCommand;
 use Lasallesoftware\Library\Commands\DeleteInactiveLoginsRecordsCommand;
-// custom guard class
 use Lasallesoftware\Library\Commands\InstalleddomainseedCommand;
-// Laravel classes
 use Lasallesoftware\Library\Commands\LasalleinstalladminappCommand;
-// https://github.com/laravel/framework/blob/5.6/src/Illuminate/Support/ServiceProvider.php
 use Lasallesoftware\Library\Commands\LasalleinstallenvCommand;
-// Laravel Nova class
 use Lasallesoftware\Library\Commands\LasalleinstallfrontendappCommand;
 
-// see https://laravel.com/docs/5.7/packages
+// Laravel Framework
+use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Routing\Router;
+use Illuminate\Support\ServiceProvider;
+
+// Laravel Nova 
+use Laravel\Nova\Nova;
+
 
 /**
  * Class LibraryServiceProvider.
@@ -99,21 +99,33 @@ class LibraryServiceProvider extends ServiceProvider
         //$this->mergeAuthGuardsConfigKey();
         //$this->overrideDefaultAuthConfigKey();
 
-        $this->registerMiddleware($router);
+        $this->registerMiddlewareRouter($router);
+        $this->registerMiddleware();
     }
 
     /**
-     * Register middleware.
+     * Register middleware routes.
      *
      * @param Router $router
      */
-    public function registerMiddleware($router)
+    public function registerMiddlewareRouter($router)
     {
         $router->aliasMiddleware('whitelist', 'Lasallesoftware\Library\Firewall\Http\Middleware\Whitelist');
 
         // Add a middleware to the end of a middleware group
         // https://github.com/laravel/framework/blob/6.x/src/Illuminate/Routing/Router.php#L902
         $router->pushMiddlewareToGroup('web', 'whitelist');
+    }
+
+    /**
+     * Register middleare
+     *
+     * @return void
+     */
+    protected function registerMiddleware()
+    {
+        $kernel = $this->app->make(Kernel::class);
+        $kernel->pushMiddleware(RedirectSomeRoutes::class);
     }
 
     /**
