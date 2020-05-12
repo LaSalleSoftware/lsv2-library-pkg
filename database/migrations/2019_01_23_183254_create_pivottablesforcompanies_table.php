@@ -132,18 +132,4 @@ class CreatePivottablesforcompaniesTable extends BaseMigration
             });
         }
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('company_address');
-        Schema::dropIfExists('company_email');
-        Schema::dropIfExists('company_social');
-        Schema::dropIfExists('company_telephone');
-        Schema::dropIfExists('company_website');
-    }
 }

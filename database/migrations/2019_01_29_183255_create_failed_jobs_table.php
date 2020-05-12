@@ -56,14 +56,4 @@ class CreateFailedJobsTable extends BaseMigration
             });
         }
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists($this->tableName);
-    }
 }

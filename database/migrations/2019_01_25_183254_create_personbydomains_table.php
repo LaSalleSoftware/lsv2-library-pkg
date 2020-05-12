@@ -92,6 +92,10 @@ class CreatePersonbydomainsTable extends BaseMigration
                 $table->foreign('installed_domain_id')->references('id')->on('installed_domains');
                 $table->string('installed_domain_title');
 
+                $table->boolean('banned_enabled')->default(false);
+                $table->timestamp('banned_at')->nullable();
+                $table->string('banned_comments')->nullable();
+
                 $table->uuid('uuid')->nullable();
 
                 $table->timestamp('created_at')->useCurrent();
@@ -110,15 +114,5 @@ class CreatePersonbydomainsTable extends BaseMigration
                 $table->unique(['person_id', 'email', 'installed_domain_id']);
             });
         }
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists($this->tableName);
     }
 }
