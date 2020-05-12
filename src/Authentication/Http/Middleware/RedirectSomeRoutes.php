@@ -44,7 +44,6 @@ class RedirectSomeRoutes
 
         if (($request->path() == "home")                 ||
             ($request->path() == "/")                    ||
-            ($request->path() == "logout")               ||
             ($request->path() == "nova")                 ||
             ($request->path() == "nova/dashboards")      ||
             ($request->path() == "nova/dashboards/main") ||
