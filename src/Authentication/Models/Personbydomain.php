@@ -31,7 +31,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 // Laravel facades
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 
@@ -89,6 +88,7 @@ class Personbydomain extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'banned_at'         => 'datetime',
     ];
 
     /**

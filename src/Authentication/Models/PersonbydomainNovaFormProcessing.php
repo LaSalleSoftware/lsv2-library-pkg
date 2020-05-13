@@ -28,6 +28,9 @@ use Lasallesoftware\Library\Authentication\Models\Login;
 // Laravel Facade
 use Illuminate\Support\Facades\DB;
 
+// Third Party Classes
+use Carbon\CarbonImmutable;
+
 
 trait PersonbydomainNovaFormProcessing
 {
@@ -92,6 +95,9 @@ trait PersonbydomainNovaFormProcessing
         // the form provides the installed_domain_id, although I do not think that's what it is called
         // need to get the installed_domain_title from "installed_domains" and save it here
         self::processDomain($personbydomain);
+
+        // process banned fields
+        self::processBan($personbydomain);
     }
 
     /**
@@ -113,6 +119,9 @@ trait PersonbydomainNovaFormProcessing
         // the form provides the installed_domain_id, although I do not think that's what it is called
         // need to get the installed_domain_title from "installed_domains" and save it here
         //self::processDomain($personbydomain);
+
+        // process banned fields
+        self::processBan($personbydomain);
     }
 
 
@@ -350,6 +359,51 @@ trait PersonbydomainNovaFormProcessing
             ->pluck('title')
             ->first()
         ;
+    }
+
+
+    ///////////////////////////////////////////////////////////////////
+    ////////////          BANNED HANDLING           ///////////////////
+    ///////////////////////////////////////////////////////////////////
+
+    /**
+     * Process a ban
+     *
+     * @param  Personbydomain  $personbydomain
+     */
+    protected static function processBan(Personbydomain $personbydomain)
+    {
+        self::populatedBannedAtField($personbydomain);
+        self::populatedBannedCommentsField($personbydomain);
+        self::deleteLoginsRecordsByPersonbydomainId($personbydomain->id);
+    }
+
+    /**
+     * Populate the banned datetime field.
+     *
+     * @param  Personbydomain  $personbydomain
+     * @return mixed
+     */
+    protected static function populatedBannedAtField(Personbydomain $personbydomain)
+    {
+        if (($personbydomain->banned_enabled == 1) && (is_null($personbydomain->banned_at))) {
+            $personbydomain->banned_at = CarbonImmutable::now();
+        }
+        
+        if ($personbydomain->banned_enabled == 0) {
+            $personbydomain->banned_at = NULL;
+        }        
+    }
+
+    /**
+     * If a personbydomain is banned, then
+     *
+     * @param  Personbydomain  $personbydomain
+     * @return mixed
+     */
+    protected static function populatedBannedCommentsField(Personbydomain $personbydomain)
+    {
+        $personbydomain->banned_comments = (is_null($personbydomain->banned_comments)) ? NULL : trim($personbydomain->banned_comments);
     }
 
 

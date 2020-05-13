@@ -68,6 +68,7 @@ return [
     // Nova Panels Labels
     'panel_domain_fields'  => 'Domain',
     'panel_persons_fields' => 'Person',
+    'panel_banned_fields'  => 'Banned',
     'panel_roles_fields'   => 'Role',
     'panel_system_fields'  => 'System Fields',
     'panel_featured_image_fields' => 'Featured Image Fields',
@@ -110,6 +111,9 @@ return [
     'field_name_middle_name'        => 'Middle Name',
     'field_name_salutation'         => 'Salutation',
     'field_name_surname'            => 'Surname',
+    'field_name_banned_enabled'     => 'Banned',
+    'field_name_banned_date'        => 'Date',
+    'field_name_banned_comments'    => 'Comments',
 
     'field_name_name'               => 'Name',
     'field_name_addressmaplink'     => 'Google Maps URL',
@@ -190,15 +194,16 @@ return [
     'field_help_personbydomain_person_reminder'    => 'REMINDER: after creation, attach a ROLE!',
 
     // Exceptions
-    'exception_message_date_cast'          => "Date field must cast to 'date' in Eloquent model.",
+    'exception_message_date_cast' => "Date field must cast to 'date' in Eloquent model.",
 
     // Rules
-    'rules_addresses_unique_message'       => 'This address already exists',
-    'rules_persons_unique_message'         => 'This person already exists',
-    'rules_telephones_unique_message'      => 'This telephone number already exists',
+    'rules_addresses_unique_message'               => 'This address already exists',
+    'rules_persons_unique_message'                 => 'This person already exists',
+    'rules_telephones_unique_message'              => 'This telephone number already exists',
+    'rules_personbydomains_cannotbanself_message'  => 'You cannot ban yourself',
 
     // Miscellaneous
-    'not_specified'                        => 'not specified',
-    'other'                                => 'other',
+    'not_specified' => 'not specified',
+    'other'         => 'other',
 
 ];

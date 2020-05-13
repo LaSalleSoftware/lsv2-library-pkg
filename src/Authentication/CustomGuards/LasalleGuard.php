@@ -24,6 +24,7 @@ namespace Lasallesoftware\Library\Authentication\CustomGuards;
 
 // LaSalle Software
 use Lasallesoftware\Library\Authentication\Models\Login as LoginModel;
+use Lasallesoftware\Library\Authentication\Models\Personbydomain;
 
 // Laravel Framework
 use Illuminate\Auth\Events\Attempting;
@@ -202,7 +203,7 @@ class LasalleGuard implements StatefulGuard
     // https://github.com/laravel/framework/blob/5.8/src/Illuminate/Auth/TokenGuard.php
 
     // The following methods in the Guard contract reside in the GuardHelper trait:
-    //  ** public function check();
+    //  **  );
     //  ** public function guest();
 
     // The following methods in the Guard contract reside in this class:
@@ -238,6 +239,11 @@ class LasalleGuard implements StatefulGuard
 
         // get the personbydomains database table's primary_id from the session
         $id = $this->getSessionKey($this->getName());
+
+        // if this personbydomain is banned, then do not authenticate
+        if (Personbydomain::where('id', $id)->pluck('banned_enabled')->first() == 1) {
+            return;
+        }
 
         // get the LaSalle loginToken (as opposed to Laravel's _token) from the from the session
         $loginToken = $this->getSessionKey('loginToken');
@@ -455,7 +461,9 @@ class LasalleGuard implements StatefulGuard
     }
 
     /**
-     * Log a user into the application without sessions or cookies.
+     * Log a user into the application without sessions or cookies. 
+     * 
+     *   ** A BANNED USER CAN LOGIN VIA THIS METHOD **
      *
      * @param  array  $credentials
      * @return bool
@@ -485,6 +493,8 @@ class LasalleGuard implements StatefulGuard
 
     /**
      * Log the given user ID into the application without sessions or cookies.
+     * 
+     *  ** A BANNED USER CAN LOGIN VIA THIS METHOD **
      *
      * @param  mixed  $id
      * @return \Illuminate\Contracts\Auth\Authenticatable|bool
