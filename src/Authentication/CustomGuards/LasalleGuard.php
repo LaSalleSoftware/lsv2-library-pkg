@@ -255,8 +255,28 @@ class LasalleGuard implements StatefulGuard
         // and there is a record in the personbydomains database table, then we have the logged in person!
         // if ((! is_null($resultGetLogin)) && ($this->user = $this->provider->retrieveById($id))) {
         if ((! is_null($resultGetLogin)) && ($this->user = $this->getUserById($id))) {
+
+
+                // IF THE EMERGENECY BAN IS ENABLED (set the env var/config param to true) 
+                // THEN LOGOUT THIS LOGGED-IN USER
+                if ($this->emergencyBanAllUsersFromLoggingIn()) {
+
+                    $this->logout();                    
+                    return;
+                }
+
+
+
             $this->loginModel->updateTheUpdateFieldsWithTheTokenAndUserId($loginToken, $id);
             $this->fireAuthenticatedEvent($this->user);
+        }
+
+
+        // IF THE EMERGENECY BAN IS ENABLED (set the env var/config param to true) 
+        // THEN LOGOUT THIS LOGGED-IN USER
+        if ($this->emergencyBanAllUsersFromLoggingIn()) {
+               
+            return;
         }
 
         return $this->user;
@@ -462,8 +482,6 @@ class LasalleGuard implements StatefulGuard
 
     /**
      * Log a user into the application without sessions or cookies. 
-     * 
-     *   ** A BANNED USER CAN LOGIN VIA THIS METHOD **
      *
      * @param  array  $credentials
      * @return bool
@@ -494,8 +512,6 @@ class LasalleGuard implements StatefulGuard
     /**
      * Log the given user ID into the application without sessions or cookies.
      * 
-     *  ** A BANNED USER CAN LOGIN VIA THIS METHOD **
-     *
      * @param  mixed  $id
      * @return \Illuminate\Contracts\Auth\Authenticatable|bool
      */
@@ -969,6 +985,21 @@ class LasalleGuard implements StatefulGuard
     {
         return $this->provider->retrieveById($id);
     }
+
+    /**
+     * Are all users banned from logging in?
+     * 
+     * Not going to delete logins database table records, nor sessions, in case they are needed for tracing.
+     * 
+     * https://github.com/LaSalleSoftware/lsv2-library-pkg/issues/80
+     *
+     * @return bool
+     */
+    public function emergencyBanAllUsersFromLoggingIn()
+    {
+        return env('LASALLE_EMERGENCY_BAN_ALL_USERS_FROM_ADMIN_APP_LOGIN') ? true : false;
+    }
+
     ///////////////////////////////////////////////////////////////////
     ////////               END: METHODS BY BOB               //////////
     ///////////////////////////////////////////////////////////////////
