@@ -43,4 +43,18 @@ class ForgotPasswordController extends CommonController
     */
 
     use SendsPasswordResetEmails;
+
+    /**
+     * Display the form to request a password reset link.
+     * 
+     * Overrides Illuminate\Foundation\Auth\SendsPasswordResetEmails::showLinkRequestForm()
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showLinkRequestForm()
+    {
+        //return view('auth.passwords.email');
+        return view('lasallesoftwarelibrary::basic.auth.passwords.email');
+        
+    }
 }

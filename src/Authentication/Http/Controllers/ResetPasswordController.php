@@ -23,10 +23,16 @@
 namespace Lasallesoftware\Library\Authentication\Http\Controllers;
 
 // LaSalle Software
+use App\Providers\RouteServiceProvider;
 use Lasallesoftware\Library\Common\Http\Controllers\CommonController;
 
 // Laravel Framework
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+
+// Laravel Facade
+use Illuminate\Support\Str;
 
 
 class ResetPasswordController extends CommonController
@@ -49,7 +55,8 @@ class ResetPasswordController extends CommonController
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    //protected $redirectTo = '/home';
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -77,5 +84,35 @@ class ResetPasswordController extends CommonController
         return view('lasallesoftwarelibrary::basic.auth.passwords.reset')->with(
             ['token' => $token, 'email' => $request->email]
         );
+    }
+
+    /**
+     * Reset the given user's password.
+     * 
+     * 
+     *   Overrides Illuminate\Foundation\Auth\ResetsPasswords::resetPassword
+     * 
+     * 
+     *   THE REASON FOR THE OVERRIDE IS I DO NOT WANT AUTOMATIC LOGIN:
+     *   ** I WANT A USER TO LOGIN WITH THEIR NEW PASSWORD
+     *   ** AUTO-LOGIN PRODUCES A UUID MISSING ERROR
+     * 
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
+     * @param  string  $password
+     * @return void
+     */
+    protected function resetPassword($user, $password)
+    {
+        $this->setUserPassword($user, $password);
+
+        $user->setRememberToken(Str::random(60));
+
+        $user->save();
+
+        event(new PasswordReset($user));
+
+        // Disable automatic login
+        //$this->guard()->login($user);
     }
 }
