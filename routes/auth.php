@@ -56,4 +56,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('email/verify/{id}', 'Lasallesoftware\Library\Authentication\Http\Controllers\VerificationController@verify')->name('verification.verify');
     Route::get('email/resend',      'Lasallesoftware\Library\Authentication\Http\Controllers\VerificationController@resend')->name('verification.resend');
 
+// Password Confirm Routes...
+    Route::get('password/confirm',  'Lasallesoftware\Library\Authentication\Http\Controllers\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
+    Route::post('password/confirm', 'Lasallesoftware\Library\Authentication\Http\Controllers\ConfirmPasswordController@confirm');
+
 });
+
+

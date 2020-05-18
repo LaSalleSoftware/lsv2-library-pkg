@@ -22,14 +22,14 @@
 
 namespace Lasallesoftware\Library\Authentication\Http\Controllers;
 
-// LaSalle Software App
-use App\Http\Controllers\Controller;
+// LaSalle Software
+use Lasallesoftware\Library\Common\Http\Controllers\CommonController;
 use App\Providers\RouteServiceProvider;
 
 // Laravel Framework
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
 
-class ConfirmPasswordController extends Controller
+class ConfirmPasswordController extends CommonController
 {
     /*
     |--------------------------------------------------------------------------
@@ -41,6 +41,14 @@ class ConfirmPasswordController extends Controller
     | this trait and override any functions that require customization.
     |
     */
+
+
+
+    // HEY! THE PASSWORD CONFIRM FEATURE DOES NOT WORK. ALWAYS REDIRECTED TO THE LOGIN FORM. 
+    // SEE 
+
+
+
 
     use ConfirmsPasswords;
 
@@ -60,5 +68,18 @@ class ConfirmPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    /**
+     * Display the password confirmation view.
+     * 
+     * OverridesIlluminate\Foundation\Auth\ConfirmsPasswords::showConfirmForm()
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showConfirmForm()
+    {
+       //return view('auth.passwords.confirm');
+        return view('lasallesoftwarelibrary::basic.auth.passwords.confirm');
     }
 }
