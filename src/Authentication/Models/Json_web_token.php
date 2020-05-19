@@ -25,6 +25,9 @@ namespace Lasallesoftware\Library\Authentication\Models;
 // LaSalle Software
 use Lasallesoftware\Library\Common\Models\CommonModel;
 
+// Laravel Framework
+use Illuminate\Support\Carbon;
+
 // Laravel facades
 use Illuminate\Support\Facades\DB;
 
@@ -73,5 +76,27 @@ class Json_web_token extends CommonModel
         $json_web_tokens = new $this;
         $json_web_tokens->jwt = $jwt;
         $json_web_tokens->save();
+    }
+
+    /**
+     * Delete expired JWT tokens
+     *
+     * @return void
+     */
+    public function deleteExpired()
+    {
+        $expiredAt = Carbon::now()->subMinutes($this->minutesToExpiration());
+
+        $this->where('created_at', '<', $expiredAt)->delete();
+    }
+
+    /**
+     * How many minutes until expiration?
+     *
+     * @return int
+     */
+    protected function minutesToExpiration()
+    {
+        return (24 * 60) - 10;
     }
 }

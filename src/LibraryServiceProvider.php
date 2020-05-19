@@ -27,6 +27,7 @@ use Lasallesoftware\Library\Authentication\CustomGuards\LasalleGuard;
 use Lasallesoftware\Library\Authentication\Http\Middleware\RedirectSomeRoutes;
 use Lasallesoftware\Library\Commands\CustomdropCommand;
 use Lasallesoftware\Library\Commands\CustomseedCommand;
+use Lasallesoftware\Library\Commands\DeleteExpiredJWTCommand;
 use Lasallesoftware\Library\Commands\DeleteExpiredLoginsCommand;
 use Lasallesoftware\Library\Commands\InstalleddomainseedCommand;
 use Lasallesoftware\Library\Commands\LasalleinstalladminappCommand;
@@ -165,6 +166,11 @@ class LibraryServiceProvider extends ServiceProvider
         $this->app->bind('command.lslibrary:deleteexpiredlogins', DeleteExpiredLoginsCommand::class);
         $this->commands([
             'command.lslibrary:deleteexpiredlogins',
+        ]);
+
+        $this->app->bind('command.lslibrary:deleteexpiredjwt', DeleteExpiredJWTCommand::class);
+        $this->commands([
+            'command.lslibrary:deleteexpiredjwt',
         ]);
     }
 
