@@ -66,4 +66,21 @@ class VerificationController extends CommonController
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
+
+    /**
+     * Show the email verification notice.
+     * 
+     * 
+     *   Overrides Illuminate\Foundation\Auth\VerifiesEmails::show
+     *
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response|\Illuminate\View\View
+     */
+    public function show(Request $request)
+    {
+        return $request->user()->hasVerifiedEmail()
+                        ? redirect($this->redirectPath())
+                        : view('lasallesoftwarelibrary::basic.auth.verify');
+    }
 }
