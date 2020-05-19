@@ -268,28 +268,22 @@ class Login extends CommonModel
      *
      * @return void
      */
-    public function deleteInactiveLoginsRecords()
+    public function deleteExpired()
     {
-        // How many minutes before a logins record is inactive?
-        $minutesToInactivity = config(
-            'lasallesoftware-library.lasalle_number_of_minutes_allowed_before_deleting_the_logins_record',
-            10
-        );
+        $expiredAt = Carbon::now()->subSeconds($this->secondsToExpiration());
 
-        // When is now?
-        $now = \Carbon\Carbon::now();
+        $this->where('updated_at', '<', $expiredAt)->delete();
+    }
 
-        // Go through all the records, deleting inactive records.
-        // Yes, I have Adam's book on higher order functions. But you know what Freud said: "sometimes a foreach is just a foreach".
-        foreach ($this->all() as $login) {
+    /**
+     * How many seconds until expiration?
+     *
+     * @return int
+     */
+    protected function secondsToExpiration()
+    {
+        $minutesToExpiration = config('lasallesoftware-library.lasalle_number_of_minutes_allowed_before_deleting_the_logins_record');
 
-            // convert the updated_at date to carbon
-            $updated_at = Carbon::parse($login->updated_at);
-
-            // if the record is inactive, then delete it
-            if ($updated_at->diffInMinutes($now, true) >= $minutesToInactivity) {
-                $this->deleteExistingLoginsRecordByModel($login);
-            }
-        }
+        return $minutesToExpiration * 60;
     }
 }

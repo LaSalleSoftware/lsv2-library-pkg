@@ -33,23 +33,23 @@ use Lasallesoftware\Library\Common\Commands\CommonCommand;
  *
  * This command is supposed to be run automatically via scheduler.
  *
- * @package Lasallesoftware\Library\Commands\DeleteInactiveLoginsRecordsCommand
+ * @package Lasallesoftware\Library\Commands\DeleteExpiredLoginsCommand
  */
-class DeleteInactiveLoginsRecordsCommand extends CommonCommand
+class DeleteExpiredLoginsCommand extends CommonCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'lslibrary:deleteinactiveloginsrecords';
+    protected $name = 'lslibrary:deleteexpiredlogins';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'The LaSalle Software custom command that deletes inactive logins db table records.';
+    protected $description = 'Delete expired logins records.';
 
     /**
      * Execute the console command.
@@ -59,26 +59,9 @@ class DeleteInactiveLoginsRecordsCommand extends CommonCommand
     public function handle()
     {
         $login = new Login();
-        $login->deleteInactiveLoginsRecords();
+        $login->deleteExpired();
 
-        //echo  "\n\n " . $login->deleteInactiveLoginsRecords();
 
-        /*
-
-        $all = Login::all();
-
-        foreach ($all as $x) {
-            echo "\n\n token and updated_at = " . $x->token . " " . $x->updated_at;
-        }
-
-        $all = Login::all();
-
-        foreach ($all as $x) {
-            echo "\n\n token and updated_at = " . $x->token . " " . $x->updated_at;
-        }
-
-        */
-
-        echo "\n\n deleteinactiveloginsrecords is done!!!";
+        $this->info('Expired logins records cleared!');
     }
 }

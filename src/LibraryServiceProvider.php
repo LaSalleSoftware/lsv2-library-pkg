@@ -27,7 +27,7 @@ use Lasallesoftware\Library\Authentication\CustomGuards\LasalleGuard;
 use Lasallesoftware\Library\Authentication\Http\Middleware\RedirectSomeRoutes;
 use Lasallesoftware\Library\Commands\CustomdropCommand;
 use Lasallesoftware\Library\Commands\CustomseedCommand;
-use Lasallesoftware\Library\Commands\DeleteInactiveLoginsRecordsCommand;
+use Lasallesoftware\Library\Commands\DeleteExpiredLoginsCommand;
 use Lasallesoftware\Library\Commands\InstalleddomainseedCommand;
 use Lasallesoftware\Library\Commands\LasalleinstalladminappCommand;
 use Lasallesoftware\Library\Commands\LasalleinstallenvCommand;
@@ -162,9 +162,9 @@ class LibraryServiceProvider extends ServiceProvider
             'command.lslibrary:lasalleinstallfrontendapp',
         ]);
 
-        $this->app->bind('command.lslibrary:deleteinactiveloginsrecords', DeleteInactiveLoginsRecordsCommand::class);
+        $this->app->bind('command.lslibrary:deleteexpiredlogins', DeleteExpiredLoginsCommand::class);
         $this->commands([
-            'command.lslibrary:deleteinactiveloginsrecords',
+            'command.lslibrary:deleteexpiredlogins',
         ]);
     }
 
