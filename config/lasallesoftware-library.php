@@ -226,7 +226,7 @@ return [
    | * https://nova.laravel.com/docs/2.0/resources/file-fields.html#file-fields
    |
    | IMPORTANT!!! ****You need to set up each S3 folder in your AWS console.****
-   | See https://github.com/LaSalleSoftware/lsv2-adminbackend-app/blob/master/AWS_S3_NOTES_README.md
+   | See https://github.com/LaSalleSoftware/ls-adminbackend-app/blob/master/AWS_S3_NOTES_README.md
    |
    */
 

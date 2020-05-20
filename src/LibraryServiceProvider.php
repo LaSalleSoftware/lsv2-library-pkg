@@ -16,8 +16,8 @@
  * @email      bob.bloom@lasallesoftware.ca
  *
  * @see       https://lasallesoftware.ca
- * @see       https://packagist.org/packages/lasallesoftware/lsv2-library-pkg
- * @see       https://github.com/LaSalleSoftware/lsv2-library-pkg
+ * @see       https://packagist.org/packages/lasallesoftware/ls-library-pkg
+ * @see       https://github.com/LaSalleSoftware/ls-library-pkg
  */
 
 namespace Lasallesoftware\Library;

@@ -15,8 +15,8 @@
  * @author     Bob Bloom
  * @email      bob.bloom@lasallesoftware.ca
  * @link       https://lasallesoftware.ca
- * @link       https://packagist.org/packages/lasallesoftware/lsv2-library-pkg
- * @link       https://github.com/LaSalleSoftware/lsv2-library-pkg
+ * @link       https://packagist.org/packages/lasallesoftware/ls-library-pkg
+ * @link       https://github.com/LaSalleSoftware/ls-library-pkg
  *
  */
 
@@ -65,7 +65,7 @@ class CommonController extends BaseController
      * Get the installed domain specified in the request's header.
      *
      * @param  Illuminate\Http\Request  $request
-     * @return string                             Such as "hackintosh.lsv2-basicfrontend-app.com" (omit quotes).
+     * @return string                             Such as "hackintosh.ls-basicfrontend-app.com" (omit quotes).
      */
     public function getRequestingDomainFromTheHeader($request)
     {

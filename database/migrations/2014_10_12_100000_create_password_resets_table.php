@@ -15,8 +15,8 @@
  * @author     Bob Bloom
  * @email      bob.bloom@lasallesoftware.ca
  * @link       https://lasallesoftware.ca
- * @link       https://packagist.org/packages/lasallesoftware/lsv2-library-pkg
- * @link       https://github.com/LaSalleSoftware/lsv2-library-pkg
+ * @link       https://packagist.org/packages/lasallesoftware/ls-library-pkg
+ * @link       https://github.com/LaSalleSoftware/ls-library-pkg
  * 
  * @see        https://github.com/laravel/ui/blob/2.x/stubs/migrations/2014_10_12_100000_create_password_resets_table.php
  *

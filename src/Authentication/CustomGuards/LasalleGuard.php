@@ -15,8 +15,8 @@
  * @author     Bob Bloom
  * @email      bob.bloom@lasallesoftware.ca
  * @link       https://lasallesoftware.ca
- * @link       https://packagist.org/packages/lasallesoftware/lsv2-library-pkg
- * @link       https://github.com/LaSalleSoftware/lsv2-library-pkg
+ * @link       https://packagist.org/packages/lasallesoftware/ls-library-pkg
+ * @link       https://github.com/LaSalleSoftware/ls-library-pkg
  *
  */
 
@@ -991,7 +991,7 @@ class LasalleGuard implements StatefulGuard
      * 
      * Not going to delete logins database table records, nor sessions, in case they are needed for tracing.
      * 
-     * https://github.com/LaSalleSoftware/lsv2-library-pkg/issues/80
+     * https://github.com/LaSalleSoftware/ls-library-pkg/issues/80
      *
      * @return bool
      */

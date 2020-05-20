@@ -15,8 +15,8 @@
  * @author     Bob Bloom
  * @email      bob.bloom@lasallesoftware.ca
  * @link       https://lasallesoftware.ca
- * @link       https://packagist.org/packages/lasallesoftware/lsv2-library-pkg
- * @link       https://github.com/LaSalleSoftware/lsv2-library-pkg
+ * @link       https://packagist.org/packages/lasallesoftware/ls-library-pkg
+ * @link       https://github.com/LaSalleSoftware/ls-library-pkg
  *
  */
 
@@ -281,7 +281,7 @@ trait HttpRequestToAdminBackend
      *
      * Raison d'etre: to grab the page number in the Laravel pagination links (https://laravel.com/docs/6.x/pagination)
      *
-     * @param  string     $url    Eg: 'http://hackintosh.lsv2-adminbackend-app.com:8888/api/v1/allarticlesblog?page=1'
+     * @param  string     $url    Eg: 'http://hackintosh.ls-adminbackend-app.com:8888/api/v1/allarticlesblog?page=1'
      * @return mixed|null
      */
     public function getPageQueryParameterFromUrlString($url)
