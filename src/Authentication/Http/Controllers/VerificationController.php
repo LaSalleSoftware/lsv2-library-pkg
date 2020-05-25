@@ -30,6 +30,7 @@ use App\Providers\RouteServiceProvider;
 
 // Laravel Framework
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use \Illuminate\Http\Request;
 
 
 class VerificationController extends CommonController
