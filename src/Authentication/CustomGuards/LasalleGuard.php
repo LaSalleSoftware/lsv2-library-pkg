@@ -203,7 +203,7 @@ class LasalleGuard implements StatefulGuard
     // https://github.com/laravel/framework/blob/5.8/src/Illuminate/Auth/TokenGuard.php
 
     // The following methods in the Guard contract reside in the GuardHelper trait:
-    //  **  );
+    //  ** public function check();
     //  ** public function guest();
 
     // The following methods in the Guard contract reside in this class:
@@ -997,7 +997,7 @@ class LasalleGuard implements StatefulGuard
      */
     public function emergencyBanAllUsersFromLoggingIn()
     {
-        return env('LASALLE_EMERGENCY_BAN_ALL_USERS_FROM_ADMIN_APP_LOGIN') ? true : false;
+        return config('ban_all_users_from_logging_into_the_admin_backend') ? true : false;
     }
 
     ///////////////////////////////////////////////////////////////////

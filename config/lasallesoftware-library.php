@@ -140,6 +140,16 @@ return [
 	*/
     'how_many_initial_chars_of_content_field_for_excerpt' => '250',
 
+    /*
+	|--------------------------------------------------------------------------
+	| Ban All Users
+	|--------------------------------------------------------------------------
+	|
+	| Ban all users from logging into the admin back-end.
+	| 
+	*/
+    'ban_all_users_from_logging_into_the_admin_backend' => env('LASALLE_EMERGENCY_BAN_ALL_USERS_FROM_ADMIN_APP_LOGIN', false),
+
 
     /*
     | ========================================================================
