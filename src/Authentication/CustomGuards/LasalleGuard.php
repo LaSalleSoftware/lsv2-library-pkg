@@ -997,7 +997,7 @@ class LasalleGuard implements StatefulGuard
      */
     public function emergencyBanAllUsersFromLoggingIn()
     {
-        return config('ban_all_users_from_logging_into_the_admin_backend') ? true : false;
+        return config('lasallesoftware-library.ban_all_users_from_logging_into_the_admin_backend') ? true : false;
     }
 
     ///////////////////////////////////////////////////////////////////
