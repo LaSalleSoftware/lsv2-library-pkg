@@ -52,7 +52,7 @@ class BaseSeeder extends Seeder
         }
 
         // if there's an override, and we're not in the production environment, then we want the test data in the db
-        if (env('LASALLE_POPULATE_DATABASE_WITH_TEST_DATA', false)) {
+        if (config('lasallesoftware-library.seed_database_with_test_data', false)) {
             return true;
         }
 
