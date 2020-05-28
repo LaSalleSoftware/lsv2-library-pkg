@@ -270,6 +270,10 @@ class Personbydomain extends Authenticatable
         return $this->lookup_role()->where('lookup_role_id', 3)->exists();
     }
 
+    ///////////////////////////////////////////////////////////////////
+    //////////////          OTHER STUFF             ///////////////////
+    ///////////////////////////////////////////////////////////////////
+
     /**
      * Does the current user (ie, personbydomain) have the specified role?
      *
@@ -293,4 +297,19 @@ class Personbydomain extends Authenticatable
         return false;
     }
 
+    /**
+     * Is an individual user banned?
+     *
+     * @param  integer  $id
+     * @return boolean
+     */
+    public function isBanned(int $id): bool 
+    {
+        $user = $this->where([
+            ['id', '=', '1'], 
+            ['banned_enabled', '=', '1']
+        ])->first();
+
+        return $user ? true : false;
+    }
 }
