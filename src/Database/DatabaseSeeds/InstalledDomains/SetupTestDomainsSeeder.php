@@ -112,15 +112,15 @@ class SetupTestDomainsSeeder extends BaseSeeder
     }
 
     /**
-     * Create hahackintosh.ls-basicfrontend-app.com for testing
+     * Create hackintosh.lsv2-basicfrontend-app.com for testing
      *
      * @return void
      */
     private function setUpSimulatedFrontendDomain3()
     {
         DB::table('installed_domains')->insert([
-            'title'       => 'hackintosh.ls-basicfrontend-app.com',
-            'description' => 'hackintosh.ls-basicfrontend-app.com',
+            'title'       => 'hackintosh.lsv2-basicfrontend-app.com',
+            'description' => 'hackintosh.lsv2-basicfrontend-app.com',
             'enabled'     => '1',
             'created_at'  => $this->now,
             'created_by'  => 1,
