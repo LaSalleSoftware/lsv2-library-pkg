@@ -29,6 +29,7 @@ use Lasallesoftware\Library\Commands\CustomdropCommand;
 use Lasallesoftware\Library\Commands\CustomseedCommand;
 use Lasallesoftware\Library\Commands\DeleteExpiredJWTCommand;
 use Lasallesoftware\Library\Commands\DeleteExpiredLoginsCommand;
+use Lasallesoftware\Library\Commands\DeleteExpiredUUIDCommand;
 use Lasallesoftware\Library\Commands\InstalleddomainseedCommand;
 use Lasallesoftware\Library\Commands\LasalleinstalladminappCommand;
 use Lasallesoftware\Library\Commands\LasalleinstallenvCommand;
@@ -171,6 +172,11 @@ class LibraryServiceProvider extends ServiceProvider
         $this->app->bind('command.lslibrary:deleteexpiredjwt', DeleteExpiredJWTCommand::class);
         $this->commands([
             'command.lslibrary:deleteexpiredjwt',
+        ]);
+
+        $this->app->bind('command.lslibrary:deleteexpireduuid', DeleteExpiredUUIDCommand::class);
+        $this->commands([
+            'command.lslibrary:deleteexpireduuid',
         ]);
     }
 

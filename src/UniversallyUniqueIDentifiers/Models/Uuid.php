@@ -25,6 +25,9 @@ namespace Lasallesoftware\Library\UniversallyUniqueIDentifiers\Models;
 // LaSalle Software
 use Lasallesoftware\Library\Common\Models\CommonModel;
 
+// Laravel Framework
+use Illuminate\Support\Carbon;
+
 /**
  * This is the model class for uuid.
  *
@@ -97,5 +100,32 @@ class Uuid extends CommonModel
     public function contact_form()
     {
         return $this->belongsTo('Lasallesoftware\Contentform\Models\Contact_form');
+    }
+
+
+    ///////////////////////////////////////////////////////////////////
+    //////////////        OTHER METHODS             ///////////////////
+    ///////////////////////////////////////////////////////////////////
+
+    /**
+     * Delete expired UUIDs
+     *
+     * @return void
+     */
+    public function deleteExpired()
+    {
+        $expiredAt = Carbon::now()->subDays($this->daysToExpiration());
+
+        $this->where('created_at', '<', $expiredAt)->delete();
+    }
+
+    /**
+     * How many days until expiration?
+     *
+     * @return int
+     */
+    protected function daysToExpiration()
+    {
+        return config('lasallesoftware-library.uuid_number_of_days_until_expiration');
     }
 }
