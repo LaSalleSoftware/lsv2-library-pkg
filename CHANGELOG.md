@@ -1,10 +1,13 @@
 # CHANGE LOG
 
-## VERSION 2.1.1 (coming!)
+## VERSION 2.2.1 (coming!)
+
+## VERSION 2.2.0 (May 30, 2020)
+* [v2.2.0 issues](https://github.com/LaSalleSoftware/ls-library-pkg/milestone/17closed=1)
 
 ## VERSION 2.1.0 (May 04, 2020)
 Note: This is the first LaSalle Software release for the Laravel Framework series 7.x.
-* [v2.1.0 issues](https://github.com/LaSalleSoftware/ls-library-pkg/milestone/15?closed=1)
+* [v2.1.0 issues](https://github.com/LaSalleSoftware/ls-library-pkg/milestone/16?closed=1)
 
 ## VERSION 2.0.11 (April 17, 2020)
 Note: This is the final LaSalle Software release for the Laravel Framework series 6.x.
