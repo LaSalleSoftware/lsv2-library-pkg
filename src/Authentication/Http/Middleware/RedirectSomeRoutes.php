@@ -38,6 +38,7 @@ class RedirectSomeRoutes
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        /*
         if (Auth::guard($guard)->check()) {
             return $next($request);
         }
@@ -52,6 +53,7 @@ class RedirectSomeRoutes
             $default_path = config('lasallesoftware-library.web_middleware_default_path');
             return redirect($default_path);
         }
+        */
 
         return $next($request);
     }
