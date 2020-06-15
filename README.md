@@ -6,7 +6,13 @@
 <a href="https://laravel.com/"><img src="https://img.shields.io/badge/Laravel-v7-brightgreen.svg?style=flat-square" alt="Laravel v7.x"></a> 
 </p>
 
-Library package for my LaSalle Software.
+Library package for my LaSalle Software.  ** DO NOT USE! **
+
+## DO NOT USE THIS PACKAGE!
+
+THIS PACKAGE WAS SPLIT INTO TWO SEPARATE PACKAGES: A FRONT-END LIBRARY PACKAGE AND A BACK-END LIBRARY PACKAGE. 
+
+THIS PACKAGE EXISTS AS REFERENCE ONLY TO PRESERVE THE INDIVIDUAL COMMITS AND ISSUES THAT THESE NEW PACKAGES INHERITED. 
 
 ## Security
 
