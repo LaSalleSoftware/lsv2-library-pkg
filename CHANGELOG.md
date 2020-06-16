@@ -1,6 +1,12 @@
 # CHANGE LOG
 
-## VERSION 2.2.2 (coming!)
+## VERSIONS OF NEW LIBRARY PACKAGES
+[Front-end Library Package's Changelog](https://github.com/LaSalleSoftware/ls-libraryfrontend-pkg/blob/master/CHANGELOG.md)
+[Back-end Library Package's Changelog](https://github.com/LaSalleSoftware/ls-librarybackend-pkg/blob/master/CHANGELOG.md)
+
+## VERSION 2.2.2 (June 15, 2020)
+Note: This is the final release of this package.
+* [v2.2.1 issues](https://github.com/LaSalleSoftware/ls-library-pkg/milestone/19closed=1)
 
 ## VERSION 2.2.1 (May 30, 2020)
 * [v2.2.1 issues](https://github.com/LaSalleSoftware/ls-library-pkg/milestone/18closed=1)

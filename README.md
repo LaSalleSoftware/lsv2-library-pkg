@@ -10,7 +10,9 @@ Library package for my LaSalle Software.  ** DO NOT USE! **
 
 ## DO NOT USE THIS PACKAGE!
 
-THIS PACKAGE WAS SPLIT INTO TWO SEPARATE PACKAGES: A FRONT-END LIBRARY PACKAGE AND A BACK-END LIBRARY PACKAGE. 
+THIS PACKAGE WAS SPLIT INTO TWO SEPARATE PACKAGES: 
+- [Front-end Library Package](https://github.com/LaSalleSoftware/ls-libraryfrontend-pkg)
+- [Back-end Library Package](https://github.com/LaSalleSoftware/ls-librarybackend-pkg)
 
 THIS PACKAGE EXISTS AS REFERENCE ONLY TO PRESERVE THE INDIVIDUAL COMMITS AND ISSUES THAT THESE NEW PACKAGES INHERITED. 
 
